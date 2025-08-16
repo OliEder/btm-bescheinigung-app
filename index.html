@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BTM-Reisebescheinigung Artikel 75</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <style>
         * {
             margin: 0;
@@ -237,112 +238,30 @@
             margin-bottom: 5px;
         }
         
-        /* Certificate styles for A4 printing */
-        .certificate-preview {
-            background: white;
-            width: 210mm;
-            min-height: 297mm;
-            padding: 15mm;
-            margin: 20px auto;
-            font-family: 'Times New Roman', serif;
-            font-size: 11pt;
-            border: 1px solid #ddd;
-            page-break-after: always;
-            page-break-inside: avoid;
-            position: relative;
-        }
-        
-        .certificate-header {
-            text-align: center;
-            margin-bottom: 15px;
-            font-size: 12pt;
-            font-weight: bold;
-        }
-        
-        .certificate-section {
-            margin-bottom: 15px;
-            border: 1px solid #000;
-            page-break-inside: avoid;
-        }
-        
-        .certificate-section-title {
-            font-weight: bold;
-            background: #f0f0f0;
-            padding: 3px 5px;
-            border-bottom: 1px solid #000;
-            font-size: 10pt;
-        }
-        
-        .certificate-field {
+        .pdf-download-list {
             display: flex;
-            min-height: 25px;
-            padding: 2px 5px;
-        }
-        
-        .certificate-label {
-            flex: 0 0 35%;
-            font-size: 9pt;
-            color: #333;
-        }
-        
-        .certificate-value {
-            flex: 1;
-            border-bottom: 1px solid #666;
-            padding-left: 5px;
-            font-size: 10pt;
-            min-height: 20px;
-        }
-        
-        .signature-fields {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            flex-wrap: wrap;
             gap: 10px;
-            margin-top: 10px;
-            padding: 5px;
+            margin-top: 20px;
         }
         
-        .signature-field {
-            text-align: center;
-            padding: 5px;
+        .pdf-item {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            padding: 15px;
+            min-width: 250px;
+            transition: all 0.3s;
         }
         
-        .signature-box {
-            border: 1px solid #999;
-            height: 50mm;
-            margin-bottom: 5px;
-            background: white;
+        .pdf-item:hover {
+            border-color: #667eea;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.1);
         }
         
-        .signature-label {
-            font-size: 8pt;
-            color: #666;
-        }
-        
-        /* International legend */
-        .international-legend {
-            page-break-before: always;
-            padding: 15mm;
-            font-size: 9pt;
-        }
-        
-        .legend-columns {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
-        
-        .legend-section {
-            margin-bottom: 15px;
-        }
-        
-        .legend-title {
-            font-weight: bold;
-            margin-bottom: 5px;
-            text-decoration: underline;
-        }
-        
-        .legend-item {
-            margin-bottom: 3px;
+        @media print {
+            body { display: none; }
         }
         
         .medication-plan {
@@ -777,22 +696,22 @@
             <div class="tab-content" id="certificates-tab">
                 <h2>Formulare & Medikationsplan</h2>
                 <div class="alert alert-info">
-                    ℹ️ Hier werden die ausgefüllten Formulare und der Medikationsplan angezeigt
+                    ℹ️ Generieren Sie PDFs für alle Formulare und den Medikationsplan
                 </div>
                 
                 <div class="button-group">
-                    <button class="btn btn-primary" onclick="generateCertificates()">
-                        📄 Formulare generieren
+                    <button class="btn btn-primary" onclick="generatePDFs()">
+                        📄 PDFs generieren
                     </button>
-                    <button class="btn btn-success" onclick="printCertificates()">
-                        🖨️ Drucken
+                    <button class="btn btn-success" onclick="downloadAllPDFs()">
+                        💾 Alle PDFs herunterladen
                     </button>
                     <button class="btn btn-secondary" onclick="exportData()">
                         📤 Daten exportieren
                     </button>
                 </div>
                 
-                <div id="certificates-container"></div>
+                <div id="certificates-container" style="margin-top: 30px;"></div>
                 <div id="medication-plan-container"></div>
             </div>
             
@@ -1357,37 +1276,85 @@
             updateDosageSchemes();
         }
         
-        // Certificate generation
-        function generateCertificates() {
+        // Certificate generation with PDF
+        let generatedPDFs = [];
+        
+        function generatePDFs() {
             if (!appData.currentPatient || !appData.currentDoctor || 
                 appData.selectedMedications.length === 0 || !appData.travelData) {
                 alert('Bitte füllen Sie alle erforderlichen Daten aus!');
                 return;
             }
             
+            generatedPDFs = [];
             const certificatesContainer = document.getElementById('certificates-container');
-            certificatesContainer.innerHTML = '';
+            certificatesContainer.innerHTML = '<h3>Generierte PDFs:</h3><div class="pdf-download-list">';
             
-            // Generate one certificate per medication
-            appData.selectedMedications.forEach(med => {
-                const certificate = createCertificate(med);
-                certificatesContainer.appendChild(certificate);
+            // Generate one PDF per medication
+            appData.selectedMedications.forEach((med, index) => {
+                const pdfName = `BTM-Bescheinigung_${med.name}_${med.concentration}.pdf`.replace(/\s+/g, '_');
+                const pdf = createCertificatePDF(med);
                 
-                // Add international legend after each certificate
-                const legend = createInternationalLegend();
-                certificatesContainer.appendChild(legend);
+                generatedPDFs.push({
+                    name: pdfName,
+                    pdf: pdf,
+                    medication: med
+                });
+                
+                // Create PDF item card
+                const pdfItem = document.createElement('div');
+                pdfItem.className = 'pdf-item';
+                pdfItem.innerHTML = `
+                    <h4>📄 ${med.name} ${med.concentration}</h4>
+                    <p style="font-size: 12px; color: #666;">2 Seiten (Formular + Legende)</p>
+                    <button class="btn btn-secondary btn-small" onclick="generatedPDFs[${generatedPDFs.length - 1}].pdf.save('${pdfName}')">
+                        💾 Download
+                    </button>
+                `;
+                certificatesContainer.querySelector('.pdf-download-list').appendChild(pdfItem);
             });
             
-            // Generate medication plan
-            generateMedicationPlan();
+            // Generate medication plan PDF
+            const planPDF = createMedicationPlanPDF();
+            const planName = `Medikationsplan_${appData.currentPatient.lastname}.pdf`.replace(/\s+/g, '_');
+            
+            generatedPDFs.push({
+                name: planName,
+                pdf: planPDF,
+                isMedicationPlan: true
+            });
+            
+            // Create medication plan card
+            const planItem = document.createElement('div');
+            planItem.className = 'pdf-item';
+            planItem.style.background = '#e3f2fd';
+            planItem.innerHTML = `
+                <h4>📋 Medikationsplan</h4>
+                <p style="font-size: 12px; color: #666;">Querformat mit Arztdaten</p>
+                <button class="btn btn-primary btn-small" onclick="generatedPDFs[${generatedPDFs.length - 1}].pdf.save('${planName}')">
+                    💾 Download
+                </button>
+            `;
+            certificatesContainer.querySelector('.pdf-download-list').appendChild(planItem);
+            
+            certificatesContainer.innerHTML += '</div>';
+            
+            // Add summary
+            const summary = document.createElement('div');
+            summary.className = 'alert alert-success';
+            summary.style.marginTop = '20px';
+            summary.innerHTML = `✅ ${generatedPDFs.length} PDFs wurden erfolgreich generiert und können heruntergeladen werden.`;
+            certificatesContainer.appendChild(summary);
             
             // Switch to certificates tab
             document.querySelector('[data-tab="certificates"]').click();
+            
+            alert(`${generatedPDFs.length} PDFs wurden erfolgreich generiert!`);
         }
         
-        function createCertificate(medication) {
-            const div = document.createElement('div');
-            div.className = 'certificate-preview';
+        function createCertificatePDF(medication) {
+            const { jsPDF } = window.jspdf;
+            const pdf = new jsPDF('p', 'mm', 'a4');
             
             // Calculate dosage information
             const schemes = appData.dosageSchemes[medication.id] || [{
@@ -1416,266 +1383,298 @@
             const concentrationValue = parseFloat(medication.concentration);
             const totalSubstance = totalAmount * concentrationValue;
             
-            div.innerHTML = `
-                <div class="certificate-header">
-                    Bescheinigung für das Mitführen von Betäubungsmitteln<br>
-                    im Rahmen einer ärztlichen Behandlung<br>
-                    - Artikel 75 des Schengener Durchführungsabkommens -
-                </div>
-                
-                <div class="certificate-section">
-                    <div class="certificate-section-title">A - Verschreibender Arzt:</div>
-                    <div class="certificate-field">
-                        <span class="certificate-label">(1) Name, Vorname, Telefon:</span>
-                        <span class="certificate-value">${appData.currentDoctor.title} ${appData.currentDoctor.lastname}, ${appData.currentDoctor.firstname}, ${appData.currentDoctor.phone}</span>
-                    </div>
-                    <div class="certificate-field">
-                        <span class="certificate-label">(2) Anschrift:</span>
-                        <span class="certificate-value">${appData.currentDoctor.address}</span>
-                    </div>
-                    <div class="signature-fields">
-                        <div class="signature-field">
-                            <div class="signature-box"></div>
-                            <div class="signature-label">(3) Stempel des Arztes</div>
-                        </div>
-                        <div class="signature-field">
-                            <div class="signature-box"></div>
-                            <div class="signature-label">Datum</div>
-                        </div>
-                        <div class="signature-field">
-                            <div class="signature-box"></div>
-                            <div class="signature-label">Unterschrift des Arztes</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="certificate-section">
-                    <div class="certificate-section-title">B - Patient:</div>
-                    <div class="certificate-field">
-                        <span class="certificate-label">(4) Name, (5) Vorname:</span>
-                        <span class="certificate-value">${appData.currentPatient.lastname}, ${appData.currentPatient.firstname}</span>
-                    </div>
-                    <div class="certificate-field">
-                        <span class="certificate-label">(5) Nr. des Passes/Ausweises:</span>
-                        <span class="certificate-value">${appData.currentPatient.passport}</span>
-                    </div>
-                    <div class="certificate-field">
-                        <span class="certificate-label">(6) Geburtsort:</span>
-                        <span class="certificate-value">${appData.currentPatient.birthplace}</span>
-                    </div>
-                    <div class="certificate-field">
-                        <span class="certificate-label">(7) Geburtsdatum:</span>
-                        <span class="certificate-value">${new Date(appData.currentPatient.birthdate).toLocaleDateString('de-DE')}</span>
-                    </div>
-                    <div class="certificate-field">
-                        <span class="certificate-label">(8) Staatsangehörigkeit:</span>
-                        <span class="certificate-value">${appData.currentPatient.nationality}</span>
-                    </div>
-                    <div class="certificate-field">
-                        <span class="certificate-label">(9) Geschlecht:</span>
-                        <span class="certificate-value">${appData.currentPatient.gender}</span>
-                    </div>
-                    <div class="certificate-field">
-                        <span class="certificate-label">(10) Wohnanschrift:</span>
-                        <span class="certificate-value">${appData.currentPatient.street}, ${appData.currentPatient.zip} ${appData.currentPatient.city}</span>
-                    </div>
-                    <div class="certificate-field">
-                        <span class="certificate-label">(11) Dauer der Reise in Tagen:</span>
-                        <span class="certificate-value">${appData.travelData.duration}</span>
-                    </div>
-                    <div class="certificate-field">
-                        <span class="certificate-label">(12) Gültigkeitsdauer der Erlaubnis:</span>
-                        <span class="certificate-value">${new Date(appData.travelData.start).toLocaleDateString('de-DE')} - ${new Date(appData.travelData.end).toLocaleDateString('de-DE')}</span>
-                    </div>
-                </div>
-                
-                <div class="certificate-section">
-                    <div class="certificate-section-title">C - Verschriebenes Arzneimittel:</div>
-                    <div class="certificate-field">
-                        <span class="certificate-label">(13) Handelsbezeichnung:</span>
-                        <span class="certificate-value">${medication.name}</span>
-                    </div>
-                    <div class="certificate-field">
-                        <span class="certificate-label">(14) Darreichungsform:</span>
-                        <span class="certificate-value">${medication.form}</span>
-                    </div>
-                    <div class="certificate-field">
-                        <span class="certificate-label">(15) Internationale Bezeichnung:</span>
-                        <span class="certificate-value">${medication.substance}</span>
-                    </div>
-                    <div class="certificate-field">
-                        <span class="certificate-label">(16) Wirkstoff-Konzentration:</span>
-                        <span class="certificate-value">${medication.concentration}</span>
-                    </div>
-                    <div class="certificate-field">
-                        <span class="certificate-label">(17) Gebrauchsanweisung:</span>
-                        <span class="certificate-value">${dosageInstructions.join('; ')}</span>
-                    </div>
-                    <div class="certificate-field">
-                        <span class="certificate-label">(18) Gesamtwirkstoffmenge:</span>
-                        <span class="certificate-value">${totalSubstance} mg</span>
-                    </div>
-                    <div class="certificate-field">
-                        <span class="certificate-label">(19) Reichdauer der Verschreibung:</span>
-                        <span class="certificate-value">${appData.travelData.duration} Tage</span>
-                    </div>
-                    <div class="certificate-field">
-                        <span class="certificate-label">(20) Anmerkungen:</span>
-                        <span class="certificate-value">Gesamtmenge: ${totalAmount} ${medication.form}</span>
-                    </div>
-                </div>
-                
-                <div class="certificate-section">
-                    <div class="certificate-section-title">D - Für die Beglaubigung zuständige Behörde:</div>
-                    <div class="certificate-field">
-                        <span class="certificate-label">(21) Bezeichnung:</span>
-                        <span class="certificate-value"></span>
-                    </div>
-                    <div class="certificate-field">
-                        <span class="certificate-label">(22) Anschrift, Telefon:</span>
-                        <span class="certificate-value"></span>
-                    </div>
-                    <div class="signature-fields">
-                        <div class="signature-field">
-                            <div class="signature-box"></div>
-                            <div class="signature-label">(23) Stempel der Behörde</div>
-                        </div>
-                        <div class="signature-field">
-                            <div class="signature-box"></div>
-                            <div class="signature-label">Datum</div>
-                        </div>
-                        <div class="signature-field">
-                            <div class="signature-box"></div>
-                            <div class="signature-label">Unterschrift der Behörde</div>
-                        </div>
-                    </div>
-                </div>
-            `;
+            // Page 1: Certificate
+            pdf.setFontSize(12);
+            pdf.setFont(undefined, 'bold');
+            pdf.text('Bescheinigung für das Mitführen von Betäubungsmitteln', 105, 20, { align: 'center' });
+            pdf.text('im Rahmen einer ärztlichen Behandlung', 105, 26, { align: 'center' });
+            pdf.text('- Artikel 75 des Schengener Durchführungsabkommens -', 105, 32, { align: 'center' });
             
-            return div;
+            let y = 45;
+            
+            // Section A - Doctor
+            pdf.setFontSize(10);
+            pdf.rect(10, y, 190, 45);
+            pdf.setFont(undefined, 'bold');
+            pdf.text('A - Verschreibender Arzt:', 12, y + 5);
+            pdf.setFont(undefined, 'normal');
+            
+            pdf.text('(1) Name, Vorname, Telefon:', 12, y + 12);
+            pdf.text(`${appData.currentDoctor.title} ${appData.currentDoctor.lastname}, ${appData.currentDoctor.firstname}, ${appData.currentDoctor.phone}`, 70, y + 12);
+            
+            pdf.text('(2) Anschrift:', 12, y + 19);
+            pdf.text(appData.currentDoctor.address, 70, y + 19);
+            
+            pdf.text('(3) Stempel des Arztes:', 12, y + 30);
+            pdf.rect(70, y + 25, 40, 15);
+            pdf.text('Datum:', 115, y + 30);
+            pdf.rect(130, y + 25, 30, 15);
+            pdf.text('Unterschrift:', 165, y + 30);
+            pdf.rect(165, y + 25, 30, 15);
+            
+            y += 50;
+            
+            // Section B - Patient
+            pdf.rect(10, y, 190, 65);
+            pdf.setFont(undefined, 'bold');
+            pdf.text('B - Patient:', 12, y + 5);
+            pdf.setFont(undefined, 'normal');
+            
+            pdf.text('(4) Name, (5) Vorname:', 12, y + 12);
+            pdf.text(`${appData.currentPatient.lastname}, ${appData.currentPatient.firstname}`, 70, y + 12);
+            
+            pdf.text('(5) Nr. des Passes/Ausweises:', 12, y + 19);
+            pdf.text(appData.currentPatient.passport, 70, y + 19);
+            
+            pdf.text('(6) Geburtsort:', 12, y + 26);
+            pdf.text(appData.currentPatient.birthplace, 70, y + 26);
+            
+            pdf.text('(7) Geburtsdatum:', 115, y + 26);
+            pdf.text(new Date(appData.currentPatient.birthdate).toLocaleDateString('de-DE'), 150, y + 26);
+            
+            pdf.text('(8) Staatsangehörigkeit:', 12, y + 33);
+            pdf.text(appData.currentPatient.nationality, 70, y + 33);
+            
+            pdf.text('(9) Geschlecht:', 115, y + 33);
+            pdf.text(appData.currentPatient.gender, 150, y + 33);
+            
+            pdf.text('(10) Wohnanschrift:', 12, y + 40);
+            pdf.text(`${appData.currentPatient.street}, ${appData.currentPatient.zip} ${appData.currentPatient.city}`, 70, y + 40);
+            
+            pdf.text('(11) Dauer der Reise in Tagen:', 12, y + 47);
+            pdf.text(appData.travelData.duration.toString(), 70, y + 47);
+            
+            pdf.text('(12) Gültigkeitsdauer der Erlaubnis:', 12, y + 54);
+            pdf.text(`${new Date(appData.travelData.start).toLocaleDateString('de-DE')} - ${new Date(appData.travelData.end).toLocaleDateString('de-DE')}`, 70, y + 54);
+            
+            y += 70;
+            
+            // Section C - Medication
+            pdf.rect(10, y, 190, 70);
+            pdf.setFont(undefined, 'bold');
+            pdf.text('C - Verschriebenes Arzneimittel:', 12, y + 5);
+            pdf.setFont(undefined, 'normal');
+            
+            pdf.text('(13) Handelsbezeichnung:', 12, y + 12);
+            pdf.text(medication.name, 70, y + 12);
+            
+            pdf.text('(14) Darreichungsform:', 12, y + 19);
+            pdf.text(medication.form, 70, y + 19);
+            
+            pdf.text('(15) Internationale Bezeichnung:', 12, y + 26);
+            pdf.text(medication.substance, 70, y + 26);
+            
+            pdf.text('(16) Wirkstoff-Konzentration:', 12, y + 33);
+            pdf.text(medication.concentration, 70, y + 33);
+            
+            pdf.text('(17) Gebrauchsanweisung:', 12, y + 40);
+            const instructionText = dosageInstructions.join('; ');
+            const splitInstructions = pdf.splitTextToSize(instructionText, 120);
+            pdf.text(splitInstructions, 70, y + 40);
+            
+            pdf.text('(18) Gesamtwirkstoffmenge:', 12, y + 47);
+            pdf.text(`${totalSubstance} mg`, 70, y + 47);
+            
+            pdf.text('(19) Reichdauer der Verschreibung:', 12, y + 54);
+            pdf.text(`${appData.travelData.duration} Tage`, 70, y + 54);
+            
+            pdf.text('(20) Anmerkungen:', 12, y + 61);
+            pdf.text(`Gesamtmenge: ${totalAmount} ${medication.form}`, 70, y + 61);
+            
+            y += 75;
+            
+            // Section D - Authority
+            if (y + 45 > 297) {
+                pdf.addPage();
+                y = 20;
+            }
+            
+            pdf.rect(10, y, 190, 45);
+            pdf.setFont(undefined, 'bold');
+            pdf.text('D - Für die Beglaubigung zuständige Behörde:', 12, y + 5);
+            pdf.setFont(undefined, 'normal');
+            
+            pdf.text('(21) Bezeichnung:', 12, y + 12);
+            pdf.line(50, y + 12, 195, y + 12);
+            
+            pdf.text('(22) Anschrift, Telefon:', 12, y + 19);
+            pdf.line(50, y + 19, 195, y + 19);
+            
+            pdf.text('(23) Stempel der Behörde:', 12, y + 30);
+            pdf.rect(70, y + 25, 40, 15);
+            pdf.text('Datum:', 115, y + 30);
+            pdf.rect(130, y + 25, 30, 15);
+            pdf.text('Unterschrift:', 165, y + 30);
+            pdf.rect(165, y + 25, 30, 15);
+            
+            // Page 2: International Legend
+            pdf.addPage();
+            pdf.setFontSize(11);
+            pdf.setFont(undefined, 'bold');
+            pdf.text('International Legend / Légende Internationale', 105, 20, { align: 'center' });
+            
+            pdf.setFontSize(9);
+            pdf.setFont(undefined, 'normal');
+            
+            // English column
+            let legendY = 35;
+            pdf.setFont(undefined, 'bold');
+            pdf.text('English:', 20, legendY);
+            pdf.setFont(undefined, 'normal');
+            legendY += 7;
+            
+            const englishLegend = [
+                'A - Prescribing doctor',
+                '(1) name, first name, phone',
+                '(2) address',
+                '(3) stamp, date, signature of doctor',
+                '',
+                'B - Patient',
+                '(4) name, first name',
+                '(5) no. of passport or ID',
+                '(6) place of birth',
+                '(7) date of birth',
+                '(8) nationality',
+                '(9) sex',
+                '(10) address',
+                '(11) duration of travel in days',
+                '(12) validity from/to - max. 30 days',
+                '',
+                'C - Prescribed drug',
+                '(13) trade name',
+                '(14) dosage form',
+                '(15) international name of substance',
+                '(16) concentration',
+                '(17) instructions for use',
+                '(18) total quantity of substance',
+                '(19) duration - max. 30 days',
+                '(20) remarks',
+                '',
+                'D - Accrediting authority',
+                '(21) designation',
+                '(22) address, phone',
+                '(23) stamp, date, signature'
+            ];
+            
+            englishLegend.forEach(line => {
+                if (line === '') {
+                    legendY += 3;
+                } else {
+                    pdf.text(line, 20, legendY);
+                    legendY += 5;
+                }
+            });
+            
+            // French column
+            legendY = 35;
+            pdf.setFont(undefined, 'bold');
+            pdf.text('Français:', 110, legendY);
+            pdf.setFont(undefined, 'normal');
+            legendY += 7;
+            
+            const frenchLegend = [
+                'A - Médecin prescripteur',
+                '(1) nom, prénom, téléphone',
+                '(2) adresse',
+                '(3) cachet, date, signature',
+                '',
+                'B - Patient',
+                '(4) nom, prénom',
+                '(5) n° du passeport ou document',
+                '(6) lieu de naissance',
+                '(7) date de naissance',
+                '(8) nationalité',
+                '(9) sexe',
+                '(10) adresse',
+                '(11) durée du voyage en jours',
+                '(12) validité du/au - max. 30 jours',
+                '',
+                'C - Médicament prescrit',
+                '(13) nom commercial',
+                '(14) forme pharmaceutique',
+                '(15) dénomination internationale',
+                '(16) concentration',
+                '(17) mode d\'emploi',
+                '(18) quantité totale',
+                '(19) durée - max. 30 jours',
+                '(20) remarques',
+                '',
+                'D - Autorité qui authentifie',
+                '(21) désignation',
+                '(22) adresse, téléphone',
+                '(23) sceau, date, signature'
+            ];
+            
+            frenchLegend.forEach(line => {
+                if (line === '') {
+                    legendY += 3;
+                } else {
+                    pdf.text(line, 110, legendY);
+                    legendY += 5;
+                }
+            });
+            
+            return pdf;
         }
         
-        function createInternationalLegend() {
-            const div = document.createElement('div');
-            div.className = 'international-legend certificate-preview';
+        function createMedicationPlanPDF() {
+            const { jsPDF } = window.jspdf;
+            const pdf = new jsPDF('l', 'mm', 'a4'); // Landscape orientation
             
-            div.innerHTML = `
-                <h3 style="text-align: center; margin-bottom: 20px;">
-                    Certification to carry drugs and/or psychotropic substances for treatment purposes<br>
-                    - Schengen Implementing Convention - Article 75
-                </h3>
-                
-                <div class="legend-columns">
-                    <div>
-                        <div class="legend-section">
-                            <div class="legend-title">A - Prescribing doctor</div>
-                            <div class="legend-item">(1) name, first name, phone</div>
-                            <div class="legend-item">(2) address</div>
-                            <div class="legend-item">(3) stamp, date, signature of doctor</div>
-                        </div>
-                        
-                        <div class="legend-section">
-                            <div class="legend-title">B - Patient</div>
-                            <div class="legend-item">(4) name, first name</div>
-                            <div class="legend-item">(5) no. of passport or other identification document</div>
-                            <div class="legend-item">(6) place of birth</div>
-                            <div class="legend-item">(7) date of birth</div>
-                            <div class="legend-item">(8) nationality</div>
-                            <div class="legend-item">(9) sex</div>
-                            <div class="legend-item">(10) address</div>
-                            <div class="legend-item">(11) duration of travel in days</div>
-                            <div class="legend-item">(12) validity of authorisation from/to - max. 30 days</div>
-                        </div>
-                        
-                        <div class="legend-section">
-                            <div class="legend-title">C - Prescribed drug</div>
-                            <div class="legend-item">(13) trade name or special preparation</div>
-                            <div class="legend-item">(14) dosage form</div>
-                            <div class="legend-item">(15) international name of active substance</div>
-                            <div class="legend-item">(16) concentration of active substance</div>
-                            <div class="legend-item">(17) instructions for use</div>
-                            <div class="legend-item">(18) total quantity of active substance</div>
-                            <div class="legend-item">(19) duration of prescription in days - max. 30 days</div>
-                            <div class="legend-item">(20) remarks</div>
-                        </div>
-                        
-                        <div class="legend-section">
-                            <div class="legend-title">D - Accrediting authority</div>
-                            <div class="legend-item">(21) expression</div>
-                            <div class="legend-item">(22) address, phone</div>
-                            <div class="legend-item">(23) stamp, date, signature of authority</div>
-                        </div>
-                    </div>
-                    
-                    <div>
-                        <div class="legend-section">
-                            <div class="legend-title">A - Médecin prescripteur</div>
-                            <div class="legend-item">(1) nom, prénom, téléphone</div>
-                            <div class="legend-item">(2) adresse</div>
-                            <div class="legend-item">(3) cachet, date, signature du médecin</div>
-                        </div>
-                        
-                        <div class="legend-section">
-                            <div class="legend-title">B - Patient</div>
-                            <div class="legend-item">(4) nom, prénom</div>
-                            <div class="legend-item">(5) n° du passeport ou du document d'identité</div>
-                            <div class="legend-item">(6) lieu de naissance</div>
-                            <div class="legend-item">(7) date de naissance</div>
-                            <div class="legend-item">(8) nationalité</div>
-                            <div class="legend-item">(9) sexe</div>
-                            <div class="legend-item">(10) adresse</div>
-                            <div class="legend-item">(11) durée du voyage en jours</div>
-                            <div class="legend-item">(12) durée de validité de l'autorisation du/au - max. 30 jours</div>
-                        </div>
-                        
-                        <div class="legend-section">
-                            <div class="legend-title">C - Médicament prescrit</div>
-                            <div class="legend-item">(13) nom commercial ou préparation spéciale</div>
-                            <div class="legend-item">(14) forme pharmaceutique</div>
-                            <div class="legend-item">(15) dénomination internationale de la substance active</div>
-                            <div class="legend-item">(16) concentration de la substance active</div>
-                            <div class="legend-item">(17) mode d'emploi</div>
-                            <div class="legend-item">(18) quantité totale de la substance active</div>
-                            <div class="legend-item">(19) durée de la prescription en jours - max. 30 jours</div>
-                            <div class="legend-item">(20) remarques</div>
-                        </div>
-                        
-                        <div class="legend-section">
-                            <div class="legend-title">D - Autorité qui authentifie</div>
-                            <div class="legend-item">(21) désignation</div>
-                            <div class="legend-item">(22) adresse, téléphone</div>
-                            <div class="legend-item">(23) sceau, date, signature de l'autorité</div>
-                        </div>
-                    </div>
-                </div>
-            `;
+            // Header
+            pdf.setFontSize(16);
+            pdf.setFont(undefined, 'bold');
+            pdf.text('Medikationsplan für BTM-Reise', 148, 20, { align: 'center' });
             
-            return div;
-        }
-        
-        function generateMedicationPlan() {
-            const container = document.getElementById('medication-plan-container');
+            // Patient and Doctor info
+            pdf.setFontSize(10);
+            pdf.setFont(undefined, 'normal');
             
-            let html = `
-                <div class="medication-plan">
-                    <h3>Medikationsplan für die Reise</h3>
-                    <p><strong>Patient:</strong> ${appData.currentPatient.firstname} ${appData.currentPatient.lastname}</p>
-                    <p><strong>Reisezeitraum:</strong> ${new Date(appData.travelData.start).toLocaleDateString('de-DE')} - ${new Date(appData.travelData.end).toLocaleDateString('de-DE')} (${appData.travelData.duration} Tage)</p>
-                    
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Zeitraum</th>
-                                <th>Arzneimittel</th>
-                                <th>Einnahmeanweisung</th>
-                                <th>Gesamt-Menge in Stück</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-            `;
+            // Patient info box
+            pdf.rect(10, 30, 135, 30);
+            pdf.setFont(undefined, 'bold');
+            pdf.text('Patient:', 12, 36);
+            pdf.setFont(undefined, 'normal');
+            pdf.text(`${appData.currentPatient.firstname} ${appData.currentPatient.lastname}`, 12, 42);
+            pdf.text(`Geb.: ${new Date(appData.currentPatient.birthdate).toLocaleDateString('de-DE')}`, 12, 48);
+            pdf.text(`${appData.currentPatient.street}, ${appData.currentPatient.zip} ${appData.currentPatient.city}`, 12, 54);
+            
+            // Doctor info box
+            pdf.rect(152, 30, 135, 30);
+            pdf.setFont(undefined, 'bold');
+            pdf.text('Verschreibender Arzt:', 154, 36);
+            pdf.setFont(undefined, 'normal');
+            pdf.text(`${appData.currentDoctor.title} ${appData.currentDoctor.firstname} ${appData.currentDoctor.lastname}`, 154, 42);
+            pdf.text(`Tel: ${appData.currentDoctor.phone}`, 154, 48);
+            pdf.text(appData.currentDoctor.address, 154, 54);
+            
+            // Travel info
+            pdf.setFont(undefined, 'bold');
+            pdf.text('Reisezeitraum:', 12, 68);
+            pdf.setFont(undefined, 'normal');
+            pdf.text(`${new Date(appData.travelData.start).toLocaleDateString('de-DE')} - ${new Date(appData.travelData.end).toLocaleDateString('de-DE')} (${appData.travelData.duration} Tage)`, 45, 68);
+            
+            // Medication table
+            let y = 80;
+            
+            // Table header
+            pdf.setFillColor(102, 126, 234);
+            pdf.rect(10, y, 277, 8, 'F');
+            pdf.setTextColor(255, 255, 255);
+            pdf.setFont(undefined, 'bold');
+            pdf.text('Zeitraum', 12, y + 5);
+            pdf.text('Arzneimittel', 60, y + 5);
+            pdf.text('Einnahmeanweisung', 140, y + 5);
+            pdf.text('Tagesdosis', 200, y + 5);
+            pdf.text('Gesamtmenge', 240, y + 5);
+            
+            pdf.setTextColor(0, 0, 0);
+            pdf.setFont(undefined, 'normal');
+            y += 10;
             
             let totalsByMedication = {};
             
+            // Table content
             appData.selectedMedications.forEach(med => {
                 const schemes = appData.dosageSchemes[med.id] || [{
                     startDate: appData.travelData.start,
@@ -1695,42 +1694,69 @@
                     
                     const dosageNotation = `${scheme.morning}-${scheme.noon}-${scheme.evening}${scheme.night > 0 ? '-' + scheme.night : ''}`;
                     
-                    html += `
-                        <tr>
-                            <td>${startDate.toLocaleDateString('de-DE')} - ${endDate.toLocaleDateString('de-DE')}</td>
-                            <td>${med.name} ${med.concentration}</td>
-                            <td>${dosageNotation}</td>
-                            <td>${totalAmount} ${med.form}</td>
-                        </tr>
-                    `;
+                    // Draw row
+                    pdf.rect(10, y - 2, 277, 8);
+                    pdf.text(`${startDate.toLocaleDateString('de-DE')} - ${endDate.toLocaleDateString('de-DE')}`, 12, y + 2);
+                    pdf.text(`${med.name} ${med.concentration}`, 60, y + 2);
+                    pdf.text(dosageNotation, 140, y + 2);
+                    pdf.text(`${dailyDose} ${med.form}/Tag`, 200, y + 2);
+                    pdf.text(`${totalAmount} ${med.form}`, 240, y + 2);
+                    
+                    y += 8;
                     
                     const key = `${med.name} ${med.concentration}`;
                     totalsByMedication[key] = (totalsByMedication[key] || 0) + totalAmount;
+                    
+                    // Add new page if needed
+                    if (y > 180) {
+                        pdf.addPage();
+                        y = 20;
+                    }
                 });
             });
             
-            html += `
-                        </tbody>
-                    </table>
-                    
-                    <h4 style="margin-top: 20px;">Packhilfe - Gesamtmengen:</h4>
-                    <ul>
-            `;
+            // Summary
+            y += 10;
+            pdf.setFont(undefined, 'bold');
+            pdf.text('Packhilfe - Gesamtmengen:', 12, y);
+            pdf.setFont(undefined, 'normal');
+            y += 8;
             
             for (const [med, total] of Object.entries(totalsByMedication)) {
-                html += `<li><strong>${med}:</strong> ${total} Stück</li>`;
+                pdf.text(`• ${med}: ${total} Stück`, 15, y);
+                y += 6;
             }
             
-            html += `
-                    </ul>
-                </div>
-            `;
+            // Footer
+            y = 190;
+            pdf.setFontSize(8);
+            pdf.setFont(undefined, 'italic');
+            pdf.text(`Erstellt am: ${new Date().toLocaleDateString('de-DE')} ${new Date().toLocaleTimeString('de-DE')}`, 12, y);
+            pdf.text('Dieser Medikationsplan ist Teil der BTM-Reisebescheinigung nach Artikel 75 des Schengener Abkommens', 12, y + 5);
             
-            container.innerHTML = html;
+            return pdf;
+        }
+        
+        function downloadAllPDFs() {
+            if (generatedPDFs.length === 0) {
+                alert('Bitte erst PDFs generieren!');
+                return;
+            }
+            
+            generatedPDFs.forEach(pdfData => {
+                pdfData.pdf.save(pdfData.name);
+            });
+            
+            alert(`${generatedPDFs.length} PDFs wurden heruntergeladen!`);
+        }
+        
+        function generateCertificates() {
+            // Legacy function for compatibility
+            generatePDFs();
         }
         
         function printCertificates() {
-            window.print();
+            alert('Bitte verwenden Sie die PDF-Download-Funktion zum Drucken der Dokumente.');
         }
         
         // Data management functions
