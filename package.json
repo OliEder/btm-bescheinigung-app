@@ -9,7 +9,7 @@
         "dev": "webpack-dev-server --mode development"
     },
     "keywords": ["btm", "medical", "travel", "pwa"],
-    "author": "Your Name",
+    "author": "Oliver-Marcus Eder",
     "license": "MIT",
     "devDependencies": {
         "webpack": "^5.89.0",
