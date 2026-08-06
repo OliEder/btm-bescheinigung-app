@@ -30,6 +30,8 @@ FHIR-angelehnte Flatfile-Medikamenten-DB hinter einem Repository-Interface.
 - Erfassung Patient/Arzt/Medikament/Reise -> Autosave in sessionStorage (obfuskiert).
 - "Bescheinigung erzeugen" -> PdfFormFiller befüllt + flattet das amtliche PDF.
 - "Exportieren" -> obfuskierte JSON-Datei zum Download.
+- Erststart nach Update: Alt-localStorage erkannt -> Migration.js (UUIDs, concentration
+  splitten, isCustom) -> Session laden -> Export-Aufforderung -> Alt-Key gelöscht.
 
 ## 7. Verteilungssicht
 Statisches Bundle in `dist/`, auslieferbar über beliebigen Static-Host / lokal.
