@@ -46,7 +46,9 @@ Statisches Bundle in `dist/`, auslieferbar über beliebigen Static-Host / lokal.
 - ADR-001: pdf-lib statt jsPDF-Nachbau (amtliches Formular direkt befüllen).
 - ADR-002: sessionStorage-Key `btm-session-data` (obfuskiert) ersetzt dauerhaftes
   localStorage `btm-app-data` (Datensparsamkeit). Alte Daten werden einmalig migriert (Migration.js).
-- ADR-003: FHIR-Medication-Flatfile hinter Repository (spätere PZN-API austauschbar).
+- ADR-003: data/medications.json (FHIR-Medication, 1 Resource pro Stärke) hinter
+  MedicationRepository (findAll/findById/search). productFamily = UI-Gruppierung
+  (nicht-FHIR). MedicationInstance = Snapshot bei Erfassung. Spätere PZN-API austauschbar.
 
 ## 10. Qualitätsanforderungen
 Datensparsamkeit, XSS-Freiheit, korrekte Wirkstoffmengen-Aggregation, amtstreue PDF-Ausgabe.
