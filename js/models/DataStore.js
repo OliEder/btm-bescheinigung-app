@@ -1,4 +1,12 @@
 // Erweiterte DataStore Klasse mit Model-Integration
+import { obfuscate, deobfuscate } from '../utils/Obfuscate.js';
+import { Patient } from './Patient.js';
+import { Doctor } from './Doctor.js';
+import { Medication, DosageScheme } from './Medication.js';
+import { DateHelper } from '../utils/DateHelper.js';
+
+const SESSION_KEY = 'btm-session-data';
+
 class DataStore {
     constructor() {
         this.data = {
@@ -15,12 +23,11 @@ class DataStore {
         
         this.listeners = [];
         this.initializeMedicationDatabase();
-        this.loadFromStorage();
+        // Kein Auto-Load mehr im Konstruktor — app.js entscheidet ueber load()/Start-Screen.
     }
     
     // Initialize medication database
     initializeMedicationDatabase() {
-        // Convert medication database to Medication instances
         this.medicationDatabase = Medication.getMedicationDatabase();
     }
     
@@ -36,7 +43,7 @@ class DataStore {
     // Patient operations using Patient model
     addPatient(patientData) {
         const patient = new Patient(patientData);
-        patient.id = Date.now();
+        patient.id = crypto.randomUUID();
         
         const validation = patient.validate();
         if (!validation.isValid) {
@@ -85,7 +92,7 @@ class DataStore {
     // Doctor operations using Doctor model
     addDoctor(doctorData) {
         const doctor = new Doctor(doctorData);
-        doctor.id = Date.now();
+        doctor.id = crypto.randomUUID();
         
         const validation = doctor.validate();
         if (!validation.isValid) {
@@ -134,7 +141,7 @@ class DataStore {
     // Medication operations using Medication model
     addMedication(medicationData) {
         const medication = new Medication(medicationData);
-        medication.id = Date.now() + Math.random();
+        medication.id = crypto.randomUUID();
         
         const validation = medication.validate();
         if (!validation.isValid) {
@@ -241,7 +248,6 @@ class DataStore {
     
     // Travel data operations
     setTravelData(travelData) {
-        // Validate travel data
         const errors = [];
         
         if (!travelData.start) {
@@ -293,101 +299,57 @@ class DataStore {
         return link;
     }
     
-    // Storage operations
+    // Storage operations — sessionStorage, obfuskiert, ohne PII-Log
     save() {
         try {
-            // In production, use localStorage
-            if (typeof localStorage !== 'undefined') {
-                localStorage.setItem('btm-app-data', JSON.stringify(this.data));
+            if (typeof sessionStorage !== 'undefined') {
+                sessionStorage.setItem(SESSION_KEY, obfuscate(JSON.stringify(this.data)));
             }
-            console.log('Data saved:', this.data);
+            // Kein Logging von PII.
         } catch (e) {
-            console.error('Error saving data:', e);
+            console.error('Error saving data.');
         }
     }
     
-    loadFromStorage() {
+    load() {
         try {
-            if (typeof localStorage !== 'undefined') {
-                const stored = localStorage.getItem('btm-app-data');
-                if (stored) {
-                    const parsedData = JSON.parse(stored);
-                    
-                    // Convert plain objects back to model instances
-                    this.data.patients = parsedData.patients.map(p => Patient.fromJSON(p));
-                    this.data.doctors = parsedData.doctors.map(d => Doctor.fromJSON(d));
-                    this.data.selectedMedications = parsedData.selectedMedications.map(m => Medication.fromJSON(m));
-                    this.data.medications = parsedData.medications?.map(m => Medication.fromJSON(m)) || [];
-                    
-                    // Convert dosage schemes
-                    this.data.dosageSchemes = {};
-                    if (parsedData.dosageSchemes) {
-                        Object.keys(parsedData.dosageSchemes).forEach(key => {
-                            this.data.dosageSchemes[key] = parsedData.dosageSchemes[key].map(s => 
-                                DosageScheme.fromJSON(s)
-                            );
-                        });
-                    }
-                    
-                    // Set current patient and doctor
-                    this.data.currentPatient = parsedData.currentPatient ? 
-                        Patient.fromJSON(parsedData.currentPatient) : null;
-                    this.data.currentDoctor = parsedData.currentDoctor ? 
-                        Doctor.fromJSON(parsedData.currentDoctor) : null;
-                    
-                    this.data.travelData = parsedData.travelData;
-                    this.data.patientDoctorLinks = parsedData.patientDoctorLinks || [];
-                    
-                    return;
-                }
-            }
-            
-            // Load demo data if no saved data
-            this.loadDemoData();
+            if (typeof sessionStorage === 'undefined') return false;
+            const packed = sessionStorage.getItem(SESSION_KEY);
+            if (!packed) return false;
+            const parsedData = JSON.parse(deobfuscate(packed));
+            this.hydrate(parsedData);
+            return true;
         } catch (e) {
-            console.error('Error loading data:', e);
-            this.loadDemoData();
+            console.warn('Session-Daten konnten nicht gelesen werden.');
+            return false;
         }
     }
     
-    loadDemoData() {
-        // Demo patient
-        const demoPatient = new Patient({
-            id: 1,
-            lastname: "Mustermann",
-            firstname: "Max",
-            passport: "L3GL31GLN",
-            birthplace: "München",
-            birthdate: "1985-03-15",
-            nationality: "Deutsch",
-            gender: "männlich",
-            street: "Hauptstraße 42",
-            zip: "92353",
-            city: "Postbauer-Heng"
-        });
+    // Wandelt Plain-Objekte zurueck in Modellinstanzen.
+    hydrate(parsedData) {
+        this.data.patients = (parsedData.patients || []).map(p => Patient.fromJSON(p));
+        this.data.doctors = (parsedData.doctors || []).map(d => Doctor.fromJSON(d));
+        this.data.selectedMedications = (parsedData.selectedMedications || []).map(m => Medication.fromJSON(m));
+        this.data.medications = (parsedData.medications || []).map(m => Medication.fromJSON(m));
         
-        // Demo doctor
-        const demoDoctor = new Doctor({
-            id: 1,
-            title: "Dr. med.",
-            lastname: "Schmidt",
-            firstname: "Thomas",
-            phone: "0911/123456",
-            email: "dr.schmidt@praxis.de",
-            address: "Bahnhofstraße 15, 90518 Altdorf bei Nürnberg"
-        });
+        this.data.dosageSchemes = {};
+        if (parsedData.dosageSchemes) {
+            Object.keys(parsedData.dosageSchemes).forEach(key => {
+                this.data.dosageSchemes[key] = parsedData.dosageSchemes[key].map(s => DosageScheme.fromJSON(s));
+            });
+        }
         
-        this.data.patients.push(demoPatient);
-        this.data.doctors.push(demoDoctor);
-        this.data.currentPatient = demoPatient;
-        this.data.currentDoctor = demoDoctor;
+        this.data.currentPatient = parsedData.currentPatient ? Patient.fromJSON(parsedData.currentPatient) : null;
+        this.data.currentDoctor = parsedData.currentDoctor ? Doctor.fromJSON(parsedData.currentDoctor) : null;
+        this.data.travelData = parsedData.travelData || null;
+        this.data.patientDoctorLinks = parsedData.patientDoctorLinks || [];
     }
     
     // Export/Import operations
     exportData() {
         const exportData = {
             ...this.data,
-            version: '1.0.0',
+            version: '2.0.0',
             exportDate: new Date().toISOString()
         };
         return JSON.stringify(exportData, null, 2);
@@ -396,44 +358,12 @@ class DataStore {
     importData(jsonData) {
         try {
             const imported = JSON.parse(jsonData);
-            
-            // Convert to model instances
-            if (imported.patients) {
-                this.data.patients = imported.patients.map(p => Patient.fromJSON(p));
-            }
-            if (imported.doctors) {
-                this.data.doctors = imported.doctors.map(d => Doctor.fromJSON(d));
-            }
-            if (imported.selectedMedications) {
-                this.data.selectedMedications = imported.selectedMedications.map(m => Medication.fromJSON(m));
-            }
-            if (imported.medications) {
-                this.data.medications = imported.medications.map(m => Medication.fromJSON(m));
-            }
-            if (imported.dosageSchemes) {
-                this.data.dosageSchemes = {};
-                Object.keys(imported.dosageSchemes).forEach(key => {
-                    this.data.dosageSchemes[key] = imported.dosageSchemes[key].map(s => 
-                        DosageScheme.fromJSON(s)
-                    );
-                });
-            }
-            
-            if (imported.currentPatient) {
-                this.data.currentPatient = Patient.fromJSON(imported.currentPatient);
-            }
-            if (imported.currentDoctor) {
-                this.data.currentDoctor = Doctor.fromJSON(imported.currentDoctor);
-            }
-            
-            this.data.travelData = imported.travelData;
-            this.data.patientDoctorLinks = imported.patientDoctorLinks || [];
-            
+            this.hydrate(imported);
             this.save();
             this.notify();
             return true;
         } catch (e) {
-            console.error('Import error:', e);
+            console.error('Import error.');
             return false;
         }
     }
@@ -454,3 +384,5 @@ class DataStore {
         this.notify();
     }
 }
+
+export { DataStore };

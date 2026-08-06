@@ -96,9 +96,9 @@ class BTMApp {
     }
     
     setupGlobalListeners() {
-        // Model change listener
-        this.model.subscribe((data) => {
-            console.log('Data updated:', data);
+        // Model change listener (kein PII-Logging)
+        this.model.subscribe(() => {
+            // absichtlich leer — Views reagieren separat auf Aenderungen
         });
         
         // File import handler

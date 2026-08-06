@@ -44,7 +44,8 @@ Statisches Bundle in `dist/`, auslieferbar über beliebigen Static-Host / lokal.
 
 ## 9. Architekturentscheidungen
 - ADR-001: pdf-lib statt jsPDF-Nachbau (amtliches Formular direkt befüllen).
-- ADR-002: sessionStorage + Export statt dauerhaftem localStorage (Datensparsamkeit).
+- ADR-002: sessionStorage-Key `btm-session-data` (obfuskiert) ersetzt dauerhaftes
+  localStorage `btm-app-data` (Datensparsamkeit). Alte Daten werden einmalig migriert (Migration.js).
 - ADR-003: FHIR-Medication-Flatfile hinter Repository (spätere PZN-API austauschbar).
 
 ## 10. Qualitätsanforderungen
