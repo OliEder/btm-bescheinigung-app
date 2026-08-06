@@ -355,9 +355,20 @@ class DataStore {
         return JSON.stringify(exportData, null, 2);
     }
     
-    importData(jsonData) {
+    // Liest sowohl obfuskierte (.btmdat) als auch Klartext-JSON-Exporte.
+    parseImport(raw) {
+        // Zuerst Klartext-JSON versuchen (Rueckwaertskompatibilitaet).
         try {
-            const imported = JSON.parse(jsonData);
+            return JSON.parse(raw);
+        } catch (_) {
+            // Kein Klartext-JSON -> als obfuskiert behandeln.
+        }
+        return JSON.parse(deobfuscate(raw));
+    }
+
+    importData(rawData) {
+        try {
+            const imported = this.parseImport(rawData);
             this.hydrate(imported);
             this.save();
             this.notify();

@@ -1,4 +1,5 @@
 import { Patient } from '../models/Patient.js';
+import { obfuscate } from '../utils/Obfuscate.js';
 
 class DataController {
     constructor(model, view) {
@@ -17,14 +18,16 @@ class DataController {
     }
     
     exportAllData() {
-        const dataStr = this.model.exportData();
-        const dataBlob = new Blob([dataStr], {type: 'application/json'});
+        // Einheitliches Format mit dem Zertifikat-Tab: obfuskierte .btmdat-Datei.
+        const packed = obfuscate(this.model.exportData());
+        const dataBlob = new Blob([packed], { type: 'application/octet-stream' });
         const url = URL.createObjectURL(dataBlob);
         const link = document.createElement('a');
         link.href = url;
-        link.download = `btm-app-data-${Date.now()}.json`;
+        link.download = 'btm-bescheinigung-export.btmdat';
         link.click();
-        
+        URL.revokeObjectURL(url);
+
         alert('Alle Daten wurden exportiert!');
     }
     
