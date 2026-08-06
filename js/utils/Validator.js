@@ -1,3 +1,5 @@
+import { DateHelper } from './DateHelper.js';
+
 class Validator {
     static validateEmail(email) {
         const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -123,7 +125,7 @@ class Validator {
             errors.push('Rückreisedatum muss nach Abreisedatum liegen');
         }
         
-        const duration = Math.ceil((new Date(data.end) - new Date(data.start)) / (1000 * 60 * 60 * 24)) + 1;
+        const duration = DateHelper.getDaysBetween(data.start, data.end);
         if (duration > 30) {
             errors.push('Maximale Reisedauer beträgt 30 Tage');
         }
@@ -134,3 +136,4 @@ class Validator {
         };
     }
 }
+export { Validator };
