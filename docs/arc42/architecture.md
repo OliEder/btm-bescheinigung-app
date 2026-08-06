@@ -62,8 +62,13 @@ Datensparsamkeit, XSS-Freiheit, korrekte Wirkstoffmengen-Aggregation, amtstreue 
 
 ## 11. Risiken und technische Schulden
 - Obfuskierung != Verschlüsselung (bewusst, s. Scope).
-- Keine vollständige PZN-Datenbank (lizenzpflichtig).
+- Keine vollständige PZN-Datenbank (lizenzpflichtig) — Repository-Interface ist
+  auf einen späteren PZN-API-Adapter vorbereitet.
+- Medikamenten-Stammdaten decken aktuell die Seed-Präparate ab; weitere
+  Wirkstärken können in `data/medications.json` ergänzt werden.
 - jsPDF-Nachbau entfernt (erledigt) — Ausgabe erfolgt nur noch über das amtliche Formular.
+- PatientView/DoctorView-Formulare wurden bei der ES-Umstellung nur exportiert, nicht
+  neu gestaltet; ihre Eingaben laufen weiter über die bestehende Validierung.
 
 ## 12. Glossar
 - BtM: Betäubungsmittel. SDÜ: Schengener Durchführungsübereinkommen.
