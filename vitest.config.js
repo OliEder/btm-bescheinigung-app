@@ -6,4 +6,5 @@ export default defineConfig({
         globals: true,
         include: ['test/**/*.test.js', 'js/**/*.test.js'],
     },
+    assetsInclude: ['**/*.pdf'],
 });

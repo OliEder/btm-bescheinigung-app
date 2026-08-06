@@ -61,6 +61,7 @@ Datensparsamkeit, XSS-Freiheit, korrekte Wirkstoffmengen-Aggregation, amtstreue 
 ## 11. Risiken und technische Schulden
 - Obfuskierung != Verschlüsselung (bewusst, s. Scope).
 - Keine vollständige PZN-Datenbank (lizenzpflichtig).
+- jsPDF-Nachbau entfernt (erledigt) — Ausgabe erfolgt nur noch über das amtliche Formular.
 
 ## 12. Glossar
 - BtM: Betäubungsmittel. SDÜ: Schengener Durchführungsübereinkommen.
