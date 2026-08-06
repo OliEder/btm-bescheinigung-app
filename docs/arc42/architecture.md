@@ -36,6 +36,8 @@ Statisches Bundle in `dist/`, auslieferbar über beliebigen Static-Host / lokal.
 
 ## 8. Querschnittliche Konzepte
 - Security: XSS-Escaping (Sanitize), keine PII-Logs, UUIDs, obfuskierte Persistenz.
+  - XSS: Alle Modelldaten laufen durch escapeHtml(); data-Attribute via setDataset()
+    (element.dataset), nie per String-Interpolation. IDs sind UUID-Strings (kein parseInt/parseFloat).
 - Persistenz: sessionStorage (flüchtig, obfuskiert via Obfuscate.js = Base64+Shift,
   kein Krypto) + Datei-Export im gleichen Format (Nutzerhoheit über Ablageort).
 - Test: Vitest + jsdom.

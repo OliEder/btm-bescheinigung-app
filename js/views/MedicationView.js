@@ -1,3 +1,5 @@
+import { escapeHtml, setDataset } from '../utils/Sanitize.js';
+
 class MedicationView {
     constructor() {
         this.template = `
@@ -87,10 +89,14 @@ class MedicationView {
     
     displaySearchResults(results) {
         const container = document.getElementById('medication-search-results');
-        container.innerHTML = '<h4>Suchergebnisse:</h4>';
+        const heading = document.createElement('h4');
+        heading.textContent = 'Suchergebnisse:';
+        container.replaceChildren(heading);
         
         if (results.length === 0) {
-            container.innerHTML += '<p>Keine Medikamente gefunden.</p>';
+            const p = document.createElement('p');
+            p.textContent = 'Keine Medikamente gefunden.';
+            container.appendChild(p);
             return;
         }
         
@@ -99,21 +105,26 @@ class MedicationView {
             medDiv.className = 'medication-item';
             medDiv.innerHTML = `
                 <div class="medication-header">
-                    <span class="medication-title">${med.name} (${med.substance})</span>
-                    <span>${med.form}</span>
+                    <span class="medication-title">${escapeHtml(med.name)} (${escapeHtml(med.substance)})</span>
+                    <span>${escapeHtml(med.form)}</span>
                 </div>
                 <div class="form-row">
                     ${med.concentrations.map(conc => `
-                        <button class="btn btn-secondary btn-small add-med-btn" 
-                                data-name="${med.name}" 
-                                data-form="${med.form}" 
-                                data-substance="${med.substance}" 
-                                data-concentration="${conc}">
-                            + ${conc}
+                        <button class="btn btn-secondary btn-small add-med-btn">
+                            + ${escapeHtml(conc)}
                         </button>
                     `).join('')}
                 </div>
             `;
+            // Werte per dataset (keine String-Interpolation in Attribute)
+            medDiv.querySelectorAll('.add-med-btn').forEach((btn, i) => {
+                setDataset(btn, {
+                    name: med.name,
+                    form: med.form,
+                    substance: med.substance,
+                    concentration: med.concentrations[i],
+                });
+            });
             container.appendChild(medDiv);
         });
         
@@ -121,10 +132,10 @@ class MedicationView {
         container.querySelectorAll('.add-med-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
                 const medData = {
-                    name: e.target.dataset.name,
-                    form: e.target.dataset.form,
-                    substance: e.target.dataset.substance,
-                    concentration: e.target.dataset.concentration
+                    name: e.currentTarget.dataset.name,
+                    form: e.currentTarget.dataset.form,
+                    substance: e.currentTarget.dataset.substance,
+                    concentration: e.currentTarget.dataset.concentration
                 };
                 window.app.controllers.medication.addMedication(medData);
             });
@@ -142,19 +153,20 @@ class MedicationView {
         container.innerHTML = medications.map(med => `
             <div class="medication-item">
                 <div class="medication-header">
-                    <span class="medication-title">${med.name} ${med.concentration}</span>
-                    <button class="btn btn-danger btn-small remove-med-btn" data-id="${med.id}">
+                    <span class="medication-title">${escapeHtml(med.name)} ${escapeHtml(med.concentration)}</span>
+                    <button class="btn btn-danger btn-small remove-med-btn">
                         🗑️ Entfernen
                     </button>
                 </div>
-                <p>Wirkstoff: ${med.substance} | Form: ${med.form}</p>
+                <p>Wirkstoff: ${escapeHtml(med.substance)} | Form: ${escapeHtml(med.form)}</p>
             </div>
         `).join('');
         
-        // Bind remove events
-        container.querySelectorAll('.remove-med-btn').forEach(btn => {
+        // Bind remove events (IDs sind UUID-Strings, kein parseFloat)
+        container.querySelectorAll('.remove-med-btn').forEach((btn, i) => {
+            setDataset(btn, { id: medications[i].id });
             btn.addEventListener('click', (e) => {
-                window.app.controllers.medication.removeMedication(parseFloat(e.target.dataset.id));
+                window.app.controllers.medication.removeMedication(e.currentTarget.dataset.id);
             });
         });
     }
@@ -174,3 +186,5 @@ class MedicationView {
         document.getElementById('manual-med-substance').value = '';
     }
 }
+
+export { MedicationView };

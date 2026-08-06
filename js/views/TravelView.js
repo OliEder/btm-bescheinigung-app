@@ -1,3 +1,5 @@
+import { escapeHtml } from '../utils/Sanitize.js';
+
 class TravelView {
     constructor() {
         this.template = `
@@ -75,12 +77,13 @@ class TravelView {
         
         container.innerHTML = selectedMedications.map(med => {
             const schemes = dosageSchemes[med.id] || [];
+            const medName = med.handelsname || med.name;
             
             return `
                 <div class="medication-item">
-                    <h4>${med.name} ${med.concentration}</h4>
+                    <h4>${escapeHtml(medName)} ${escapeHtml(med.concentration)}</h4>
                     <div class="dosage-scheme">
-                        <div id="schemes-${med.id}">
+                        <div id="schemes-${escapeHtml(med.id)}">
                             ${schemes.length === 0 ? 
                                 this.renderDosageSchemeInput(med.id, 0, travelData.start, travelData.end) :
                                 schemes.map((scheme, index) => 
@@ -88,7 +91,7 @@ class TravelView {
                                 ).join('')
                             }
                         </div>
-                        <button class="btn btn-secondary btn-small add-scheme-btn" data-med-id="${med.id}">
+                        <button class="btn btn-secondary btn-small add-scheme-btn" data-med-id="${escapeHtml(med.id)}">
                             + Weiteres Schema hinzufügen
                         </button>
                     </div>
@@ -103,51 +106,53 @@ class TravelView {
     renderDosageSchemeInput(medicationId, schemeIndex, startDate, endDate, existingScheme = null) {
         const schemeId = `${medicationId}-${schemeIndex}`;
         const scheme = existingScheme || { morning: 0, noon: 0, evening: 0, night: 0 };
+        const mid = escapeHtml(medicationId);
+        const sid = escapeHtml(schemeId);
         
         return `
-            <div class="dosage-scheme-item" id="scheme-${schemeId}">
+            <div class="dosage-scheme-item" id="scheme-${sid}">
                 <p><strong>Schema ${schemeIndex + 1}</strong></p>
                 <div class="form-row">
                     <div class="form-group">
                         <label>Von</label>
-                        <input type="date" id="scheme-start-${schemeId}" value="${startDate}" 
-                               class="scheme-date" data-med-id="${medicationId}" data-scheme-index="${schemeIndex}">
+                        <input type="date" id="scheme-start-${sid}" value="${escapeHtml(startDate)}" 
+                               class="scheme-date" data-med-id="${mid}" data-scheme-index="${schemeIndex}">
                     </div>
                     <div class="form-group">
                         <label>Bis</label>
-                        <input type="date" id="scheme-end-${schemeId}" value="${endDate}"
-                               class="scheme-date" data-med-id="${medicationId}" data-scheme-index="${schemeIndex}">
+                        <input type="date" id="scheme-end-${sid}" value="${escapeHtml(endDate)}"
+                               class="scheme-date" data-med-id="${mid}" data-scheme-index="${schemeIndex}">
                     </div>
                 </div>
                 <div class="dosage-input-group">
                     <div>
                         <div class="dosage-label">Morgens</div>
-                        <input type="number" min="0" max="10" value="${scheme.morning}" 
-                               id="dose-morning-${schemeId}" 
-                               class="dose-input" data-med-id="${medicationId}" data-scheme-index="${schemeIndex}">
+                        <input type="number" min="0" max="10" value="${escapeHtml(scheme.morning)}" 
+                               id="dose-morning-${sid}" 
+                               class="dose-input" data-med-id="${mid}" data-scheme-index="${schemeIndex}">
                     </div>
                     <div>
                         <div class="dosage-label">Mittags</div>
-                        <input type="number" min="0" max="10" value="${scheme.noon}" 
-                               id="dose-noon-${schemeId}"
-                               class="dose-input" data-med-id="${medicationId}" data-scheme-index="${schemeIndex}">
+                        <input type="number" min="0" max="10" value="${escapeHtml(scheme.noon)}" 
+                               id="dose-noon-${sid}"
+                               class="dose-input" data-med-id="${mid}" data-scheme-index="${schemeIndex}">
                     </div>
                     <div>
                         <div class="dosage-label">Abends</div>
-                        <input type="number" min="0" max="10" value="${scheme.evening}" 
-                               id="dose-evening-${schemeId}"
-                               class="dose-input" data-med-id="${medicationId}" data-scheme-index="${schemeIndex}">
+                        <input type="number" min="0" max="10" value="${escapeHtml(scheme.evening)}" 
+                               id="dose-evening-${sid}"
+                               class="dose-input" data-med-id="${mid}" data-scheme-index="${schemeIndex}">
                     </div>
                     <div>
                         <div class="dosage-label">Nachts</div>
-                        <input type="number" min="0" max="10" value="${scheme.night}" 
-                               id="dose-night-${schemeId}"
-                               class="dose-input" data-med-id="${medicationId}" data-scheme-index="${schemeIndex}">
+                        <input type="number" min="0" max="10" value="${escapeHtml(scheme.night)}" 
+                               id="dose-night-${sid}"
+                               class="dose-input" data-med-id="${mid}" data-scheme-index="${schemeIndex}">
                     </div>
                 </div>
                 ${schemeIndex > 0 ? `
                     <button class="btn btn-danger btn-small remove-scheme-btn" 
-                            data-med-id="${medicationId}" data-scheme-index="${schemeIndex}">
+                            data-med-id="${mid}" data-scheme-index="${schemeIndex}">
                         Schema entfernen
                     </button>` : ''}
             </div>
@@ -155,10 +160,10 @@ class TravelView {
     }
     
     bindSchemeEvents() {
-        // Add scheme buttons
+        // Add scheme buttons (medId ist UUID-String)
         document.querySelectorAll('.add-scheme-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
-                const medId = parseFloat(e.target.dataset.medId);
+                const medId = e.currentTarget.dataset.medId;
                 window.app.controllers.travel.addDosageScheme(medId);
             });
         });
@@ -166,8 +171,8 @@ class TravelView {
         // Remove scheme buttons
         document.querySelectorAll('.remove-scheme-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
-                const medId = parseFloat(e.target.dataset.medId);
-                const schemeIndex = parseInt(e.target.dataset.schemeIndex);
+                const medId = e.currentTarget.dataset.medId;
+                const schemeIndex = parseInt(e.currentTarget.dataset.schemeIndex, 10);
                 window.app.controllers.travel.removeScheme(medId, schemeIndex);
             });
         });
@@ -175,8 +180,8 @@ class TravelView {
         // Dose inputs
         document.querySelectorAll('.dose-input, .scheme-date').forEach(input => {
             input.addEventListener('change', (e) => {
-                const medId = parseFloat(e.target.dataset.medId);
-                const schemeIndex = parseInt(e.target.dataset.schemeIndex);
+                const medId = e.currentTarget.dataset.medId;
+                const schemeIndex = parseInt(e.currentTarget.dataset.schemeIndex, 10);
                 window.app.controllers.travel.updateScheme(medId, schemeIndex);
             });
         });
@@ -203,3 +208,5 @@ class TravelView {
         document.getElementById('travel-duration').value = travelData.duration || '';
     }
 }
+
+export { TravelView };
