@@ -45,7 +45,10 @@ Statisches Bundle in `dist/`, auslieferbar über beliebigen Static-Host / lokal.
 - Test: Vitest + jsdom.
 
 ## 9. Architekturentscheidungen
-- ADR-001: pdf-lib statt jsPDF-Nachbau (amtliches Formular direkt befüllen).
+- ADR-001: pdf-lib befüllt das amtliche BfArM-017-Formular (AcroForm) und flattet es.
+  Einmalige Vorverarbeitung (scripts/preprocess-form.mjs) merged zusammengesetzte
+  Feldpaare (Staatsangehoerigkeit, Wohnanschrift) und repariert die Widgets (/P + Page-Annots),
+  damit flatten() funktioniert. Signatur-/Behördenfelder bleiben leer. 32 Felder final.
 - ADR-002: sessionStorage-Key `btm-session-data` (obfuskiert) ersetzt dauerhaftes
   localStorage `btm-app-data` (Datensparsamkeit). Alte Daten werden einmalig migriert (Migration.js).
 - ADR-003: data/medications.json (FHIR-Medication, 1 Resource pro Stärke) hinter

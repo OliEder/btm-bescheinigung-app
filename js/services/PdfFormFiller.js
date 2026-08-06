@@ -1,0 +1,74 @@
+import { PDFDocument } from 'pdf-lib';
+import { DateHelper } from '../utils/DateHelper.js';
+import { DosageAggregator } from './DosageAggregator.js';
+
+// Befuellt das amtliche BfArM-017-Formular (AcroForm) und flattet es.
+// Signatur-/Behoerdenfelder bleiben bewusst leer (per Hand/vor Ort).
+// Feldnamen entsprechen der bereinigten 32-Felder-Version (s. scripts/preprocess-form.mjs).
+
+function setField(form, name, value) {
+    try {
+        form.getTextField(name).setText(String(value ?? ''));
+    } catch {
+        // Feld existiert nicht in dieser Formularvariante — ueberspringen.
+    }
+}
+
+function buildInstruction(blocks) {
+    if (blocks.length <= 1) {
+        return {
+            gebrauchsanweisung: blocks[0] ? DosageAggregator.instructionChain(blocks) : '',
+            anmerkungen: '',
+        };
+    }
+    const chain = DosageAggregator.instructionChain(blocks);
+    const detailed = DosageAggregator.detailedSchedule(blocks);
+    // Zu lange Kette -> Verweis auf Anmerkungen (Zeile fasst ~40 Zeichen bei Kleinschrift).
+    const gebrauchsanweisung = chain.length > 40 ? 's. Anmerkungen' : chain;
+    return { gebrauchsanweisung, anmerkungen: detailed };
+}
+
+export async function fillCertificate(templateBytes, data) {
+    const { patient, doctor, travel, medication, blocks = [], flatten = true } = data;
+    const doc = await PDFDocument.load(templateBytes);
+    const form = doc.getForm();
+
+    // A – Arzt
+    setField(form, 'Name', doctor.lastname);
+    setField(form, 'Vorname', doctor.firstname);
+    setField(form, 'Telefon', doctor.phone);
+    setField(form, 'Anschrift', doctor.address);
+    // Stempel des Arztes / Datum / Unterschrift des Arztes bewusst leer.
+
+    // B – Patient
+    setField(form, 'Name_2', patient.lastname);
+    setField(form, 'Vorname_2', patient.firstname);
+    setField(form, 'Nr des Passes oder eines', patient.passport);
+    setField(form, 'Geburtsort', patient.birthplace);
+    setField(form, 'Geburtsdatum', DateHelper.formatDate(patient.birthdate));
+    setField(form, 'Staatsangehoerigkeit', patient.nationality);
+    setField(form, 'Geschlecht', patient.gender);
+    setField(form, 'Wohnanschrift', `${patient.street}, ${patient.zip} ${patient.city}`);
+    setField(form, 'Dauer der Reise in Tagen', travel.duration);
+    setField(form, 'Gültigkeitsdauer der Erlaubnis vonbis max 30 Tage',
+        `${DateHelper.formatDate(travel.start)} - ${DateHelper.formatDate(travel.end)}`);
+
+    // C – Arzneimittel
+    setField(form, 'Handelsbezeichnung oder Sonderzubereitung', medication.handelsname);
+    setField(form, 'Darreichungsform', medication.darreichungsform);
+    setField(form, 'Internationale Bezeichnung des Wirkstoffs', medication.wirkstoff);
+    setField(form, 'WirkstoffKonzentration',
+        `${medication.concentrationValue}${medication.concentrationUnit}`);
+    const { gebrauchsanweisung, anmerkungen } = buildInstruction(blocks);
+    setField(form, 'Gebrauchsanweisung', gebrauchsanweisung);
+    setField(form, 'Anmerkungen', anmerkungen);
+    setField(form, 'Gesamtwirkstoffmenge',
+        `${DosageAggregator.totalSubstance(blocks, medication.concentrationValue)} ${medication.concentrationUnit}`);
+    setField(form, 'Reichdauer der Verschreibung in Tagen max 30 Tage',
+        `${DosageAggregator.reachDurationDays(blocks)} Tage`);
+
+    // D – Behörde (Bezeichnung/Anschrift_2/Telefon_2/Stempel/Datum_2/Unterschrift) bewusst leer.
+
+    if (flatten) form.flatten();
+    return doc.save();
+}
