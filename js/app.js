@@ -40,17 +40,16 @@ class BTMApp {
         this.initializeControllers();
         this.setupGlobalListeners();
 
-        // Persistenz-Einstieg: Migration > laufende Session > Start-Screen.
+        // Persistenz-Einstieg: Migration > Start-Screen (Sitzung/Neu/Laden).
         if (hasLegacyData()) {
             this.model.hydrate(migrateLegacyData());
             this.model.save();
             this.hasUnsavedChanges = true;
             this.showTab('patient');
             alert('Alte Daten wurden übernommen. Bitte jetzt über "Daten exportieren" sichern.');
-        } else if (this.model.load()) {
-            this.showTab('patient');
         } else {
-            this.showTab('patient');
+            // Fragt: laufende Sitzung fortsetzen (falls vorhanden) / neu / Datei laden.
+            this.showStartScreen();
         }
 
         // Warnung bei ungesicherten Änderungen (sessionStorage wird beim Schließen geleert).
@@ -142,6 +141,47 @@ class BTMApp {
                 e.target.value = '';
             });
         }
+    }
+
+    // Start-Screen: laufende Sitzung fortsetzen / neu anfangen / Datei laden.
+    showStartScreen() {
+        const hasSession = this.model.hasSession();
+        const mainContent = document.getElementById('main-content');
+        document.querySelectorAll('.nav-tab').forEach((t) => t.classList.remove('active'));
+
+        mainContent.innerHTML = `
+            <div class="tab-content active start-screen">
+                <h2>Willkommen</h2>
+                <div class="alert alert-info">
+                    ℹ️ Möchten Sie eine gespeicherte Datei laden oder neu beginnen?
+                </div>
+                <div class="button-group">
+                    ${hasSession ? '<button class="btn btn-primary" id="start-continue">▶️ Laufende Sitzung fortsetzen</button>' : ''}
+                    <button class="btn btn-secondary" id="start-import">📥 Gespeicherte Datei laden</button>
+                    <button class="btn btn-secondary" id="start-new">🆕 Neu anfangen</button>
+                </div>
+            </div>
+        `;
+
+        const cont = document.getElementById('start-continue');
+        if (cont) {
+            cont.addEventListener('click', () => {
+                this.model.load();
+                this.showTab('patient');
+            });
+        }
+
+        document.getElementById('start-new').addEventListener('click', () => {
+            this.model.clearAll();
+            this.hasUnsavedChanges = false;
+            this.showTab('patient');
+        });
+
+        document.getElementById('start-import').addEventListener('click', () => {
+            // Nach erfolgreichem Import in die App wechseln.
+            this._pendingImportRedirect = true;
+            this.controllers.data.importData();
+        });
     }
 
     // Zentraler Export: obfuskierte .btmdat-Datei (gleiches Format wie sessionStorage-Cache).

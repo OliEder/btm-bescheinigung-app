@@ -53,3 +53,16 @@ describe('DataStore Persistenz', () => {
         spy.mockRestore();
     });
 });
+
+describe('DataStore.hasSession', () => {
+    it('false ohne Session, true nach save()', () => {
+        sessionStorage.clear();
+        const store = new DataStore();
+        expect(store.hasSession()).toBe(false);
+        store.addPatient({ firstname: 'Anna', lastname: 'Beispiel', passport: 'AB123456',
+            birthplace: 'Berlin', birthdate: '1990-01-01', nationality: 'deutsch', gender: 'weiblich',
+            street: 'Weg 1', zip: '10115', city: 'Berlin' });
+        store.save();
+        expect(store.hasSession()).toBe(true);
+    });
+});

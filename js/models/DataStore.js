@@ -311,6 +311,12 @@ class DataStore {
         }
     }
     
+    // Gibt es eine gespeicherte Sitzung im sessionStorage?
+    hasSession() {
+        return typeof sessionStorage !== 'undefined'
+            && sessionStorage.getItem(SESSION_KEY) !== null;
+    }
+
     load() {
         try {
             if (typeof sessionStorage === 'undefined') return false;

@@ -41,7 +41,13 @@ class DataController {
             const success = this.model.importData(e.target.result);
             if (success) {
                 alert('Daten wurden erfolgreich importiert!');
-                this.view.updateDataDisplay(this.model.data);
+                // Vom Start-Screen kommend: in die App wechseln; sonst Anzeige aktualisieren.
+                if (window.app && window.app._pendingImportRedirect) {
+                    window.app._pendingImportRedirect = false;
+                    window.app.showTab('patient');
+                } else {
+                    this.view.updateDataDisplay(this.model.data);
+                }
             } else {
                 alert('Fehler beim Importieren der Daten!');
             }
