@@ -118,12 +118,16 @@ class MedicationView {
             `;
             // Werte per dataset (keine String-Interpolation in Attribute)
             medDiv.querySelectorAll('.add-med-btn').forEach((btn, i) => {
-                setDataset(btn, {
+                const conc = med.concentrations[i];
+                const data = {
                     name: med.name,
                     form: med.form,
                     substance: med.substance,
-                    concentration: med.concentrations[i],
-                });
+                    concentration: conc,
+                };
+                // refId ermoeglicht dem Controller den Snapshot-Pfad (DB-Eintrag)
+                if (med.refIds && med.refIds[conc]) data.refId = med.refIds[conc];
+                setDataset(btn, data);
             });
             container.appendChild(medDiv);
         });
@@ -135,7 +139,8 @@ class MedicationView {
                     name: e.currentTarget.dataset.name,
                     form: e.currentTarget.dataset.form,
                     substance: e.currentTarget.dataset.substance,
-                    concentration: e.currentTarget.dataset.concentration
+                    concentration: e.currentTarget.dataset.concentration,
+                    refId: e.currentTarget.dataset.refId
                 };
                 window.app.controllers.medication.addMedication(medData);
             });
@@ -150,17 +155,26 @@ class MedicationView {
             return;
         }
         
-        container.innerHTML = medications.map(med => `
+        container.innerHTML = medications.map(med => {
+            // MedicationInstance-Snapshot (handelsname/wirkstoff/darreichungsform)
+            // oder Legacy-Form (name/substance/form).
+            const name = med.handelsname || med.name;
+            const substance = med.wirkstoff || med.substance;
+            const form = med.darreichungsform || med.form;
+            const conc = med.concentration
+                || `${med.concentrationValue || ''}${med.concentrationUnit || ''}`;
+            return `
             <div class="medication-item">
                 <div class="medication-header">
-                    <span class="medication-title">${escapeHtml(med.name)} ${escapeHtml(med.concentration)}</span>
+                    <span class="medication-title">${escapeHtml(name)} ${escapeHtml(conc)}</span>
                     <button class="btn btn-danger btn-small remove-med-btn">
                         🗑️ Entfernen
                     </button>
                 </div>
-                <p>Wirkstoff: ${escapeHtml(med.substance)} | Form: ${escapeHtml(med.form)}</p>
+                <p>Wirkstoff: ${escapeHtml(substance)} | Form: ${escapeHtml(form)}</p>
             </div>
-        `).join('');
+        `;
+        }).join('');
         
         // Bind remove events (IDs sind UUID-Strings, kein parseFloat)
         container.querySelectorAll('.remove-med-btn').forEach((btn, i) => {
