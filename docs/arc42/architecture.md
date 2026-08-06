@@ -36,7 +36,8 @@ Statisches Bundle in `dist/`, auslieferbar über beliebigen Static-Host / lokal.
 
 ## 8. Querschnittliche Konzepte
 - Security: XSS-Escaping (Sanitize), keine PII-Logs, UUIDs, obfuskierte Persistenz.
-- Persistenz: sessionStorage (flüchtig) + Datei-Export (Nutzerhoheit).
+- Persistenz: sessionStorage (flüchtig, obfuskiert via Obfuscate.js = Base64+Shift,
+  kein Krypto) + Datei-Export im gleichen Format (Nutzerhoheit über Ablageort).
 - Test: Vitest + jsdom.
 
 ## 9. Architekturentscheidungen
