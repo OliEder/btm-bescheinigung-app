@@ -1,3 +1,5 @@
+import { Patient } from '../models/Patient.js';
+
 class DataController {
     constructor(model, view) {
         this.model = model;
@@ -103,3 +105,5 @@ class DataController {
         alert('Verknüpfung wurde geladen!');
     }
 }
+
+export { DataController };

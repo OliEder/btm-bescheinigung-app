@@ -100,3 +100,5 @@ class DoctorView {
         };
     }
 }
+
+export { DoctorView };

@@ -34,7 +34,9 @@ FHIR-angelehnte Flatfile-Medikamenten-DB hinter einem Repository-Interface.
   splitten, isCustom) -> Session laden -> Export-Aufforderung -> Alt-Key gelöscht.
 
 ## 7. Verteilungssicht
-Statisches Bundle in `dist/`, auslieferbar über beliebigen Static-Host / lokal.
+Webpack-Bundle (js/app.js Entry) -> dist/ (bundle.<hash>.js + index.html + PDF-Asset).
+Kein CDN mehr (jsPDF entfernt), damit kein SRI/CSP-Lücken-Risiko.
+Auslieferbar über beliebigen Static-Host / lokal.
 
 ## 8. Querschnittliche Konzepte
 - Security: XSS-Escaping (Sanitize), keine PII-Logs, UUIDs, obfuskierte Persistenz.

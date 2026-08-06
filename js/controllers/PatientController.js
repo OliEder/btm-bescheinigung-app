@@ -1,3 +1,5 @@
+import { Patient } from '../models/Patient.js';
+
 class PatientController {
     constructor(model, view) {
         this.model = model;
@@ -66,3 +68,5 @@ class PatientController {
                data.street && data.zip && data.city;
     }
 }
+
+export { PatientController };

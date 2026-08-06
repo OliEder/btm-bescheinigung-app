@@ -1,3 +1,5 @@
+import { AppConfig } from '../config.js';
+
 class TravelController {
     constructor(model, view) {
         this.model = model;
@@ -123,3 +125,5 @@ class TravelController {
         this.model.updateDosageScheme(medicationId, schemeIndex, scheme);
     }
 }
+
+export { TravelController };
