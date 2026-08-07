@@ -21,7 +21,7 @@ FHIR-angelehnte Flatfile-Medikamenten-DB hinter einem Repository-Interface.
 ## 5. Bausteinsicht
 - Models: Patient, Doctor, Medication, MedicationInstance, DosageScheme, DataStore
 - Repositories: MedicationRepository
-- Services: PdfFormFiller, DosageAggregator, Migration
+- Services: PdfFormFiller, DosageAggregator, Migration, MedicationPlanBuilder (BMP nach § 31a Abs. 4 SGB V)
 - Utils: Sanitize, Obfuscate, Validator, DateHelper
 - Views / Controllers: pro Domäne
 

@@ -1,4 +1,5 @@
 import { fillCertificate } from '../services/PdfFormFiller.js';
+import { buildMedicationPlan } from '../services/MedicationPlanBuilder.js';
 import templateUrl from '../../assets/reise-scheng-formular.pdf';
 
 // Testbare Kernfunktion: baut die PDF-Bytes aus Session + gewaehlter Medikamenten-ID.
@@ -51,7 +52,18 @@ class PDFController {
             const bytes = await buildCertificateBytes(templateBytes, this.model.data, med.id);
             this.generatedPDFs.push({ name: fileName, bytes, medication: med });
         }
-        
+
+        // Medikationsplan (§ 31a Abs. 4 SGB V) ueber alle Medikamente.
+        const planBytes = await buildMedicationPlan({
+            patient: this.model.data.currentPatient,
+            doctor: this.model.data.currentDoctor,
+            medications: this.model.data.selectedMedications,
+            dosageSchemes: this.model.data.dosageSchemes,
+            printDate: new Date().toISOString(),
+        });
+        const planName = `Medikationsplan_${this.model.data.currentPatient.lastname}.pdf`.replace(/\s+/g, '_');
+        this.generatedPDFs.push({ name: planName, bytes: planBytes, isMedicationPlan: true });
+
         this.view.displayGeneratedPDFs(this.generatedPDFs);
     }
     
