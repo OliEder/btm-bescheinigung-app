@@ -1,0 +1,34 @@
+name: Security Audit
+
+on:
+  pull_request:
+    branches: [main]
+  schedule:
+    # Wöchentlich montags 06:00 UTC.
+    - cron: '0 6 * * 1'
+  workflow_dispatch:
+
+jobs:
+  npm-audit:
+    name: npm audit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Node.js einrichten
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Abhängigkeiten installieren
+        run: npm ci
+
+      # Blockierend: nur Laufzeit-Abhängigkeiten (landen im ausgelieferten Bundle).
+      - name: Audit Produktions-Abhängigkeiten (high/critical)
+        run: npm audit --omit=dev --audit-level=high
+
+      # Informativ: Dev-Tooling-Lücken (vitest/webpack-dev-server) melden, nicht blockieren.
+      - name: Audit inkl. devDependencies (informativ)
+        if: always()
+        run: npm audit || true

@@ -6,6 +6,10 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: 'bundle.[contenthash].js',
+        // Relativer publicPath, damit die App sowohl unter der Domain-Root (lokal)
+        // als auch in einem Unterpfad (GitHub Pages: /<repo>/) funktioniert.
+        // Über PUBLIC_PATH überschreibbar, falls ein absoluter Pfad nötig ist.
+        publicPath: process.env.PUBLIC_PATH || '',
         clean: true,
     },
     module: {
