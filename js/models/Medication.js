@@ -4,7 +4,19 @@ class Medication {
         this.name = data.name || '';
         this.form = data.form || '';
         this.substance = data.substance || '';
-        this.concentration = data.concentration || '';
+        // Getrennte Felder; falls nur alter concentration-String kommt, ableiten.
+        if (data.concentrationValue !== undefined || data.concentrationUnit !== undefined) {
+            this.concentrationValue = Number(data.concentrationValue) || 0;
+            this.concentrationUnit = data.concentrationUnit || '';
+        } else if (data.concentration) {
+            const numMatch = String(data.concentration).match(/(\d+(?:\.\d+)?)/);
+            const unitMatch = String(data.concentration).match(/\d+(?:\.\d+)?(.*)/);
+            this.concentrationValue = numMatch ? parseFloat(numMatch[1]) : 0;
+            this.concentrationUnit = unitMatch ? unitMatch[1].trim() : '';
+        } else {
+            this.concentrationValue = 0;
+            this.concentrationUnit = '';
+        }
         this.manufacturer = data.manufacturer || '';
         this.pzn = data.pzn || ''; // Pharmazentralnummer
         this.btmCategory = data.btmCategory || 'BTM'; // BTM, Nicht-BTM
@@ -22,16 +34,9 @@ class Medication {
         return `${this.name} ${this.concentration} (${this.substance})`;
     }
     
-    get concentrationValue() {
-        // Extract numeric value from concentration (e.g., "10mg" -> 10)
-        const match = this.concentration.match(/(\d+(?:\.\d+)?)/);
-        return match ? parseFloat(match[1]) : 0;
-    }
-    
-    get concentrationUnit() {
-        // Extract unit from concentration (e.g., "10mg" -> "mg")
-        const match = this.concentration.match(/\d+(?:\.\d+)?(.*)/);
-        return match ? match[1] : '';
+    get concentration() {
+        // Kombinierte Anzeige aus getrennten Feldern (z.B. 36 + "mg" -> "36mg").
+        return `${this.concentrationValue}${this.concentrationUnit}`;
     }
     
     get isBTM() {
@@ -54,10 +59,11 @@ class Medication {
             errors.push('Wirkstoff ist erforderlich');
         }
         
-        if (!this.concentration) {
-            errors.push('Konzentration ist erforderlich');
-        } else if (!/^\d+(?:\.\d+)?mg$/.test(this.concentration)) {
-            errors.push('Ungültiges Konzentrationsformat (z.B. 10mg)');
+        if (!this.concentrationValue || this.concentrationValue <= 0) {
+            errors.push('Konzentration (Wert) ist erforderlich');
+        }
+        if (!this.concentrationUnit) {
+            errors.push('Konzentration (Einheit) ist erforderlich');
         }
         
         return {
@@ -94,7 +100,8 @@ class Medication {
             name: this.name,
             form: this.form,
             substance: this.substance,
-            concentration: this.concentration,
+            concentrationValue: this.concentrationValue,
+            concentrationUnit: this.concentrationUnit,
             manufacturer: this.manufacturer,
             pzn: this.pzn,
             btmCategory: this.btmCategory,
@@ -360,7 +367,4 @@ class DosageScheme {
     }
 }
 
-// Export for module systems (if using)
-if (typeof module !== 'undefined' && module.exports) {
-    module.exports = { Medication, DosageScheme };
-}
+export { Medication, DosageScheme };

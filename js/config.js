@@ -44,3 +44,5 @@ const AppConfig = {
         { title: "Dr. med.", lastname: "Weber", firstname: "Michael", phone: "0911/345678", address: "Marktplatz 3, 90518 Altdorf bei Nürnberg" }
     ]
 };
+
+export { AppConfig };

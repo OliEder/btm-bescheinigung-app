@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="BTM-Reisebescheinigung Generator - Artikel 75 Schengener Abkommen">
+    <title>BTM-Reisebescheinigung Generator</title>
+
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+</head>
+<body>
+    <div id="app" class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1>BTM-Reisebescheinigung Generator</h1>
+            <p>Artikel 75 des Schengener Durchführungsabkommens</p>
+        </header>
+
+        <!-- Navigation -->
+        <nav class="nav-tabs" id="navigation"></nav>
+
+        <!-- Main Content -->
+        <main class="content" id="main-content"></main>
+    </div>
+
+    <!-- Hidden file input for imports -->
+    <input type="file" id="import-file" style="display: none;" accept=".btmdat,.json">
+</body>
+</html>

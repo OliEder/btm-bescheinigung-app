@@ -1,0 +1,2067 @@
+[
+  {
+    "resourceType": "Medication",
+    "id": "ritalin-5mg",
+    "productFamily": "Ritalin",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "N06BA04"
+        }
+      ],
+      "text": "Ritalin 5 mg Tablette"
+    },
+    "form": {
+      "text": "Tablette"
+    },
+    "btmCategory": "BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Methylphenidat"
+        },
+        "strength": {
+          "numerator": {
+            "value": 5,
+            "unit": "mg"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Tablette"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "resourceType": "Medication",
+    "id": "ritalin-10mg",
+    "productFamily": "Ritalin",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "N06BA04"
+        }
+      ],
+      "text": "Ritalin 10 mg Tablette"
+    },
+    "form": {
+      "text": "Tablette"
+    },
+    "btmCategory": "BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Methylphenidat"
+        },
+        "strength": {
+          "numerator": {
+            "value": 10,
+            "unit": "mg"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Tablette"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "resourceType": "Medication",
+    "id": "ritalin-20mg",
+    "productFamily": "Ritalin",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "N06BA04"
+        }
+      ],
+      "text": "Ritalin 20 mg Tablette"
+    },
+    "form": {
+      "text": "Tablette"
+    },
+    "btmCategory": "BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Methylphenidat"
+        },
+        "strength": {
+          "numerator": {
+            "value": 20,
+            "unit": "mg"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Tablette"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "resourceType": "Medication",
+    "id": "ritalin-adult-10mg",
+    "productFamily": "Ritalin Adult",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "N06BA04"
+        }
+      ],
+      "text": "Ritalin Adult 10 mg Kapsel"
+    },
+    "form": {
+      "text": "Kapsel"
+    },
+    "btmCategory": "BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Methylphenidat"
+        },
+        "strength": {
+          "numerator": {
+            "value": 10,
+            "unit": "mg"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Kapsel"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "resourceType": "Medication",
+    "id": "ritalin-adult-20mg",
+    "productFamily": "Ritalin Adult",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "N06BA04"
+        }
+      ],
+      "text": "Ritalin Adult 20 mg Kapsel"
+    },
+    "form": {
+      "text": "Kapsel"
+    },
+    "btmCategory": "BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Methylphenidat"
+        },
+        "strength": {
+          "numerator": {
+            "value": 20,
+            "unit": "mg"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Kapsel"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "resourceType": "Medication",
+    "id": "ritalin-adult-30mg",
+    "productFamily": "Ritalin Adult",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "N06BA04"
+        }
+      ],
+      "text": "Ritalin Adult 30 mg Kapsel"
+    },
+    "form": {
+      "text": "Kapsel"
+    },
+    "btmCategory": "BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Methylphenidat"
+        },
+        "strength": {
+          "numerator": {
+            "value": 30,
+            "unit": "mg"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Kapsel"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "resourceType": "Medication",
+    "id": "ritalin-adult-40mg",
+    "productFamily": "Ritalin Adult",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "N06BA04"
+        }
+      ],
+      "text": "Ritalin Adult 40 mg Kapsel"
+    },
+    "form": {
+      "text": "Kapsel"
+    },
+    "btmCategory": "BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Methylphenidat"
+        },
+        "strength": {
+          "numerator": {
+            "value": 40,
+            "unit": "mg"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Kapsel"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "resourceType": "Medication",
+    "id": "ritalin-adult-60mg",
+    "productFamily": "Ritalin Adult",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "N06BA04"
+        }
+      ],
+      "text": "Ritalin Adult 60 mg Kapsel"
+    },
+    "form": {
+      "text": "Kapsel"
+    },
+    "btmCategory": "BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Methylphenidat"
+        },
+        "strength": {
+          "numerator": {
+            "value": 60,
+            "unit": "mg"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Kapsel"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "resourceType": "Medication",
+    "id": "ritalin-la-10mg",
+    "productFamily": "Ritalin LA",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "N06BA04"
+        }
+      ],
+      "text": "Ritalin LA 10 mg Retardkapsel"
+    },
+    "form": {
+      "text": "Retardkapsel"
+    },
+    "btmCategory": "BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Methylphenidat"
+        },
+        "strength": {
+          "numerator": {
+            "value": 10,
+            "unit": "mg"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Kapsel"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "resourceType": "Medication",
+    "id": "ritalin-la-20mg",
+    "productFamily": "Ritalin LA",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "N06BA04"
+        }
+      ],
+      "text": "Ritalin LA 20 mg Retardkapsel"
+    },
+    "form": {
+      "text": "Retardkapsel"
+    },
+    "btmCategory": "BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Methylphenidat"
+        },
+        "strength": {
+          "numerator": {
+            "value": 20,
+            "unit": "mg"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Kapsel"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "resourceType": "Medication",
+    "id": "ritalin-la-30mg",
+    "productFamily": "Ritalin LA",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "N06BA04"
+        }
+      ],
+      "text": "Ritalin LA 30 mg Retardkapsel"
+    },
+    "form": {
+      "text": "Retardkapsel"
+    },
+    "btmCategory": "BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Methylphenidat"
+        },
+        "strength": {
+          "numerator": {
+            "value": 30,
+            "unit": "mg"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Kapsel"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "resourceType": "Medication",
+    "id": "ritalin-la-40mg",
+    "productFamily": "Ritalin LA",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "N06BA04"
+        }
+      ],
+      "text": "Ritalin LA 40 mg Retardkapsel"
+    },
+    "form": {
+      "text": "Retardkapsel"
+    },
+    "btmCategory": "BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Methylphenidat"
+        },
+        "strength": {
+          "numerator": {
+            "value": 40,
+            "unit": "mg"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Kapsel"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "resourceType": "Medication",
+    "id": "medikinet-5mg",
+    "productFamily": "Medikinet",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "N06BA04"
+        }
+      ],
+      "text": "Medikinet 5 mg Tablette"
+    },
+    "form": {
+      "text": "Tablette"
+    },
+    "btmCategory": "BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Methylphenidat"
+        },
+        "strength": {
+          "numerator": {
+            "value": 5,
+            "unit": "mg"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Tablette"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "resourceType": "Medication",
+    "id": "medikinet-10mg",
+    "productFamily": "Medikinet",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "N06BA04"
+        }
+      ],
+      "text": "Medikinet 10 mg Tablette"
+    },
+    "form": {
+      "text": "Tablette"
+    },
+    "btmCategory": "BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Methylphenidat"
+        },
+        "strength": {
+          "numerator": {
+            "value": 10,
+            "unit": "mg"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Tablette"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "resourceType": "Medication",
+    "id": "medikinet-20mg",
+    "productFamily": "Medikinet",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "N06BA04"
+        }
+      ],
+      "text": "Medikinet 20 mg Tablette"
+    },
+    "form": {
+      "text": "Tablette"
+    },
+    "btmCategory": "BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Methylphenidat"
+        },
+        "strength": {
+          "numerator": {
+            "value": 20,
+            "unit": "mg"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Tablette"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "resourceType": "Medication",
+    "id": "medikinet-adult-5mg",
+    "productFamily": "Medikinet adult",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "N06BA04"
+        }
+      ],
+      "text": "Medikinet adult 5 mg Retardkapsel"
+    },
+    "form": {
+      "text": "Retardkapsel"
+    },
+    "btmCategory": "BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Methylphenidat"
+        },
+        "strength": {
+          "numerator": {
+            "value": 5,
+            "unit": "mg"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Kapsel"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "resourceType": "Medication",
+    "id": "medikinet-adult-10mg",
+    "productFamily": "Medikinet adult",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "N06BA04"
+        }
+      ],
+      "text": "Medikinet adult 10 mg Retardkapsel"
+    },
+    "form": {
+      "text": "Retardkapsel"
+    },
+    "btmCategory": "BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Methylphenidat"
+        },
+        "strength": {
+          "numerator": {
+            "value": 10,
+            "unit": "mg"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Kapsel"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "resourceType": "Medication",
+    "id": "medikinet-adult-20mg",
+    "productFamily": "Medikinet adult",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "N06BA04"
+        }
+      ],
+      "text": "Medikinet adult 20 mg Retardkapsel"
+    },
+    "form": {
+      "text": "Retardkapsel"
+    },
+    "btmCategory": "BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Methylphenidat"
+        },
+        "strength": {
+          "numerator": {
+            "value": 20,
+            "unit": "mg"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Kapsel"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "resourceType": "Medication",
+    "id": "medikinet-adult-30mg",
+    "productFamily": "Medikinet adult",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "N06BA04"
+        }
+      ],
+      "text": "Medikinet adult 30 mg Retardkapsel"
+    },
+    "form": {
+      "text": "Retardkapsel"
+    },
+    "btmCategory": "BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Methylphenidat"
+        },
+        "strength": {
+          "numerator": {
+            "value": 30,
+            "unit": "mg"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Kapsel"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "resourceType": "Medication",
+    "id": "medikinet-adult-40mg",
+    "productFamily": "Medikinet adult",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "N06BA04"
+        }
+      ],
+      "text": "Medikinet adult 40 mg Retardkapsel"
+    },
+    "form": {
+      "text": "Retardkapsel"
+    },
+    "btmCategory": "BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Methylphenidat"
+        },
+        "strength": {
+          "numerator": {
+            "value": 40,
+            "unit": "mg"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Kapsel"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "resourceType": "Medication",
+    "id": "medikinet-adult-50mg",
+    "productFamily": "Medikinet adult",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "N06BA04"
+        }
+      ],
+      "text": "Medikinet adult 50 mg Retardkapsel"
+    },
+    "form": {
+      "text": "Retardkapsel"
+    },
+    "btmCategory": "BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Methylphenidat"
+        },
+        "strength": {
+          "numerator": {
+            "value": 50,
+            "unit": "mg"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Kapsel"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "resourceType": "Medication",
+    "id": "medikinet-adult-60mg",
+    "productFamily": "Medikinet adult",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "N06BA04"
+        }
+      ],
+      "text": "Medikinet adult 60 mg Retardkapsel"
+    },
+    "form": {
+      "text": "Retardkapsel"
+    },
+    "btmCategory": "BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Methylphenidat"
+        },
+        "strength": {
+          "numerator": {
+            "value": 60,
+            "unit": "mg"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Kapsel"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "resourceType": "Medication",
+    "id": "concerta-18mg",
+    "productFamily": "Concerta",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "N06BA04"
+        }
+      ],
+      "text": "Concerta 18 mg Retardtablette"
+    },
+    "form": {
+      "text": "Retardtablette"
+    },
+    "btmCategory": "BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Methylphenidat"
+        },
+        "strength": {
+          "numerator": {
+            "value": 18,
+            "unit": "mg"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Tablette"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "resourceType": "Medication",
+    "id": "concerta-27mg",
+    "productFamily": "Concerta",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "N06BA04"
+        }
+      ],
+      "text": "Concerta 27 mg Retardtablette"
+    },
+    "form": {
+      "text": "Retardtablette"
+    },
+    "btmCategory": "BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Methylphenidat"
+        },
+        "strength": {
+          "numerator": {
+            "value": 27,
+            "unit": "mg"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Tablette"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "resourceType": "Medication",
+    "id": "concerta-36mg",
+    "productFamily": "Concerta",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "N06BA04"
+        }
+      ],
+      "text": "Concerta 36 mg Retardtablette"
+    },
+    "form": {
+      "text": "Retardtablette"
+    },
+    "btmCategory": "BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Methylphenidat"
+        },
+        "strength": {
+          "numerator": {
+            "value": 36,
+            "unit": "mg"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Tablette"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "resourceType": "Medication",
+    "id": "concerta-54mg",
+    "productFamily": "Concerta",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "N06BA04"
+        }
+      ],
+      "text": "Concerta 54 mg Retardtablette"
+    },
+    "form": {
+      "text": "Retardtablette"
+    },
+    "btmCategory": "BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Methylphenidat"
+        },
+        "strength": {
+          "numerator": {
+            "value": 54,
+            "unit": "mg"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Tablette"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "resourceType": "Medication",
+    "id": "equasym-5mg",
+    "productFamily": "Equasym",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "N06BA04"
+        }
+      ],
+      "text": "Equasym 5 mg Tablette"
+    },
+    "form": {
+      "text": "Tablette"
+    },
+    "btmCategory": "BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Methylphenidat"
+        },
+        "strength": {
+          "numerator": {
+            "value": 5,
+            "unit": "mg"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Tablette"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "resourceType": "Medication",
+    "id": "equasym-10mg",
+    "productFamily": "Equasym",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "N06BA04"
+        }
+      ],
+      "text": "Equasym 10 mg Tablette"
+    },
+    "form": {
+      "text": "Tablette"
+    },
+    "btmCategory": "BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Methylphenidat"
+        },
+        "strength": {
+          "numerator": {
+            "value": 10,
+            "unit": "mg"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Tablette"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "resourceType": "Medication",
+    "id": "equasym-20mg",
+    "productFamily": "Equasym",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "N06BA04"
+        }
+      ],
+      "text": "Equasym 20 mg Tablette"
+    },
+    "form": {
+      "text": "Tablette"
+    },
+    "btmCategory": "BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Methylphenidat"
+        },
+        "strength": {
+          "numerator": {
+            "value": 20,
+            "unit": "mg"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Tablette"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "resourceType": "Medication",
+    "id": "equasym-retard-10mg",
+    "productFamily": "Equasym Retard",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "N06BA04"
+        }
+      ],
+      "text": "Equasym Retard 10 mg Retardkapsel"
+    },
+    "form": {
+      "text": "Retardkapsel"
+    },
+    "btmCategory": "BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Methylphenidat"
+        },
+        "strength": {
+          "numerator": {
+            "value": 10,
+            "unit": "mg"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Kapsel"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "resourceType": "Medication",
+    "id": "equasym-retard-20mg",
+    "productFamily": "Equasym Retard",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "N06BA04"
+        }
+      ],
+      "text": "Equasym Retard 20 mg Retardkapsel"
+    },
+    "form": {
+      "text": "Retardkapsel"
+    },
+    "btmCategory": "BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Methylphenidat"
+        },
+        "strength": {
+          "numerator": {
+            "value": 20,
+            "unit": "mg"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Kapsel"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "resourceType": "Medication",
+    "id": "equasym-retard-30mg",
+    "productFamily": "Equasym Retard",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "N06BA04"
+        }
+      ],
+      "text": "Equasym Retard 30 mg Retardkapsel"
+    },
+    "form": {
+      "text": "Retardkapsel"
+    },
+    "btmCategory": "BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Methylphenidat"
+        },
+        "strength": {
+          "numerator": {
+            "value": 30,
+            "unit": "mg"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Kapsel"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "resourceType": "Medication",
+    "id": "kinecteen-18mg",
+    "productFamily": "Kinecteen",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "N06BA04"
+        }
+      ],
+      "text": "Kinecteen 18 mg Retardtablette"
+    },
+    "form": {
+      "text": "Retardtablette"
+    },
+    "btmCategory": "BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Methylphenidat"
+        },
+        "strength": {
+          "numerator": {
+            "value": 18,
+            "unit": "mg"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Tablette"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "resourceType": "Medication",
+    "id": "kinecteen-27mg",
+    "productFamily": "Kinecteen",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "N06BA04"
+        }
+      ],
+      "text": "Kinecteen 27 mg Retardtablette"
+    },
+    "form": {
+      "text": "Retardtablette"
+    },
+    "btmCategory": "BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Methylphenidat"
+        },
+        "strength": {
+          "numerator": {
+            "value": 27,
+            "unit": "mg"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Tablette"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "resourceType": "Medication",
+    "id": "kinecteen-36mg",
+    "productFamily": "Kinecteen",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "N06BA04"
+        }
+      ],
+      "text": "Kinecteen 36 mg Retardtablette"
+    },
+    "form": {
+      "text": "Retardtablette"
+    },
+    "btmCategory": "BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Methylphenidat"
+        },
+        "strength": {
+          "numerator": {
+            "value": 36,
+            "unit": "mg"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Tablette"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "resourceType": "Medication",
+    "id": "kinecteen-54mg",
+    "productFamily": "Kinecteen",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "N06BA04"
+        }
+      ],
+      "text": "Kinecteen 54 mg Retardtablette"
+    },
+    "form": {
+      "text": "Retardtablette"
+    },
+    "btmCategory": "BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Methylphenidat"
+        },
+        "strength": {
+          "numerator": {
+            "value": 54,
+            "unit": "mg"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Tablette"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "resourceType": "Medication",
+    "id": "elvanse-20mg",
+    "productFamily": "Elvanse",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "N06BA12"
+        }
+      ],
+      "text": "Elvanse 20 mg Kapsel"
+    },
+    "form": {
+      "text": "Kapsel"
+    },
+    "btmCategory": "BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Lisdexamfetamin"
+        },
+        "strength": {
+          "numerator": {
+            "value": 20,
+            "unit": "mg"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Kapsel"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "resourceType": "Medication",
+    "id": "elvanse-30mg",
+    "productFamily": "Elvanse",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "N06BA12"
+        }
+      ],
+      "text": "Elvanse 30 mg Kapsel"
+    },
+    "form": {
+      "text": "Kapsel"
+    },
+    "btmCategory": "BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Lisdexamfetamin"
+        },
+        "strength": {
+          "numerator": {
+            "value": 30,
+            "unit": "mg"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Kapsel"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "resourceType": "Medication",
+    "id": "elvanse-40mg",
+    "productFamily": "Elvanse",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "N06BA12"
+        }
+      ],
+      "text": "Elvanse 40 mg Kapsel"
+    },
+    "form": {
+      "text": "Kapsel"
+    },
+    "btmCategory": "BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Lisdexamfetamin"
+        },
+        "strength": {
+          "numerator": {
+            "value": 40,
+            "unit": "mg"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Kapsel"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "resourceType": "Medication",
+    "id": "elvanse-50mg",
+    "productFamily": "Elvanse",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "N06BA12"
+        }
+      ],
+      "text": "Elvanse 50 mg Kapsel"
+    },
+    "form": {
+      "text": "Kapsel"
+    },
+    "btmCategory": "BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Lisdexamfetamin"
+        },
+        "strength": {
+          "numerator": {
+            "value": 50,
+            "unit": "mg"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Kapsel"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "resourceType": "Medication",
+    "id": "elvanse-60mg",
+    "productFamily": "Elvanse",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "N06BA12"
+        }
+      ],
+      "text": "Elvanse 60 mg Kapsel"
+    },
+    "form": {
+      "text": "Kapsel"
+    },
+    "btmCategory": "BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Lisdexamfetamin"
+        },
+        "strength": {
+          "numerator": {
+            "value": 60,
+            "unit": "mg"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Kapsel"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "resourceType": "Medication",
+    "id": "elvanse-70mg",
+    "productFamily": "Elvanse",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "N06BA12"
+        }
+      ],
+      "text": "Elvanse 70 mg Kapsel"
+    },
+    "form": {
+      "text": "Kapsel"
+    },
+    "btmCategory": "BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Lisdexamfetamin"
+        },
+        "strength": {
+          "numerator": {
+            "value": 70,
+            "unit": "mg"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Kapsel"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "resourceType": "Medication",
+    "id": "elvanse-adult-30mg",
+    "productFamily": "Elvanse Adult",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "N06BA12"
+        }
+      ],
+      "text": "Elvanse Adult 30 mg Kapsel"
+    },
+    "form": {
+      "text": "Kapsel"
+    },
+    "btmCategory": "BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Lisdexamfetamin"
+        },
+        "strength": {
+          "numerator": {
+            "value": 30,
+            "unit": "mg"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Kapsel"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "resourceType": "Medication",
+    "id": "elvanse-adult-50mg",
+    "productFamily": "Elvanse Adult",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "N06BA12"
+        }
+      ],
+      "text": "Elvanse Adult 50 mg Kapsel"
+    },
+    "form": {
+      "text": "Kapsel"
+    },
+    "btmCategory": "BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Lisdexamfetamin"
+        },
+        "strength": {
+          "numerator": {
+            "value": 50,
+            "unit": "mg"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Kapsel"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "resourceType": "Medication",
+    "id": "elvanse-adult-70mg",
+    "productFamily": "Elvanse Adult",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "N06BA12"
+        }
+      ],
+      "text": "Elvanse Adult 70 mg Kapsel"
+    },
+    "form": {
+      "text": "Kapsel"
+    },
+    "btmCategory": "BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Lisdexamfetamin"
+        },
+        "strength": {
+          "numerator": {
+            "value": 70,
+            "unit": "mg"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Kapsel"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "resourceType": "Medication",
+    "id": "attentin-5mg",
+    "productFamily": "Attentin",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "N06BA02"
+        }
+      ],
+      "text": "Attentin 5 mg Tablette"
+    },
+    "form": {
+      "text": "Tablette"
+    },
+    "btmCategory": "BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Dexamfetamin"
+        },
+        "strength": {
+          "numerator": {
+            "value": 5,
+            "unit": "mg"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Tablette"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "resourceType": "Medication",
+    "id": "attentin-10mg",
+    "productFamily": "Attentin",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "N06BA02"
+        }
+      ],
+      "text": "Attentin 10 mg Tablette"
+    },
+    "form": {
+      "text": "Tablette"
+    },
+    "btmCategory": "BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Dexamfetamin"
+        },
+        "strength": {
+          "numerator": {
+            "value": 10,
+            "unit": "mg"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Tablette"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "resourceType": "Medication",
+    "id": "attentin-20mg",
+    "productFamily": "Attentin",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "N06BA02"
+        }
+      ],
+      "text": "Attentin 20 mg Tablette"
+    },
+    "form": {
+      "text": "Tablette"
+    },
+    "btmCategory": "BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Dexamfetamin"
+        },
+        "strength": {
+          "numerator": {
+            "value": 20,
+            "unit": "mg"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Tablette"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "resourceType": "Medication",
+    "id": "strattera-10mg",
+    "productFamily": "Strattera",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "N06BA09"
+        }
+      ],
+      "text": "Strattera 10 mg Kapsel"
+    },
+    "form": {
+      "text": "Kapsel"
+    },
+    "btmCategory": "Nicht-BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Atomoxetin"
+        },
+        "strength": {
+          "numerator": {
+            "value": 10,
+            "unit": "mg"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Kapsel"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "resourceType": "Medication",
+    "id": "strattera-18mg",
+    "productFamily": "Strattera",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "N06BA09"
+        }
+      ],
+      "text": "Strattera 18 mg Kapsel"
+    },
+    "form": {
+      "text": "Kapsel"
+    },
+    "btmCategory": "Nicht-BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Atomoxetin"
+        },
+        "strength": {
+          "numerator": {
+            "value": 18,
+            "unit": "mg"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Kapsel"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "resourceType": "Medication",
+    "id": "strattera-25mg",
+    "productFamily": "Strattera",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "N06BA09"
+        }
+      ],
+      "text": "Strattera 25 mg Kapsel"
+    },
+    "form": {
+      "text": "Kapsel"
+    },
+    "btmCategory": "Nicht-BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Atomoxetin"
+        },
+        "strength": {
+          "numerator": {
+            "value": 25,
+            "unit": "mg"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Kapsel"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "resourceType": "Medication",
+    "id": "strattera-40mg",
+    "productFamily": "Strattera",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "N06BA09"
+        }
+      ],
+      "text": "Strattera 40 mg Kapsel"
+    },
+    "form": {
+      "text": "Kapsel"
+    },
+    "btmCategory": "Nicht-BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Atomoxetin"
+        },
+        "strength": {
+          "numerator": {
+            "value": 40,
+            "unit": "mg"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Kapsel"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "resourceType": "Medication",
+    "id": "strattera-60mg",
+    "productFamily": "Strattera",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "N06BA09"
+        }
+      ],
+      "text": "Strattera 60 mg Kapsel"
+    },
+    "form": {
+      "text": "Kapsel"
+    },
+    "btmCategory": "Nicht-BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Atomoxetin"
+        },
+        "strength": {
+          "numerator": {
+            "value": 60,
+            "unit": "mg"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Kapsel"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "resourceType": "Medication",
+    "id": "strattera-80mg",
+    "productFamily": "Strattera",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "N06BA09"
+        }
+      ],
+      "text": "Strattera 80 mg Kapsel"
+    },
+    "form": {
+      "text": "Kapsel"
+    },
+    "btmCategory": "Nicht-BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Atomoxetin"
+        },
+        "strength": {
+          "numerator": {
+            "value": 80,
+            "unit": "mg"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Kapsel"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "resourceType": "Medication",
+    "id": "strattera-100mg",
+    "productFamily": "Strattera",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "N06BA09"
+        }
+      ],
+      "text": "Strattera 100 mg Kapsel"
+    },
+    "form": {
+      "text": "Kapsel"
+    },
+    "btmCategory": "Nicht-BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Atomoxetin"
+        },
+        "strength": {
+          "numerator": {
+            "value": 100,
+            "unit": "mg"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Kapsel"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "resourceType": "Medication",
+    "id": "intuniv-1mg",
+    "productFamily": "Intuniv",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "C02AC02"
+        }
+      ],
+      "text": "Intuniv 1 mg Retardtablette"
+    },
+    "form": {
+      "text": "Retardtablette"
+    },
+    "btmCategory": "Nicht-BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Guanfacin"
+        },
+        "strength": {
+          "numerator": {
+            "value": 1,
+            "unit": "mg"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Tablette"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "resourceType": "Medication",
+    "id": "intuniv-2mg",
+    "productFamily": "Intuniv",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "C02AC02"
+        }
+      ],
+      "text": "Intuniv 2 mg Retardtablette"
+    },
+    "form": {
+      "text": "Retardtablette"
+    },
+    "btmCategory": "Nicht-BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Guanfacin"
+        },
+        "strength": {
+          "numerator": {
+            "value": 2,
+            "unit": "mg"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Tablette"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "resourceType": "Medication",
+    "id": "intuniv-3mg",
+    "productFamily": "Intuniv",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "C02AC02"
+        }
+      ],
+      "text": "Intuniv 3 mg Retardtablette"
+    },
+    "form": {
+      "text": "Retardtablette"
+    },
+    "btmCategory": "Nicht-BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Guanfacin"
+        },
+        "strength": {
+          "numerator": {
+            "value": 3,
+            "unit": "mg"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Tablette"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "resourceType": "Medication",
+    "id": "intuniv-4mg",
+    "productFamily": "Intuniv",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "C02AC02"
+        }
+      ],
+      "text": "Intuniv 4 mg Retardtablette"
+    },
+    "form": {
+      "text": "Retardtablette"
+    },
+    "btmCategory": "Nicht-BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Guanfacin"
+        },
+        "strength": {
+          "numerator": {
+            "value": 4,
+            "unit": "mg"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Tablette"
+          }
+        }
+      }
+    ]
+  }
+]

@@ -1,3 +1,6 @@
+import { Patient } from '../models/Patient.js';
+import { obfuscate } from '../utils/Obfuscate.js';
+
 class DataController {
     constructor(model, view) {
         this.model = model;
@@ -15,14 +18,16 @@ class DataController {
     }
     
     exportAllData() {
-        const dataStr = this.model.exportData();
-        const dataBlob = new Blob([dataStr], {type: 'application/json'});
+        // Einheitliches Format mit dem Zertifikat-Tab: obfuskierte .btmdat-Datei.
+        const packed = obfuscate(this.model.exportData());
+        const dataBlob = new Blob([packed], { type: 'application/octet-stream' });
         const url = URL.createObjectURL(dataBlob);
         const link = document.createElement('a');
         link.href = url;
-        link.download = `btm-app-data-${Date.now()}.json`;
+        link.download = 'btm-bescheinigung-export.btmdat';
         link.click();
-        
+        URL.revokeObjectURL(url);
+
         alert('Alle Daten wurden exportiert!');
     }
     
@@ -36,7 +41,13 @@ class DataController {
             const success = this.model.importData(e.target.result);
             if (success) {
                 alert('Daten wurden erfolgreich importiert!');
-                this.view.updateDataDisplay(this.model.data);
+                // Vom Start-Screen kommend: in die App wechseln; sonst Anzeige aktualisieren.
+                if (window.app && window.app._pendingImportRedirect) {
+                    window.app._pendingImportRedirect = false;
+                    window.app.showTab('patient');
+                } else {
+                    this.view.updateDataDisplay(this.model.data);
+                }
             } else {
                 alert('Fehler beim Importieren der Daten!');
             }
@@ -103,3 +114,5 @@ class DataController {
         alert('Verknüpfung wurde geladen!');
     }
 }
+
+export { DataController };

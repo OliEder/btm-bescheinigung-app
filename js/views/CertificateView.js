@@ -1,3 +1,5 @@
+import { escapeHtml, setDataset } from '../utils/Sanitize.js';
+
 class CertificateView {
     constructor() {
         this.template = `
@@ -45,7 +47,7 @@ class CertificateView {
     
     displayGeneratedPDFs(pdfList) {
         const container = document.getElementById('certificates-container');
-        container.innerHTML = '<h3>Generierte PDFs:</h3><div class="pdf-download-list">';
+        container.innerHTML = '<h3>Generierte PDFs:</h3><div class="pdf-download-list"></div>';
         
         pdfList.forEach((pdfInfo, index) => {
             const pdfItem = document.createElement('div');
@@ -56,20 +58,22 @@ class CertificateView {
                 pdfItem.innerHTML = `
                     <h4>📋 Medikationsplan</h4>
                     <p style="font-size: 12px; color: #666;">Querformat mit Arztdaten</p>
-                    <button class="btn btn-primary btn-small download-pdf-btn" data-index="${index}">
+                    <button class="btn btn-primary btn-small download-pdf-btn">
                         💾 Download
                     </button>
                 `;
             } else {
+                const name = pdfInfo.medication.handelsname || pdfInfo.medication.name;
                 pdfItem.innerHTML = `
-                    <h4>📄 ${pdfInfo.medication.name} ${pdfInfo.medication.concentration}</h4>
-                    <p style="font-size: 12px; color: #666;">2 Seiten (Formular + Legende)</p>
-                    <button class="btn btn-secondary btn-small download-pdf-btn" data-index="${index}">
+                    <h4>📄 ${escapeHtml(name)} ${escapeHtml(pdfInfo.medication.concentration)}</h4>
+                    <p style="font-size: 12px; color: #666;">Amtliches Formular (befüllt)</p>
+                    <button class="btn btn-secondary btn-small download-pdf-btn">
                         💾 Download
                     </button>
                 `;
             }
             
+            setDataset(pdfItem.querySelector('.download-pdf-btn'), { index });
             container.querySelector('.pdf-download-list').appendChild(pdfItem);
         });
         
@@ -77,13 +81,13 @@ class CertificateView {
         const summary = document.createElement('div');
         summary.className = 'alert alert-success';
         summary.style.marginTop = '20px';
-        summary.innerHTML = `✅ ${pdfList.length} PDFs wurden erfolgreich generiert und können heruntergeladen werden.`;
+        summary.textContent = `✅ ${pdfList.length} PDFs wurden erfolgreich generiert und können heruntergeladen werden.`;
         container.appendChild(summary);
         
-        // Bind download events
+        // Bind download events (index ist Array-Position)
         container.querySelectorAll('.download-pdf-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
-                const index = parseInt(e.target.dataset.index);
+                const index = parseInt(e.currentTarget.dataset.index, 10);
                 window.app.controllers.pdf.downloadPDF(index);
             });
         });
@@ -91,10 +95,11 @@ class CertificateView {
     
     showError(message) {
         const container = document.getElementById('certificates-container');
-        container.innerHTML = `
-            <div class="alert alert-warning">
-                ⚠️ ${message}
-            </div>
-        `;
+        const alert = document.createElement('div');
+        alert.className = 'alert alert-warning';
+        alert.textContent = `⚠️ ${message}`;
+        container.replaceChildren(alert);
     }
 }
+
+export { CertificateView };

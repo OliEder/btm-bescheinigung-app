@@ -168,7 +168,4 @@ class Doctor {
     }
 }
 
-// Export for module systems (if using)
-if (typeof module !== 'undefined' && module.exports) {
-    module.exports = Doctor;
-}
+export { Doctor };

@@ -1,3 +1,6 @@
+import { Patient } from '../models/Patient.js';
+import { AppConfig } from '../config.js';
+
 class DoctorController {
     constructor(model, view) {
         this.model = model;
@@ -99,3 +102,5 @@ class DoctorController {
         return data.lastname && data.firstname && data.phone && data.address;
     }
 }
+
+export { DoctorController };

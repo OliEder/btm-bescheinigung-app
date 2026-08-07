@@ -78,3 +78,4 @@ class DateHelper {
         return dates;
     }
 }
+export { DateHelper };
