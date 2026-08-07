@@ -1,6 +1,8 @@
 import { PDFDocument } from 'pdf-lib';
 import { DateHelper } from '../utils/DateHelper.js';
 import { DosageAggregator } from './DosageAggregator.js';
+import { formatNumber } from '../utils/NumberFormat.js';
+import { formUnit } from '../utils/DosageForm.js';
 
 // Befuellt das amtliche BfArM-017-Formular (AcroForm) und flattet es.
 // Signatur-/Behoerdenfelder bleiben bewusst leer (per Hand/vor Ort).
@@ -18,14 +20,14 @@ function buildInstruction(blocks) {
     if (blocks.length <= 1) {
         return {
             gebrauchsanweisung: blocks[0] ? DosageAggregator.instructionChain(blocks) : '',
-            anmerkungen: '',
+            anmerkungen: 'keine',
         };
     }
     const chain = DosageAggregator.instructionChain(blocks);
     const detailed = DosageAggregator.detailedSchedule(blocks);
     // Zu lange Kette -> Verweis auf Anmerkungen (Zeile fasst ~40 Zeichen bei Kleinschrift).
     const gebrauchsanweisung = chain.length > 40 ? 's. Anmerkungen' : chain;
-    return { gebrauchsanweisung, anmerkungen: detailed };
+    return { gebrauchsanweisung, anmerkungen: detailed || 'keine' };
 }
 
 export async function fillCertificate(templateBytes, data) {
@@ -57,13 +59,16 @@ export async function fillCertificate(templateBytes, data) {
     setField(form, 'Handelsbezeichnung oder Sonderzubereitung', medication.handelsname);
     setField(form, 'Darreichungsform', medication.darreichungsform);
     setField(form, 'Internationale Bezeichnung des Wirkstoffs', medication.wirkstoff);
+    const unit = formUnit(medication.darreichungsform);
     setField(form, 'WirkstoffKonzentration',
-        `${medication.concentrationValue}${medication.concentrationUnit}`);
+        `${formatNumber(medication.concentrationValue)} ${medication.concentrationUnit}/${unit.singular}`);
     const { gebrauchsanweisung, anmerkungen } = buildInstruction(blocks);
     setField(form, 'Gebrauchsanweisung', gebrauchsanweisung);
     setField(form, 'Anmerkungen', anmerkungen);
+    const stueck = DosageAggregator.totalUnits(blocks);
+    const stueckEinheit = stueck === 1 ? unit.singular : unit.plural;
     setField(form, 'Gesamtwirkstoffmenge',
-        `${DosageAggregator.totalSubstance(blocks, medication.concentrationValue)} ${medication.concentrationUnit}`);
+        `${formatNumber(DosageAggregator.totalSubstance(blocks, medication.concentrationValue))} ${medication.concentrationUnit}, entspricht ${formatNumber(stueck)} ${stueckEinheit}`);
     setField(form, 'Reichdauer der Verschreibung in Tagen max 30 Tage',
         `${DosageAggregator.reachDurationDays(blocks)} Tage`);
 

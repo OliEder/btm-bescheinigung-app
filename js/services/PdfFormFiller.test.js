@@ -40,3 +40,43 @@ describe('fillCertificate', () => {
         expect(get('Stempel der Behörde')).toBe('');
     });
 });
+
+describe('fillCertificate — Formatkorrekturen (TP0)', () => {
+    const read = async (data) => {
+        const bytes = await fillCertificate(templateBytes, { ...data, flatten: false });
+        const form = (await PDFDocument.load(bytes)).getForm();
+        return (n) => { try { return form.getTextField(n).getText() || ''; } catch { return ''; } };
+    };
+
+    it('Konzentration als Wert Einheit/Bezugsmenge', async () => {
+        const g = await read({ patient, doctor, travel, medication, blocks });
+        expect(g('WirkstoffKonzentration')).toBe('36 mg/Tablette');
+    });
+
+    it('Gesamtmenge mit Stueckzahl und Plural', async () => {
+        // blocks: 4 Tage*(1+1)=8 + 11 Tage*(2+1)=33 => 41 Stueck; 41*36=1476 mg
+        const g = await read({ patient, doctor, travel, medication, blocks });
+        expect(g('Gesamtwirkstoffmenge')).toBe('1476 mg, entspricht 41 Tabletten');
+    });
+
+    it('Einzelstueck -> Singular', async () => {
+        const oneDay = [{ startDate: '2026-08-10', endDate: '2026-08-10',
+            morning: 1, noon: 0, evening: 0, night: 0 }];
+        const g = await read({ patient, doctor, travel, medication, blocks: oneDay });
+        expect(g('Gesamtwirkstoffmenge')).toBe('36 mg, entspricht 1 Tablette');
+    });
+
+    it('Bruchteil -> Dezimalkomma in Stueckzahl', async () => {
+        const half = [{ startDate: '2026-08-10', endDate: '2026-08-19',
+            morning: 0.5, noon: 0, evening: 0, night: 0 }]; // 10 Tage*0.5=5 Stueck
+        const g = await read({ patient, doctor, travel, medication, blocks: half });
+        expect(g('Gesamtwirkstoffmenge')).toContain('entspricht 5 Tabletten');
+    });
+
+    it('leere Anmerkungen -> "keine"', async () => {
+        const oneBlock = [{ startDate: '2026-08-10', endDate: '2026-08-13',
+            morning: 1, noon: 0, evening: 1, night: 0 }];
+        const g = await read({ patient, doctor, travel, medication, blocks: oneBlock });
+        expect(g('Anmerkungen')).toBe('keine');
+    });
+});
