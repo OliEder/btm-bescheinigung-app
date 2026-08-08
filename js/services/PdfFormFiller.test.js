@@ -74,7 +74,7 @@ describe('fillCertificate — Formatkorrekturen (TP0)', () => {
     });
 
     it('leere Anmerkungen -> "keine"', async () => {
-        const oneBlock = [{ startDate: '2026-08-10', endDate: '2026-08-13',
+        const oneBlock = [{ startDate: '2026-08-10', endDate: '2026-08-24',
             morning: 1, noon: 0, evening: 1, night: 0 }];
         const g = await read({ patient, doctor, travel, medication, blocks: oneBlock });
         expect(g('Anmerkungen')).toBe('keine');
@@ -97,7 +97,7 @@ describe('fillCertificate — reasonNote in Anmerkungen (Grund/ICD-UI)', () => {
         expect(g('Anmerkungen')).not.toContain('ADHS');
     });
     it('ohne reasonNote und ohne Titration -> keine', async () => {
-        const blocks = [{ startDate: '2026-08-10', endDate: '2026-08-13',
+        const blocks = [{ startDate: '2026-08-10', endDate: '2026-08-24',
             morning: 1, noon: 0, evening: 1, night: 0 }];
         const g = await read({ patient, doctor, travel, medication, blocks });
         expect(g('Anmerkungen')).toBe('keine');
@@ -113,5 +113,33 @@ describe('fillCertificate — reasonNote in Anmerkungen (Grund/ICD-UI)', () => {
         const anm = g('Anmerkungen');
         // 'Titration' nur einmal (dedupliziert), Whitespace-only-Note ignoriert
         expect(anm.match(/Titration/g)).toHaveLength(1);
+    });
+});
+
+describe('fillCertificate — Reisedauer-Abweichung in Anmerkungen (TP2)', () => {
+    const read = async (data) => {
+        const bytes = await fillCertificate(templateBytes, { ...data, flatten: false });
+        const form = (await PDFDocument.load(bytes)).getForm();
+        return (n) => { try { return form.getTextField(n).getText() || ''; } catch { return ''; } };
+    };
+    it('nicht-taeglich -> Hinweis in Anmerkungen', async () => {
+        const blocks = [{ startDate: '2026-08-10', endDate: '2026-08-24',
+            morning: 1, noon: 0, evening: 0, night: 0, weekdays: ['Mo', 'Di', 'So'] }];
+        const g = await read({ patient, doctor, travel, medication, blocks });
+        expect(g('Anmerkungen')).toMatch(/Mo, Di, So/);
+    });
+    it('Abweichung + reasonNote kombiniert', async () => {
+        const blocks = [{ startDate: '2026-08-12', endDate: '2026-08-24',
+            morning: 1, noon: 0, evening: 0, night: 0, reasonNote: 'Titration' }];
+        const g = await read({ patient, doctor, travel, medication, blocks });
+        const anm = g('Anmerkungen');
+        expect(anm).toContain('Titration');
+        expect(anm).toMatch(/keine Einnahme/i);
+    });
+    it('ohne Abweichung/Note/Titration -> keine', async () => {
+        const blocks = [{ startDate: '2026-08-10', endDate: '2026-08-24',
+            morning: 1, noon: 0, evening: 0, night: 0 }];
+        const g = await read({ patient, doctor, travel, medication, blocks });
+        expect(g('Anmerkungen')).toBe('keine');
     });
 });

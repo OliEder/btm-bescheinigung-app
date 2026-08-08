@@ -3,6 +3,7 @@ import { DateHelper } from '../utils/DateHelper.js';
 import { DosageAggregator } from './DosageAggregator.js';
 import { formatNumber } from '../utils/NumberFormat.js';
 import { formUnit } from '../utils/DosageForm.js';
+import { detectDeviations } from './DosageDeviation.js';
 
 // Befuellt das amtliche BfArM-017-Formular (AcroForm) und flattet es.
 // Signatur-/Behoerdenfelder bleiben bewusst leer (per Hand/vor Ort).
@@ -16,11 +17,12 @@ function setField(form, name, value) {
     }
 }
 
-function buildInstruction(blocks) {
+function buildInstruction(blocks, travelData) {
     const notes = [...new Set(blocks.map((b) => (b.reasonNote || '').trim()).filter(Boolean))];
-    const notesText = notes.join(' | ');
+    const deviations = detectDeviations(blocks, travelData);
+    const extra = [...deviations, ...notes].join(' | ');
     const append = (base) => {
-        const merged = [base, notesText].filter((s) => s && s !== 'keine').join(' | ');
+        const merged = [base, extra].filter((s) => s && s !== 'keine').join(' | ');
         return merged || 'keine';
     };
     if (blocks.length <= 1) {
@@ -66,7 +68,7 @@ export async function fillCertificate(templateBytes, data) {
     const unit = formUnit(medication.darreichungsform);
     setField(form, 'WirkstoffKonzentration',
         `${formatNumber(medication.concentrationValue)} ${medication.concentrationUnit}/${unit.singular}`);
-    const { gebrauchsanweisung, anmerkungen } = buildInstruction(blocks);
+    const { gebrauchsanweisung, anmerkungen } = buildInstruction(blocks, travel);
     setField(form, 'Gebrauchsanweisung', gebrauchsanweisung);
     setField(form, 'Anmerkungen', anmerkungen);
     const stueck = DosageAggregator.totalUnits(blocks);
