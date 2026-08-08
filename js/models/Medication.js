@@ -274,13 +274,18 @@ class DosageScheme {
         this.reasonLabel = data.reasonLabel || '';
         this.reasonIcd10 = data.reasonIcd10 || '';
         this.reasonNote = data.reasonNote ?? data.notes ?? '';
+        this.weekdays = Array.isArray(data.weekdays) ? data.weekdays : [];
     }
     
     // Getters
     get dailyDose() {
         return this.morning + this.noon + this.evening + this.night;
     }
-    
+
+    get isDaily() {
+        return this.weekdays.length === 0 || this.weekdays.length === 7;
+    }
+
     get notation() {
         if (this.night > 0) {
             return `${this.morning}-${this.noon}-${this.evening}-${this.night}`;
@@ -340,7 +345,7 @@ class DosageScheme {
     
     // Serialization
     toJSON() {
-        return {
+        const json = {
             medicationId: this.medicationId,
             startDate: this.startDate,
             endDate: this.endDate,
@@ -350,8 +355,10 @@ class DosageScheme {
             night: this.night,
             reasonLabel: this.reasonLabel,
             reasonIcd10: this.reasonIcd10,
-            reasonNote: this.reasonNote
+            reasonNote: this.reasonNote,
         };
+        if (!this.isDaily) json.weekdays = this.weekdays;
+        return json;
     }
     
     // Static factory method

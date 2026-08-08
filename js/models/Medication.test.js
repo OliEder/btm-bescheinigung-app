@@ -60,3 +60,22 @@ describe('DosageScheme Grund/ICD-Felder', () => {
         expect(j).not.toHaveProperty('notes');
     });
 });
+
+describe('DosageScheme weekdays (nicht-taeglich)', () => {
+    it('nimmt weekdays an; Default leer', async () => {
+        const { DosageScheme } = await import('./Medication.js');
+        expect(new DosageScheme({}).weekdays).toEqual([]);
+        expect(new DosageScheme({ weekdays: ['Mo', 'Di'] }).weekdays).toEqual(['Mo', 'Di']);
+    });
+    it('isDaily: leer oder alle 7 -> true; Teilmenge -> false', async () => {
+        const { DosageScheme } = await import('./Medication.js');
+        expect(new DosageScheme({}).isDaily).toBe(true);
+        expect(new DosageScheme({ weekdays: ['Mo','Di','Mi','Do','Fr','Sa','So'] }).isDaily).toBe(true);
+        expect(new DosageScheme({ weekdays: ['Mo','Di','So'] }).isDaily).toBe(false);
+    });
+    it('toJSON: weekdays weglassen bei taeglich, ausgeben bei Teilmenge', async () => {
+        const { DosageScheme } = await import('./Medication.js');
+        expect(new DosageScheme({}).toJSON()).not.toHaveProperty('weekdays');
+        expect(new DosageScheme({ weekdays: ['Mo','Di','So'] }).toJSON().weekdays).toEqual(['Mo','Di','So']);
+    });
+});
