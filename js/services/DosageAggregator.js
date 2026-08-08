@@ -18,6 +18,7 @@ function notation(block) {
         .map((v) => formatNumber(v || 0))
         .join('-');
     const wd = block.weekdays;
+    // Praefix nur bei echter Teilmenge (leer/0 = taeglich, 7 = alle Tage)
     if (wd && wd.length > 0 && wd.length < 7) return `${wd.join(',')}: ${doses}`;
     return doses;
 }
