@@ -17,17 +17,21 @@ function setField(form, name, value) {
 }
 
 function buildInstruction(blocks) {
+    const notes = [...new Set(blocks.map((b) => (b.reasonNote || '').trim()).filter(Boolean))];
+    const notesText = notes.join(' | ');
+    const append = (base) => {
+        const merged = [base, notesText].filter((s) => s && s !== 'keine').join(' | ');
+        return merged || 'keine';
+    };
     if (blocks.length <= 1) {
-        return {
-            gebrauchsanweisung: blocks[0] ? DosageAggregator.instructionChain(blocks) : '',
-            anmerkungen: 'keine',
-        };
+        const chain = blocks[0] ? DosageAggregator.instructionChain(blocks) : '';
+        return { gebrauchsanweisung: chain, anmerkungen: append('') };
     }
     const chain = DosageAggregator.instructionChain(blocks);
     const detailed = DosageAggregator.detailedSchedule(blocks);
     // Zu lange Kette -> Verweis auf Anmerkungen (Zeile fasst ~40 Zeichen bei Kleinschrift).
     const gebrauchsanweisung = chain.length > 40 ? 's. Anmerkungen' : chain;
-    return { gebrauchsanweisung, anmerkungen: detailed || 'keine' };
+    return { gebrauchsanweisung, anmerkungen: append(detailed) };
 }
 
 export async function fillCertificate(templateBytes, data) {
