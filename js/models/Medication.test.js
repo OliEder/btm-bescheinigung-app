@@ -39,3 +39,24 @@ describe('DosageScheme', () => {
         expect(d.notation).toBe('1-0-1');
     });
 });
+
+describe('DosageScheme Grund/ICD-Felder', () => {
+    it('nimmt reasonLabel/reasonIcd10/reasonNote an', async () => {
+        const { DosageScheme } = await import('./Medication.js');
+        const d = new DosageScheme({ reasonLabel: 'ADHS', reasonIcd10: 'F90.0', reasonNote: 'Dosis erhöht' });
+        expect(d.reasonLabel).toBe('ADHS');
+        expect(d.reasonIcd10).toBe('F90.0');
+        expect(d.reasonNote).toBe('Dosis erhöht');
+    });
+    it('liest Alt-Feld notes als reasonNote (Rueckwaertskompat.)', async () => {
+        const { DosageScheme } = await import('./Medication.js');
+        const d = new DosageScheme({ notes: 'alt' });
+        expect(d.reasonNote).toBe('alt');
+    });
+    it('toJSON enthaelt reason-Felder und kein notes', async () => {
+        const { DosageScheme } = await import('./Medication.js');
+        const j = new DosageScheme({ reasonLabel: 'X', reasonIcd10: 'Y', reasonNote: 'Z' }).toJSON();
+        expect(j).toMatchObject({ reasonLabel: 'X', reasonIcd10: 'Y', reasonNote: 'Z' });
+        expect(j).not.toHaveProperty('notes');
+    });
+});
