@@ -12,6 +12,7 @@ export class MedicationInstance {
         this.darreichungsform = data.darreichungsform || '';
         this.concentrationValue = Number(data.concentrationValue) || 0;
         this.concentrationUnit = data.concentrationUnit || '';
+        this.reasonSuggestions = Array.isArray(data.reasonSuggestions) ? data.reasonSuggestions : [];
     }
 
     static fromRepository(resource) {
@@ -24,6 +25,7 @@ export class MedicationInstance {
             darreichungsform: resource.form?.text || '',
             concentrationValue: strength.value ?? 0,
             concentrationUnit: strength.unit ?? '',
+            reasonSuggestions: resource.reasonSuggestions || [],
         });
     }
 
@@ -56,6 +58,7 @@ export class MedicationInstance {
             darreichungsform: this.darreichungsform,
             concentrationValue: this.concentrationValue,
             concentrationUnit: this.concentrationUnit,
+            reasonSuggestions: this.reasonSuggestions,
         };
     }
 }
