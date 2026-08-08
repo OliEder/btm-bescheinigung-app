@@ -8,5 +8,6 @@ export function formUnit(darreichungsform) {
     if (f.includes('tropfen') || f.includes('saft') || f.includes('lösung') || f.includes('loesung')) {
         return { singular: 'ml', plural: 'ml' };
     }
-    return { singular: 'Einheit', plural: 'Einheiten' };
+    if (f.includes('pflaster')) return { singular: 'Stück', plural: 'Stück' };
+    return { singular: 'Stück', plural: 'Stück' };
 }

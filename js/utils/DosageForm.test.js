@@ -15,7 +15,21 @@ describe('formUnit', () => {
         expect(formUnit('Lösung')).toEqual({ singular: 'ml', plural: 'ml' });
     });
     it('Fallback fuer Unbekanntes', () => {
-        expect(formUnit('Zäpfchen')).toEqual({ singular: 'Einheit', plural: 'Einheiten' });
-        expect(formUnit('')).toEqual({ singular: 'Einheit', plural: 'Einheiten' });
+        expect(formUnit('Zäpfchen')).toEqual({ singular: 'Stück', plural: 'Stück' });
+        expect(formUnit('')).toEqual({ singular: 'Stück', plural: 'Stück' });
+    });
+});
+
+describe('formUnit — Sonderformen (Stammdaten-Erweiterung)', () => {
+    it('transdermales Pflaster -> Stück', () => {
+        expect(formUnit('transdermales Pflaster')).toEqual({ singular: 'Stück', plural: 'Stück' });
+    });
+    it('Buccaltablette/Sublingualtablette -> Tablette (enthält "tablette")', () => {
+        expect(formUnit('Buccaltablette')).toEqual({ singular: 'Tablette', plural: 'Tabletten' });
+        expect(formUnit('Sublingualtablette')).toEqual({ singular: 'Tablette', plural: 'Tabletten' });
+    });
+    it('unbekannte Form -> Stück (nicht mehr Einheit)', () => {
+        expect(formUnit('Zäpfchen')).toEqual({ singular: 'Stück', plural: 'Stück' });
+        expect(formUnit('')).toEqual({ singular: 'Stück', plural: 'Stück' });
     });
 });

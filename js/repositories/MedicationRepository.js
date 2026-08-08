@@ -3,8 +3,16 @@
 // Ein spaeterer PZN-API-Adapter muesste nur dieses Interface erfuellen.
 
 export class MedicationRepository {
-    constructor(resources) {
-        this.resources = resources || [];
+    constructor(resources, substanceRepository = null) {
+        this.substanceRepository = substanceRepository;
+        this.resources = (resources || []).map((r) => this._enrich(r));
+    }
+
+    _enrich(resource) {
+        const reasonSuggestions = this.substanceRepository
+            ? this.substanceRepository.indicationsFor(resource.substanceId)
+            : [];
+        return { ...resource, reasonSuggestions };
     }
 
     findAll() {

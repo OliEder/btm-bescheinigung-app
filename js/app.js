@@ -1,10 +1,12 @@
 // Main Application Class (ES-Module-Entry)
 import '../css/styles.css';
 import medicationsData from '../data/medications.json';
+import substancesData from '../data/substances.json';
 
 import { AppConfig } from './config.js';
 import { DataStore } from './models/DataStore.js';
 import { MedicationRepository } from './repositories/MedicationRepository.js';
+import { SubstanceRepository } from './repositories/SubstanceRepository.js';
 import { obfuscate } from './utils/Obfuscate.js';
 import { hasLegacyData, migrateLegacyData } from './services/Migration.js';
 
@@ -25,7 +27,8 @@ import { DataController } from './controllers/DataController.js';
 class BTMApp {
     constructor() {
         this.model = new DataStore();
-        this.medicationRepository = new MedicationRepository(medicationsData);
+        this.substanceRepository = new SubstanceRepository(substancesData);
+        this.medicationRepository = new MedicationRepository(medicationsData, this.substanceRepository);
         this.controllers = {};
         this.views = {};
         this.currentTab = 'patient';
