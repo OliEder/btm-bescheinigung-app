@@ -20,7 +20,8 @@ FHIR-angelehnte Flatfile-Medikamenten-DB hinter einem Repository-Interface.
 
 ## 5. Bausteinsicht
 - Models: Patient, Doctor, Medication, MedicationInstance, DosageScheme, DataStore
-- Repositories: MedicationRepository
+- Repositories: MedicationRepository, SubstanceRepository
+- Daten: medications.json, substances.json
 - Services: PdfFormFiller, DosageAggregator, Migration, MedicationPlanBuilder (BMP nach § 31a Abs. 4 SGB V)
 - Utils: Sanitize, Obfuscate, Validator, DateHelper, NumberFormat (deutsche
   Zahlenformatierung), DosageForm (Bezugseinheit aus Darreichungsform)
@@ -61,6 +62,7 @@ Auslieferbar über beliebigen Static-Host / lokal.
 - ADR-003: data/medications.json (FHIR-Medication, 1 Resource pro Stärke) hinter
   MedicationRepository (findAll/findById/search). productFamily = UI-Gruppierung
   (nicht-FHIR). MedicationInstance = Snapshot bei Erfassung. Spätere PZN-API austauschbar.
+- ADR-004: Indikationen (ICD-10-GM + ICD-11) zentral in substances.json; Join Resource->Wirkstoff über stabile substanceId (nicht ATC, da ein Wirkstoff mehrere ATC-Codes haben kann, z.B. Guanfacin N06BA21/C02AC02). MedicationRepository reichert Resources um reasonSuggestions an.
 
 ## 10. Qualitätsanforderungen
 Datensparsamkeit, XSS-Freiheit, korrekte Wirkstoffmengen-Aggregation, amtstreue PDF-Ausgabe.
@@ -74,6 +76,7 @@ Datensparsamkeit, XSS-Freiheit, korrekte Wirkstoffmengen-Aggregation, amtstreue 
 - jsPDF-Nachbau entfernt (erledigt) — Ausgabe erfolgt nur noch über das amtliche Formular.
 - PatientView/DoctorView-Formulare wurden bei der ES-Umstellung nur exportiert, nicht
   neu gestaltet; ihre Eingaben laufen weiter über die bestehende Validierung.
+- BtM-Rechtsstand: Cannabinoide seit 04/2024 kein BtM (MedCanG), daher (noch) nicht aufgenommen; Tilidin-retard ist BtM-ausgenommen (btmStatus 'ausgenommen'). ATC-Referenz: WIdO; ICD-11: WHO MMS.
 
 ## 12. Glossar
 - BtM: Betäubungsmittel. SDÜ: Schengener Durchführungsübereinkommen.
