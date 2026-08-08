@@ -85,9 +85,9 @@ class TravelView {
                     <div class="dosage-scheme">
                         <div id="schemes-${escapeHtml(med.id)}">
                             ${schemes.length === 0 ? 
-                                this.renderDosageSchemeInput(med.id, 0, travelData.start, travelData.end) :
+                                this.renderDosageSchemeInput(med.id, 0, travelData.start, travelData.end, null, med.reasonSuggestions || []) :
                                 schemes.map((scheme, index) => 
-                                    this.renderDosageSchemeInput(med.id, index, scheme.startDate, scheme.endDate, scheme)
+                                    this.renderDosageSchemeInput(med.id, index, scheme.startDate, scheme.endDate, scheme, med.reasonSuggestions || [])
                                 ).join('')
                             }
                         </div>
@@ -103,11 +103,36 @@ class TravelView {
         this.bindSchemeEvents();
     }
     
-    renderDosageSchemeInput(medicationId, schemeIndex, startDate, endDate, existingScheme = null) {
+    renderDosageSchemeInput(medicationId, schemeIndex, startDate, endDate, existingScheme = null, suggestions = []) {
         const schemeId = `${medicationId}-${schemeIndex}`;
         const scheme = existingScheme || { morning: 0, noon: 0, evening: 0, night: 0 };
         const mid = escapeHtml(medicationId);
         const sid = escapeHtml(schemeId);
+
+        const selLabel = existingScheme?.reasonLabel || '';
+        const selIcd = existingScheme?.reasonIcd10 || '';
+        const matchIdx = suggestions.findIndex((s) => s.label === selLabel && (s.icd10 || '') === (selIcd || ''));
+        const selectedVal = selLabel === '' ? 'none' : (matchIdx >= 0 ? String(matchIdx) : 'custom');
+        const options = suggestions.map((s, i) =>
+            `<option value="${i}"${selectedVal === String(i) ? ' selected' : ''}>${escapeHtml(s.label)}</option>`).join('');
+        const noneSel = selectedVal === 'none' ? ' selected' : '';
+        const customSel = selectedVal === 'custom' ? ' selected' : '';
+        const customStyle = selectedVal === 'custom' ? '' : 'display:none;';
+        const reasonBlock = `
+            <div class="reason-group">
+                <label>Grund</label>
+                <select id="reason-select-${sid}" class="reason-select" data-med-id="${mid}" data-scheme-index="${schemeIndex}">
+                    ${options}
+                    <option value="custom"${customSel}>Anderer Grund…</option>
+                    <option value="none"${noneSel}>— kein Grund —</option>
+                </select>
+                <input type="text" id="reason-custom-${sid}" class="reason-custom" placeholder="Eigener Grund"
+                       style="${customStyle}" value="${escapeHtml(selectedVal === 'custom' ? selLabel : '')}"
+                       data-med-id="${mid}" data-scheme-index="${schemeIndex}">
+                <input type="text" id="reason-note-${sid}" class="reason-note" placeholder="Anmerkung zur Dosierung"
+                       value="${escapeHtml(existingScheme?.reasonNote || '')}"
+                       data-med-id="${mid}" data-scheme-index="${schemeIndex}">
+            </div>`;
         
         return `
             <div class="dosage-scheme-item" id="scheme-${sid}">
@@ -150,6 +175,7 @@ class TravelView {
                                class="dose-input" data-med-id="${mid}" data-scheme-index="${schemeIndex}">
                     </div>
                 </div>
+                ${reasonBlock}
                 ${schemeIndex > 0 ? `
                     <button class="btn btn-danger btn-small remove-scheme-btn" 
                             data-med-id="${mid}" data-scheme-index="${schemeIndex}">
@@ -180,6 +206,27 @@ class TravelView {
         // Dose inputs
         document.querySelectorAll('.dose-input, .scheme-date').forEach(input => {
             input.addEventListener('change', (e) => {
+                const medId = e.currentTarget.dataset.medId;
+                const schemeIndex = parseInt(e.currentTarget.dataset.schemeIndex, 10);
+                window.app.controllers.travel.updateScheme(medId, schemeIndex);
+            });
+        });
+
+        // Grund-Select
+        document.querySelectorAll('.reason-select').forEach((el) => {
+            el.addEventListener('change', (e) => {
+                const medId = e.currentTarget.dataset.medId;
+                const schemeIndex = parseInt(e.currentTarget.dataset.schemeIndex, 10);
+                const sid = `${medId}-${schemeIndex}`;
+                const custom = document.getElementById(`reason-custom-${sid}`);
+                if (custom) custom.style.display = e.currentTarget.value === 'custom' ? '' : 'none';
+                window.app.controllers.travel.updateScheme(medId, schemeIndex);
+            });
+        });
+
+        // Eigener Grund + Anmerkung
+        document.querySelectorAll('.reason-custom, .reason-note').forEach((el) => {
+            el.addEventListener('change', (e) => {
                 const medId = e.currentTarget.dataset.medId;
                 const schemeIndex = parseInt(e.currentTarget.dataset.schemeIndex, 10);
                 window.app.controllers.travel.updateScheme(medId, schemeIndex);
