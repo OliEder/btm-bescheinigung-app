@@ -271,7 +271,9 @@ class DosageScheme {
         this.noon = data.noon || 0;
         this.evening = data.evening || 0;
         this.night = data.night || 0;
-        this.notes = data.notes || '';
+        this.reasonLabel = data.reasonLabel || '';
+        this.reasonIcd10 = data.reasonIcd10 || '';
+        this.reasonNote = data.reasonNote ?? data.notes ?? '';
     }
     
     // Getters
@@ -346,7 +348,9 @@ class DosageScheme {
             noon: this.noon,
             evening: this.evening,
             night: this.night,
-            notes: this.notes
+            reasonLabel: this.reasonLabel,
+            reasonIcd10: this.reasonIcd10,
+            reasonNote: this.reasonNote
         };
     }
     

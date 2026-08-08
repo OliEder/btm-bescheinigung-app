@@ -65,3 +65,33 @@ describe('MedicationPlanBuilder — Format (TP0)', () => {
         expect(rows[0].einheit).toBe('Stück');
     });
 });
+
+describe('MedicationPlanBuilder — Grund/ICD (Grund/ICD-UI)', () => {
+    const meds = [{ id: 'm1', handelsname: 'Concerta', wirkstoff: 'Methylphenidat',
+        darreichungsform: 'Retardtablette', concentrationValue: 36, concentrationUnit: 'mg' }];
+    it('grund = Label (ICD10)', () => {
+        const s = { m1: [{ startDate: '2026-08-10', endDate: '2026-08-12',
+            morning: 1, noon: 0, evening: 0, night: 0,
+            reasonLabel: 'ADHS', reasonIcd10: 'F90.0', reasonNote: '' }] };
+        const rows = buildMedicationPlanRows(meds, s);
+        expect(rows[0].grund).toBe('ADHS (F90.0)');
+    });
+    it('grund = nur Label ohne ICD; leer ohne Grund', () => {
+        const s = { m1: [{ startDate: '2026-08-10', endDate: '2026-08-12',
+            morning: 1, noon: 0, evening: 0, night: 0,
+            reasonLabel: 'Eigen', reasonIcd10: '', reasonNote: '' }] };
+        expect(buildMedicationPlanRows(meds, s)[0].grund).toBe('Eigen');
+        const s2 = { m1: [{ startDate: '2026-08-10', endDate: '2026-08-12',
+            morning: 1, noon: 0, evening: 0, night: 0 }] };
+        expect(buildMedicationPlanRows(meds, s2)[0].grund).toBe('');
+    });
+    it('reasonNote wird an hinweise angehaengt', () => {
+        const s = { m1: [
+            { startDate: '2026-08-10', endDate: '2026-08-12', morning: 1, noon: 0, evening: 0, night: 0, reasonNote: 'Start' },
+            { startDate: '2026-08-13', endDate: '2026-08-24', morning: 2, noon: 0, evening: 0, night: 0, reasonNote: 'erhöht' },
+        ] };
+        const rows = buildMedicationPlanRows(meds, s);
+        expect(rows[0].hinweise).toContain('Start');
+        expect(rows[0].hinweise).toMatch(/·/);
+    });
+});

@@ -50,6 +50,10 @@ Auslieferbar über beliebigen Static-Host / lokal.
   Formular-Konzentration als „Wert Einheit/Bezugsmenge" (z.B. 36 mg/Tablette),
   Gesamtmenge als „X mg, entspricht Y <Form>" (Zähl-Einheit aus DosageForm.formUnit),
   leere Anmerkungen als „keine". Dosier-Notation dezimal 4-Slot (0,5-0-0,5-0).
+- Grund/ICD: reasonSuggestions (Stammdaten) -> Snapshot in MedicationInstance -> Grund-Dropdown
+  je Dosierblock -> reasonLabel/reasonIcd10/reasonNote im DosageScheme. Anzeige: Medikationsplan
+  Grund-Spalte „Label (ICD-10-GM)", reasonNote in Hinweise. BtM-Formular: nur reasonNote in
+  Anmerkungen (nie ICD/Diagnose).
 - Test: Vitest + jsdom.
 
 ## 9. Architekturentscheidungen

@@ -81,13 +81,28 @@ class TravelController {
             startDate = lastEndDate.toISOString().split('T')[0];
         }
         
+        let reasonLabel = '';
+        let reasonIcd10 = '';
+        if (schemes.length > 0) {
+            const prev = schemes[schemes.length - 1];
+            reasonLabel = prev.reasonLabel || '';
+            reasonIcd10 = prev.reasonIcd10 || '';
+        } else {
+            const inst = this.model.data.selectedMedications.find((m) => m.id === medicationId);
+            const first = inst?.reasonSuggestions?.[0];
+            if (first) { reasonLabel = first.label; reasonIcd10 = first.icd10; }
+        }
+
         schemes.push({
             startDate: startDate,
             endDate: this.model.data.travelData.end,
             morning: 0,
             noon: 0,
             evening: 0,
-            night: 0
+            night: 0,
+            reasonLabel,
+            reasonIcd10,
+            reasonNote: '',
         });
         
         this.model.data.dosageSchemes[medicationId] = schemes;
@@ -113,15 +128,33 @@ class TravelController {
     
     updateScheme(medicationId, schemeIndex) {
         const schemeId = `${medicationId}-${schemeIndex}`;
+        const val = (id) => document.getElementById(id)?.value ?? '';
+        const reasonSelect = document.getElementById(`reason-select-${schemeId}`);
+        const reasonSelectVal = reasonSelect ? reasonSelect.value : 'none';
+        const suggestions = (this.model.data.selectedMedications
+            .find((m) => m.id === medicationId)?.reasonSuggestions) || [];
+
+        let reasonLabel = '';
+        let reasonIcd10 = '';
+        if (reasonSelectVal === 'custom') {
+            reasonLabel = val(`reason-custom-${schemeId}`);
+        } else if (reasonSelectVal !== 'none' && reasonSelectVal !== '') {
+            const s = suggestions[Number(reasonSelectVal)];
+            if (s) { reasonLabel = s.label; reasonIcd10 = s.icd10; }
+        }
+
         const scheme = {
-            startDate: document.getElementById(`scheme-start-${schemeId}`).value,
-            endDate: document.getElementById(`scheme-end-${schemeId}`).value,
-            morning: parseInt(document.getElementById(`dose-morning-${schemeId}`).value) || 0,
-            noon: parseInt(document.getElementById(`dose-noon-${schemeId}`).value) || 0,
-            evening: parseInt(document.getElementById(`dose-evening-${schemeId}`).value) || 0,
-            night: parseInt(document.getElementById(`dose-night-${schemeId}`).value) || 0
+            startDate: val(`scheme-start-${schemeId}`),
+            endDate: val(`scheme-end-${schemeId}`),
+            morning: parseInt(val(`dose-morning-${schemeId}`)) || 0,
+            noon: parseInt(val(`dose-noon-${schemeId}`)) || 0,
+            evening: parseInt(val(`dose-evening-${schemeId}`)) || 0,
+            night: parseInt(val(`dose-night-${schemeId}`)) || 0,
+            reasonLabel,
+            reasonIcd10,
+            reasonNote: val(`reason-note-${schemeId}`),
         };
-        
+
         this.model.updateDosageScheme(medicationId, schemeIndex, scheme);
     }
 }

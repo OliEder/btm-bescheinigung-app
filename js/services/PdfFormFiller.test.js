@@ -80,3 +80,38 @@ describe('fillCertificate — Formatkorrekturen (TP0)', () => {
         expect(g('Anmerkungen')).toBe('keine');
     });
 });
+
+describe('fillCertificate — reasonNote in Anmerkungen (Grund/ICD-UI)', () => {
+    const read = async (data) => {
+        const bytes = await fillCertificate(templateBytes, { ...data, flatten: false });
+        const form = (await PDFDocument.load(bytes)).getForm();
+        return (n) => { try { return form.getTextField(n).getText() || ''; } catch { return ''; } };
+    };
+    it('reasonNote landet in Anmerkungen, ICD/Label nicht', async () => {
+        const blocks = [{ startDate: '2026-08-10', endDate: '2026-08-24',
+            morning: 1, noon: 0, evening: 1, night: 0,
+            reasonLabel: 'ADHS', reasonIcd10: 'F90.0', reasonNote: 'Titration' }];
+        const g = await read({ patient, doctor, travel, medication, blocks });
+        expect(g('Anmerkungen')).toContain('Titration');
+        expect(g('Anmerkungen')).not.toContain('F90.0');
+        expect(g('Anmerkungen')).not.toContain('ADHS');
+    });
+    it('ohne reasonNote und ohne Titration -> keine', async () => {
+        const blocks = [{ startDate: '2026-08-10', endDate: '2026-08-13',
+            morning: 1, noon: 0, evening: 1, night: 0 }];
+        const g = await read({ patient, doctor, travel, medication, blocks });
+        expect(g('Anmerkungen')).toBe('keine');
+    });
+
+    it('dedupliziert reasonNotes und ignoriert Whitespace-only', async () => {
+        const blocks = [
+            { startDate: '2026-08-10', endDate: '2026-08-13', morning: 1, noon: 0, evening: 0, night: 0, reasonNote: 'Titration' },
+            { startDate: '2026-08-14', endDate: '2026-08-17', morning: 2, noon: 0, evening: 0, night: 0, reasonNote: 'Titration' },
+            { startDate: '2026-08-18', endDate: '2026-08-24', morning: 3, noon: 0, evening: 0, night: 0, reasonNote: '   ' },
+        ];
+        const g = await read({ patient, doctor, travel, medication, blocks });
+        const anm = g('Anmerkungen');
+        // 'Titration' nur einmal (dedupliziert), Whitespace-only-Note ignoriert
+        expect(anm.match(/Titration/g)).toHaveLength(1);
+    });
+});

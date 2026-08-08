@@ -12,6 +12,17 @@ function ddmm(dateStr) {
     return `${String(d.getDate()).padStart(2, '0')}.${String(d.getMonth() + 1).padStart(2, '0')}.`;
 }
 
+function grundText(b) {
+    const label = b.reasonLabel || '';
+    if (!label) return '';
+    return b.reasonIcd10 ? `${label} (${b.reasonIcd10})` : label;
+}
+function hinweisText(zeitraum, b) {
+    const note = b.reasonNote || '';
+    if (zeitraum && note) return `${zeitraum} · ${note}`;
+    return zeitraum || note;
+}
+
 // Einheit aus der Darreichungsform ableiten (BMP-Spalte "Einheit").
 function unitForForm(form) {
     const f = (form || '').toLowerCase();
@@ -56,8 +67,8 @@ export function buildMedicationPlanRows(medications, dosageSchemes) {
                 abends: formatNumber(b.evening ?? 0),
                 nachts: formatNumber(b.night ?? 0),
                 einheit: unitForForm(form),
-                hinweise: zeitraum,
-                grund: '',
+                hinweise: hinweisText(zeitraum, b),
+                grund: grundText(b),
             });
         }
     }
