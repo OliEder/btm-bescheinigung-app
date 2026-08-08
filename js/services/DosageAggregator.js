@@ -1,4 +1,5 @@
 import { DateHelper } from '../utils/DateHelper.js';
+import { formatNumber } from '../utils/NumberFormat.js';
 
 // Aggregiert mehrere Dosierbloecke (Titrations-/Eindosierungsschema) fuer die
 // einzeiligen Felder des amtlichen Formulars.
@@ -12,8 +13,10 @@ function blockDays(block) {
 }
 
 function notation(block) {
-    const base = `${block.morning || 0}-${block.noon || 0}-${block.evening || 0}`;
-    return (block.night || 0) > 0 ? `${base}-${block.night}` : base;
+    // Immer 4 Slots (morgens-mittags-abends-nachts), dezimal mit Komma.
+    return [block.morning, block.noon, block.evening, block.night]
+        .map((v) => formatNumber(v || 0))
+        .join('-');
 }
 
 function ddmm(dateStr) {
@@ -24,10 +27,15 @@ function ddmm(dateStr) {
 }
 
 export const DosageAggregator = {
-    /** Σ (Tage_i * Tagesdosis_i) * concentrationValue, gerundet. */
+    /** Σ über alle Bloecke (Tage_i * Tagesdosis_i). */
+    totalUnits(blocks) {
+        return blocks.reduce((sum, b) => sum + blockDays(b) * dailyDose(b), 0);
+    },
+
+    /** Gesamtwirkstoffmenge = totalUnits * concentrationValue, auf 2 NK gerundet. */
     totalSubstance(blocks, concentrationValue) {
-        const units = blocks.reduce((sum, b) => sum + blockDays(b) * dailyDose(b), 0);
-        return Math.round(units * concentrationValue);
+        const raw = this.totalUnits(blocks) * concentrationValue;
+        return Math.round((raw + Number.EPSILON) * 100) / 100;
     },
 
     /** Tage vom Start des ersten bis Ende des letzten Blocks (inkl.). */

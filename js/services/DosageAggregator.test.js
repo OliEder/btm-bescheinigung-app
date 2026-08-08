@@ -16,14 +16,37 @@ describe('DosageAggregator', () => {
     it('berechnet Reichdauer = erster Start bis letztes Ende (inkl.)', () => {
         expect(DosageAggregator.reachDurationDays(blocks)).toBe(15);
     });
-    it('baut kompakte Gebrauchsanweisungs-Kette bei mehreren Bloecken', () => {
-        expect(DosageAggregator.instructionChain(blocks)).toBe('1-0-0 -> 1-0-1 -> 2-0-1');
+    it('baut kompakte Gebrauchsanweisungs-Kette bei mehreren Bloecken (4-Slot)', () => {
+        expect(DosageAggregator.instructionChain(blocks)).toBe('1-0-0-0 -> 1-0-1-0 -> 2-0-1-0');
     });
-    it('einzelner Block: schlichte Notation ohne Kette', () => {
-        expect(DosageAggregator.instructionChain([blocks[1]])).toBe('1-0-1');
+    it('einzelner Block: schlichte Notation ohne Kette (4-Slot)', () => {
+        expect(DosageAggregator.instructionChain([blocks[1]])).toBe('1-0-1-0');
     });
-    it('ausfuehrliches Schema mit Datumsangaben fuer Anmerkungen', () => {
+    it('ausfuehrliches Schema mit Datumsangaben fuer Anmerkungen (4-Slot)', () => {
         expect(DosageAggregator.detailedSchedule(blocks))
-            .toBe('10.08.-11.08.: 1-0-0 | 12.08.-13.08.: 1-0-1 | 14.08.-24.08.: 2-0-1');
+            .toBe('10.08.-11.08.: 1-0-0-0 | 12.08.-13.08.: 1-0-1-0 | 14.08.-24.08.: 2-0-1-0');
+    });
+});
+
+describe('DosageAggregator.totalUnits', () => {
+    it('summiert Einnahme-Einheiten ueber alle Bloecke', () => {
+        // Block1: 2 Tage * 1 = 2 ; Block2: 2 Tage * 2 = 4 ; Block3: 11 Tage * 3 = 33 => 39
+        expect(DosageAggregator.totalUnits(blocks)).toBe(39);
+    });
+    it('unterstuetzt Bruchteil-Tagesdosen', () => {
+        const frac = [{ startDate: '2026-08-10', endDate: '2026-08-19',
+            morning: 0.5, noon: 0, evening: 0.5, night: 0 }]; // 10 Tage * 1.0 = 10
+        expect(DosageAggregator.totalUnits(frac)).toBe(10);
+        const frac2 = [{ startDate: '2026-08-10', endDate: '2026-08-19',
+            morning: 0.5, noon: 0, evening: 0, night: 0 }]; // 10 Tage * 0.5 = 5
+        expect(DosageAggregator.totalUnits(frac2)).toBe(5);
+    });
+});
+
+describe('DosageAggregator Notation (dezimal, 4-Slot)', () => {
+    it('schreibt Bruchteile mit Komma und immer 4 Slots', () => {
+        const b = [{ startDate: '2026-08-10', endDate: '2026-08-11',
+            morning: 0.5, noon: 0, evening: 0.5, night: 0 }];
+        expect(DosageAggregator.instructionChain(b)).toBe('0,5-0-0,5-0');
     });
 });

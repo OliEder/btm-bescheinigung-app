@@ -53,3 +53,15 @@ describe('buildMedicationPlan (PDF)', () => {
         expect(bytes.byteLength).toBeGreaterThan(500);
     });
 });
+
+describe('MedicationPlanBuilder — Format (TP0)', () => {
+    it('formatiert Bruchteil-Dosen mit Komma und Einheit', () => {
+        const m = [{ id: 'x', handelsname: 'Test', wirkstoff: 'W',
+            darreichungsform: 'Tablette', concentrationValue: 10, concentrationUnit: 'mg' }];
+        const s = { x: [{ startDate: '2026-08-10', endDate: '2026-08-12',
+            morning: 0.5, noon: 0, evening: 0, night: 0 }] };
+        const rows = buildMedicationPlanRows(m, s);
+        expect(rows[0].morgens).toBe('0,5');
+        expect(rows[0].einheit).toBe('Stück');
+    });
+});

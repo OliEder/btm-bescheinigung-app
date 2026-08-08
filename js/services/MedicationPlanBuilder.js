@@ -1,5 +1,6 @@
 import { PDFDocument, StandardFonts, rgb } from 'pdf-lib';
 import { DateHelper } from '../utils/DateHelper.js';
+import { formatNumber } from '../utils/NumberFormat.js';
 
 // Bundeseinheitlicher Medikationsplan (BMP) angelehnt an § 31a Abs. 4 Satz 1 SGB V.
 // Spalten je Zeile: Wirkstoff, Handelsname, Staerke, Form, morgens, mittags,
@@ -50,10 +51,10 @@ export function buildMedicationPlanRows(medications, dosageSchemes) {
             const zeitraum = multi ? `${ddmm(b.startDate)}–${ddmm(b.endDate)}` : '';
             rows.push({
                 wirkstoff, handelsname: name, staerke, form,
-                morgens: String(b.morning ?? 0),
-                mittags: String(b.noon ?? 0),
-                abends: String(b.evening ?? 0),
-                nachts: String(b.night ?? 0),
+                morgens: formatNumber(b.morning ?? 0),
+                mittags: formatNumber(b.noon ?? 0),
+                abends: formatNumber(b.evening ?? 0),
+                nachts: formatNumber(b.night ?? 0),
                 einheit: unitForForm(form),
                 hinweise: zeitraum,
                 grund: '',

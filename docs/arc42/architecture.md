@@ -22,7 +22,8 @@ FHIR-angelehnte Flatfile-Medikamenten-DB hinter einem Repository-Interface.
 - Models: Patient, Doctor, Medication, MedicationInstance, DosageScheme, DataStore
 - Repositories: MedicationRepository
 - Services: PdfFormFiller, DosageAggregator, Migration, MedicationPlanBuilder (BMP nach § 31a Abs. 4 SGB V)
-- Utils: Sanitize, Obfuscate, Validator, DateHelper
+- Utils: Sanitize, Obfuscate, Validator, DateHelper, NumberFormat (deutsche
+  Zahlenformatierung), DosageForm (Bezugseinheit aus Darreichungsform)
 - Views / Controllers: pro Domäne
 
 ## 6. Laufzeitsicht
@@ -44,6 +45,10 @@ Auslieferbar über beliebigen Static-Host / lokal.
     (element.dataset), nie per String-Interpolation. IDs sind UUID-Strings (kein parseInt/parseFloat).
 - Persistenz: sessionStorage (flüchtig, obfuskiert via Obfuscate.js = Base64+Shift,
   kein Krypto) + Datei-Export im gleichen Format (Nutzerhoheit über Ablageort).
+- Mengen/Dosen: einheitlich über formatNumber() (Dezimalkomma, bis 2 Nachkommastellen).
+  Formular-Konzentration als „Wert Einheit/Bezugsmenge" (z.B. 36 mg/Tablette),
+  Gesamtmenge als „X mg, entspricht Y <Form>" (Zähl-Einheit aus DosageForm.formUnit),
+  leere Anmerkungen als „keine". Dosier-Notation dezimal 4-Slot (0,5-0-0,5-0).
 - Test: Vitest + jsdom.
 
 ## 9. Architekturentscheidungen
