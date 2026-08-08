@@ -1,4 +1,6 @@
 import { escapeHtml } from '../utils/Sanitize.js';
+import { WEEKDAYS } from '../utils/Weekdays.js';
+import { detectDeviations } from '../services/DosageDeviation.js';
 
 class TravelView {
     constructor() {
@@ -94,11 +96,19 @@ class TravelView {
                         <button class="btn btn-secondary btn-small add-scheme-btn" data-med-id="${escapeHtml(med.id)}">
                             + Weiteres Schema hinzufügen
                         </button>
+                        <div class="deviation-hint" id="deviation-${escapeHtml(med.id)}"></div>
                     </div>
                 </div>
             `;
         }).join('');
         
+        selectedMedications.forEach((med) => {
+            const el = document.getElementById(`deviation-${med.id}`);
+            if (!el) return;
+            const hints = detectDeviations(dosageSchemes[med.id] || [], travelData);
+            el.textContent = hints.length ? `ℹ️ ${hints.join(' | ')}` : '';
+        });
+
         // Bind events for scheme management
         this.bindSchemeEvents();
     }
@@ -133,6 +143,16 @@ class TravelView {
                        value="${escapeHtml(existingScheme?.reasonNote || '')}"
                        data-med-id="${mid}" data-scheme-index="${schemeIndex}">
             </div>`;
+
+        const wd = existingScheme?.weekdays || [];
+        const nichtTaeglich = wd.length > 0 && wd.length < 7;
+        const cbs = WEEKDAYS.map((w) =>
+            `<label class="weekday-label"><input type="checkbox" class="weekday-cb-${sid}" value="${w}"${(!nichtTaeglich || wd.includes(w)) ? ' checked' : ''} data-med-id="${mid}" data-scheme-index="${schemeIndex}"> ${w}</label>`).join('');
+        const weekdayBlock = `
+            <div class="weekday-group">
+                <label><input type="checkbox" id="weekday-toggle-${sid}" class="weekday-toggle"${nichtTaeglich ? ' checked' : ''} data-med-id="${mid}" data-scheme-index="${schemeIndex}"> Nicht täglich einnehmen</label>
+                <div class="weekday-days" id="weekday-days-${sid}" style="${nichtTaeglich ? '' : 'display:none;'}">${cbs}</div>
+            </div>`;
         
         return `
             <div class="dosage-scheme-item" id="scheme-${sid}">
@@ -152,30 +172,31 @@ class TravelView {
                 <div class="dosage-input-group">
                     <div>
                         <div class="dosage-label">Morgens</div>
-                        <input type="number" min="0" max="10" value="${escapeHtml(scheme.morning)}" 
+                        <input type="number" min="0" max="10" step="0.25" value="${escapeHtml(scheme.morning)}" 
                                id="dose-morning-${sid}" 
                                class="dose-input" data-med-id="${mid}" data-scheme-index="${schemeIndex}">
                     </div>
                     <div>
                         <div class="dosage-label">Mittags</div>
-                        <input type="number" min="0" max="10" value="${escapeHtml(scheme.noon)}" 
+                        <input type="number" min="0" max="10" step="0.25" value="${escapeHtml(scheme.noon)}" 
                                id="dose-noon-${sid}"
                                class="dose-input" data-med-id="${mid}" data-scheme-index="${schemeIndex}">
                     </div>
                     <div>
                         <div class="dosage-label">Abends</div>
-                        <input type="number" min="0" max="10" value="${escapeHtml(scheme.evening)}" 
+                        <input type="number" min="0" max="10" step="0.25" value="${escapeHtml(scheme.evening)}" 
                                id="dose-evening-${sid}"
                                class="dose-input" data-med-id="${mid}" data-scheme-index="${schemeIndex}">
                     </div>
                     <div>
                         <div class="dosage-label">Nachts</div>
-                        <input type="number" min="0" max="10" value="${escapeHtml(scheme.night)}" 
+                        <input type="number" min="0" max="10" step="0.25" value="${escapeHtml(scheme.night)}" 
                                id="dose-night-${sid}"
                                class="dose-input" data-med-id="${mid}" data-scheme-index="${schemeIndex}">
                     </div>
                 </div>
                 ${reasonBlock}
+                ${weekdayBlock}
                 ${schemeIndex > 0 ? `
                     <button class="btn btn-danger btn-small remove-scheme-btn" 
                             data-med-id="${mid}" data-scheme-index="${schemeIndex}">
@@ -226,6 +247,23 @@ class TravelView {
 
         // Eigener Grund + Anmerkung
         document.querySelectorAll('.reason-custom, .reason-note').forEach((el) => {
+            el.addEventListener('change', (e) => {
+                const medId = e.currentTarget.dataset.medId;
+                const schemeIndex = parseInt(e.currentTarget.dataset.schemeIndex, 10);
+                window.app.controllers.travel.updateScheme(medId, schemeIndex);
+            });
+        });
+
+        document.querySelectorAll('.weekday-toggle').forEach((el) => {
+            el.addEventListener('change', (e) => {
+                const medId = e.currentTarget.dataset.medId;
+                const schemeIndex = parseInt(e.currentTarget.dataset.schemeIndex, 10);
+                const days = document.getElementById(`weekday-days-${medId}-${schemeIndex}`);
+                if (days) days.style.display = e.currentTarget.checked ? '' : 'none';
+                window.app.controllers.travel.updateScheme(medId, schemeIndex);
+            });
+        });
+        document.querySelectorAll('[class^="weekday-cb-"]').forEach((el) => {
             el.addEventListener('change', (e) => {
                 const medId = e.currentTarget.dataset.medId;
                 const schemeIndex = parseInt(e.currentTarget.dataset.schemeIndex, 10);
