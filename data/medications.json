@@ -2063,5 +2063,1970 @@
         }
       }
     ]
+  },
+  {
+    "resourceType": "Medication",
+    "id": "mst-continus-10mg",
+    "substanceId": "morphin",
+    "productFamily": "MST Continus",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "N02AA01"
+        }
+      ],
+      "text": "MST Continus 10 mg Retardtablette"
+    },
+    "form": {
+      "text": "Retardtablette"
+    },
+    "btmStatus": "btm",
+    "btmCategory": "BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Morphin"
+        },
+        "strength": {
+          "numerator": {
+            "value": 10,
+            "unit": "mg"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Tablette"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "resourceType": "Medication",
+    "id": "mst-continus-30mg",
+    "substanceId": "morphin",
+    "productFamily": "MST Continus",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "N02AA01"
+        }
+      ],
+      "text": "MST Continus 30 mg Retardtablette"
+    },
+    "form": {
+      "text": "Retardtablette"
+    },
+    "btmStatus": "btm",
+    "btmCategory": "BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Morphin"
+        },
+        "strength": {
+          "numerator": {
+            "value": 30,
+            "unit": "mg"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Tablette"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "resourceType": "Medication",
+    "id": "mst-continus-60mg",
+    "substanceId": "morphin",
+    "productFamily": "MST Continus",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "N02AA01"
+        }
+      ],
+      "text": "MST Continus 60 mg Retardtablette"
+    },
+    "form": {
+      "text": "Retardtablette"
+    },
+    "btmStatus": "btm",
+    "btmCategory": "BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Morphin"
+        },
+        "strength": {
+          "numerator": {
+            "value": 60,
+            "unit": "mg"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Tablette"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "resourceType": "Medication",
+    "id": "mst-continus-100mg",
+    "substanceId": "morphin",
+    "productFamily": "MST Continus",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "N02AA01"
+        }
+      ],
+      "text": "MST Continus 100 mg Retardtablette"
+    },
+    "form": {
+      "text": "Retardtablette"
+    },
+    "btmStatus": "btm",
+    "btmCategory": "BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Morphin"
+        },
+        "strength": {
+          "numerator": {
+            "value": 100,
+            "unit": "mg"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Tablette"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "resourceType": "Medication",
+    "id": "mst-continus-200mg",
+    "substanceId": "morphin",
+    "productFamily": "MST Continus",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "N02AA01"
+        }
+      ],
+      "text": "MST Continus 200 mg Retardtablette"
+    },
+    "form": {
+      "text": "Retardtablette"
+    },
+    "btmStatus": "btm",
+    "btmCategory": "BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Morphin"
+        },
+        "strength": {
+          "numerator": {
+            "value": 200,
+            "unit": "mg"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Tablette"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "resourceType": "Medication",
+    "id": "sevredol-10mg",
+    "substanceId": "morphin",
+    "productFamily": "Sevredol",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "N02AA01"
+        }
+      ],
+      "text": "Sevredol 10 mg Tablette"
+    },
+    "form": {
+      "text": "Tablette"
+    },
+    "btmStatus": "btm",
+    "btmCategory": "BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Morphin"
+        },
+        "strength": {
+          "numerator": {
+            "value": 10,
+            "unit": "mg"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Tablette"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "resourceType": "Medication",
+    "id": "sevredol-20mg",
+    "substanceId": "morphin",
+    "productFamily": "Sevredol",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "N02AA01"
+        }
+      ],
+      "text": "Sevredol 20 mg Tablette"
+    },
+    "form": {
+      "text": "Tablette"
+    },
+    "btmStatus": "btm",
+    "btmCategory": "BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Morphin"
+        },
+        "strength": {
+          "numerator": {
+            "value": 20,
+            "unit": "mg"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Tablette"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "resourceType": "Medication",
+    "id": "palladon-4mg",
+    "substanceId": "hydromorphon",
+    "productFamily": "Palladon",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "N02AA03"
+        }
+      ],
+      "text": "Palladon 4 mg Retardkapsel"
+    },
+    "form": {
+      "text": "Retardkapsel"
+    },
+    "btmStatus": "btm",
+    "btmCategory": "BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Hydromorphon"
+        },
+        "strength": {
+          "numerator": {
+            "value": 4,
+            "unit": "mg"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Kapsel"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "resourceType": "Medication",
+    "id": "palladon-8mg",
+    "substanceId": "hydromorphon",
+    "productFamily": "Palladon",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "N02AA03"
+        }
+      ],
+      "text": "Palladon 8 mg Retardkapsel"
+    },
+    "form": {
+      "text": "Retardkapsel"
+    },
+    "btmStatus": "btm",
+    "btmCategory": "BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Hydromorphon"
+        },
+        "strength": {
+          "numerator": {
+            "value": 8,
+            "unit": "mg"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Kapsel"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "resourceType": "Medication",
+    "id": "palladon-16mg",
+    "substanceId": "hydromorphon",
+    "productFamily": "Palladon",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "N02AA03"
+        }
+      ],
+      "text": "Palladon 16 mg Retardkapsel"
+    },
+    "form": {
+      "text": "Retardkapsel"
+    },
+    "btmStatus": "btm",
+    "btmCategory": "BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Hydromorphon"
+        },
+        "strength": {
+          "numerator": {
+            "value": 16,
+            "unit": "mg"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Kapsel"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "resourceType": "Medication",
+    "id": "palladon-24mg",
+    "substanceId": "hydromorphon",
+    "productFamily": "Palladon",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "N02AA03"
+        }
+      ],
+      "text": "Palladon 24 mg Retardkapsel"
+    },
+    "form": {
+      "text": "Retardkapsel"
+    },
+    "btmStatus": "btm",
+    "btmCategory": "BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Hydromorphon"
+        },
+        "strength": {
+          "numerator": {
+            "value": 24,
+            "unit": "mg"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Kapsel"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "resourceType": "Medication",
+    "id": "jurnista-4mg",
+    "substanceId": "hydromorphon",
+    "productFamily": "Jurnista",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "N02AA03"
+        }
+      ],
+      "text": "Jurnista 4 mg Retardtablette"
+    },
+    "form": {
+      "text": "Retardtablette"
+    },
+    "btmStatus": "btm",
+    "btmCategory": "BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Hydromorphon"
+        },
+        "strength": {
+          "numerator": {
+            "value": 4,
+            "unit": "mg"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Tablette"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "resourceType": "Medication",
+    "id": "jurnista-8mg",
+    "substanceId": "hydromorphon",
+    "productFamily": "Jurnista",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "N02AA03"
+        }
+      ],
+      "text": "Jurnista 8 mg Retardtablette"
+    },
+    "form": {
+      "text": "Retardtablette"
+    },
+    "btmStatus": "btm",
+    "btmCategory": "BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Hydromorphon"
+        },
+        "strength": {
+          "numerator": {
+            "value": 8,
+            "unit": "mg"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Tablette"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "resourceType": "Medication",
+    "id": "jurnista-16mg",
+    "substanceId": "hydromorphon",
+    "productFamily": "Jurnista",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "N02AA03"
+        }
+      ],
+      "text": "Jurnista 16 mg Retardtablette"
+    },
+    "form": {
+      "text": "Retardtablette"
+    },
+    "btmStatus": "btm",
+    "btmCategory": "BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Hydromorphon"
+        },
+        "strength": {
+          "numerator": {
+            "value": 16,
+            "unit": "mg"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Tablette"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "resourceType": "Medication",
+    "id": "jurnista-32mg",
+    "substanceId": "hydromorphon",
+    "productFamily": "Jurnista",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "N02AA03"
+        }
+      ],
+      "text": "Jurnista 32 mg Retardtablette"
+    },
+    "form": {
+      "text": "Retardtablette"
+    },
+    "btmStatus": "btm",
+    "btmCategory": "BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Hydromorphon"
+        },
+        "strength": {
+          "numerator": {
+            "value": 32,
+            "unit": "mg"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Tablette"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "resourceType": "Medication",
+    "id": "jurnista-64mg",
+    "substanceId": "hydromorphon",
+    "productFamily": "Jurnista",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "N02AA03"
+        }
+      ],
+      "text": "Jurnista 64 mg Retardtablette"
+    },
+    "form": {
+      "text": "Retardtablette"
+    },
+    "btmStatus": "btm",
+    "btmCategory": "BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Hydromorphon"
+        },
+        "strength": {
+          "numerator": {
+            "value": 64,
+            "unit": "mg"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Tablette"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "resourceType": "Medication",
+    "id": "oxygesic-5mg",
+    "substanceId": "oxycodon",
+    "productFamily": "Oxygesic",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "N02AA05"
+        }
+      ],
+      "text": "Oxygesic 5 mg Retardtablette"
+    },
+    "form": {
+      "text": "Retardtablette"
+    },
+    "btmStatus": "btm",
+    "btmCategory": "BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Oxycodon"
+        },
+        "strength": {
+          "numerator": {
+            "value": 5,
+            "unit": "mg"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Tablette"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "resourceType": "Medication",
+    "id": "oxygesic-10mg",
+    "substanceId": "oxycodon",
+    "productFamily": "Oxygesic",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "N02AA05"
+        }
+      ],
+      "text": "Oxygesic 10 mg Retardtablette"
+    },
+    "form": {
+      "text": "Retardtablette"
+    },
+    "btmStatus": "btm",
+    "btmCategory": "BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Oxycodon"
+        },
+        "strength": {
+          "numerator": {
+            "value": 10,
+            "unit": "mg"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Tablette"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "resourceType": "Medication",
+    "id": "oxygesic-20mg",
+    "substanceId": "oxycodon",
+    "productFamily": "Oxygesic",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "N02AA05"
+        }
+      ],
+      "text": "Oxygesic 20 mg Retardtablette"
+    },
+    "form": {
+      "text": "Retardtablette"
+    },
+    "btmStatus": "btm",
+    "btmCategory": "BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Oxycodon"
+        },
+        "strength": {
+          "numerator": {
+            "value": 20,
+            "unit": "mg"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Tablette"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "resourceType": "Medication",
+    "id": "oxygesic-40mg",
+    "substanceId": "oxycodon",
+    "productFamily": "Oxygesic",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "N02AA05"
+        }
+      ],
+      "text": "Oxygesic 40 mg Retardtablette"
+    },
+    "form": {
+      "text": "Retardtablette"
+    },
+    "btmStatus": "btm",
+    "btmCategory": "BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Oxycodon"
+        },
+        "strength": {
+          "numerator": {
+            "value": 40,
+            "unit": "mg"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Tablette"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "resourceType": "Medication",
+    "id": "oxygesic-80mg",
+    "substanceId": "oxycodon",
+    "productFamily": "Oxygesic",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "N02AA05"
+        }
+      ],
+      "text": "Oxygesic 80 mg Retardtablette"
+    },
+    "form": {
+      "text": "Retardtablette"
+    },
+    "btmStatus": "btm",
+    "btmCategory": "BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Oxycodon"
+        },
+        "strength": {
+          "numerator": {
+            "value": 80,
+            "unit": "mg"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Tablette"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "resourceType": "Medication",
+    "id": "targin-5mg",
+    "substanceId": "oxycodon-naloxon",
+    "productFamily": "Targin",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "N02AA55"
+        }
+      ],
+      "text": "Targin 5 mg Retardtablette"
+    },
+    "form": {
+      "text": "Retardtablette"
+    },
+    "btmStatus": "btm",
+    "btmCategory": "BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Oxycodon + Naloxon"
+        },
+        "strength": {
+          "numerator": {
+            "value": 5,
+            "unit": "mg"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Tablette"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "resourceType": "Medication",
+    "id": "targin-10mg",
+    "substanceId": "oxycodon-naloxon",
+    "productFamily": "Targin",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "N02AA55"
+        }
+      ],
+      "text": "Targin 10 mg Retardtablette"
+    },
+    "form": {
+      "text": "Retardtablette"
+    },
+    "btmStatus": "btm",
+    "btmCategory": "BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Oxycodon + Naloxon"
+        },
+        "strength": {
+          "numerator": {
+            "value": 10,
+            "unit": "mg"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Tablette"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "resourceType": "Medication",
+    "id": "targin-20mg",
+    "substanceId": "oxycodon-naloxon",
+    "productFamily": "Targin",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "N02AA55"
+        }
+      ],
+      "text": "Targin 20 mg Retardtablette"
+    },
+    "form": {
+      "text": "Retardtablette"
+    },
+    "btmStatus": "btm",
+    "btmCategory": "BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Oxycodon + Naloxon"
+        },
+        "strength": {
+          "numerator": {
+            "value": 20,
+            "unit": "mg"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Tablette"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "resourceType": "Medication",
+    "id": "targin-40mg",
+    "substanceId": "oxycodon-naloxon",
+    "productFamily": "Targin",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "N02AA55"
+        }
+      ],
+      "text": "Targin 40 mg Retardtablette"
+    },
+    "form": {
+      "text": "Retardtablette"
+    },
+    "btmStatus": "btm",
+    "btmCategory": "BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Oxycodon + Naloxon"
+        },
+        "strength": {
+          "numerator": {
+            "value": 40,
+            "unit": "mg"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Tablette"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "resourceType": "Medication",
+    "id": "durogesic-12ugh",
+    "substanceId": "fentanyl",
+    "productFamily": "Durogesic",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "N02AB03"
+        }
+      ],
+      "text": "Durogesic 12 µg/h transdermales Pflaster"
+    },
+    "form": {
+      "text": "transdermales Pflaster"
+    },
+    "btmStatus": "btm",
+    "btmCategory": "BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Fentanyl"
+        },
+        "strength": {
+          "numerator": {
+            "value": 12,
+            "unit": "µg/h"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Pflaster"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "resourceType": "Medication",
+    "id": "durogesic-25ugh",
+    "substanceId": "fentanyl",
+    "productFamily": "Durogesic",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "N02AB03"
+        }
+      ],
+      "text": "Durogesic 25 µg/h transdermales Pflaster"
+    },
+    "form": {
+      "text": "transdermales Pflaster"
+    },
+    "btmStatus": "btm",
+    "btmCategory": "BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Fentanyl"
+        },
+        "strength": {
+          "numerator": {
+            "value": 25,
+            "unit": "µg/h"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Pflaster"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "resourceType": "Medication",
+    "id": "durogesic-50ugh",
+    "substanceId": "fentanyl",
+    "productFamily": "Durogesic",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "N02AB03"
+        }
+      ],
+      "text": "Durogesic 50 µg/h transdermales Pflaster"
+    },
+    "form": {
+      "text": "transdermales Pflaster"
+    },
+    "btmStatus": "btm",
+    "btmCategory": "BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Fentanyl"
+        },
+        "strength": {
+          "numerator": {
+            "value": 50,
+            "unit": "µg/h"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Pflaster"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "resourceType": "Medication",
+    "id": "durogesic-75ugh",
+    "substanceId": "fentanyl",
+    "productFamily": "Durogesic",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "N02AB03"
+        }
+      ],
+      "text": "Durogesic 75 µg/h transdermales Pflaster"
+    },
+    "form": {
+      "text": "transdermales Pflaster"
+    },
+    "btmStatus": "btm",
+    "btmCategory": "BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Fentanyl"
+        },
+        "strength": {
+          "numerator": {
+            "value": 75,
+            "unit": "µg/h"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Pflaster"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "resourceType": "Medication",
+    "id": "durogesic-100ugh",
+    "substanceId": "fentanyl",
+    "productFamily": "Durogesic",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "N02AB03"
+        }
+      ],
+      "text": "Durogesic 100 µg/h transdermales Pflaster"
+    },
+    "form": {
+      "text": "transdermales Pflaster"
+    },
+    "btmStatus": "btm",
+    "btmCategory": "BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Fentanyl"
+        },
+        "strength": {
+          "numerator": {
+            "value": 100,
+            "unit": "µg/h"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Pflaster"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "resourceType": "Medication",
+    "id": "effentora-100ug",
+    "substanceId": "fentanyl",
+    "productFamily": "Effentora",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "N02AB03"
+        }
+      ],
+      "text": "Effentora 100 µg Buccaltablette"
+    },
+    "form": {
+      "text": "Buccaltablette"
+    },
+    "btmStatus": "btm",
+    "btmCategory": "BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Fentanyl"
+        },
+        "strength": {
+          "numerator": {
+            "value": 100,
+            "unit": "µg"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Tablette"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "resourceType": "Medication",
+    "id": "effentora-200ug",
+    "substanceId": "fentanyl",
+    "productFamily": "Effentora",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "N02AB03"
+        }
+      ],
+      "text": "Effentora 200 µg Buccaltablette"
+    },
+    "form": {
+      "text": "Buccaltablette"
+    },
+    "btmStatus": "btm",
+    "btmCategory": "BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Fentanyl"
+        },
+        "strength": {
+          "numerator": {
+            "value": 200,
+            "unit": "µg"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Tablette"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "resourceType": "Medication",
+    "id": "effentora-400ug",
+    "substanceId": "fentanyl",
+    "productFamily": "Effentora",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "N02AB03"
+        }
+      ],
+      "text": "Effentora 400 µg Buccaltablette"
+    },
+    "form": {
+      "text": "Buccaltablette"
+    },
+    "btmStatus": "btm",
+    "btmCategory": "BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Fentanyl"
+        },
+        "strength": {
+          "numerator": {
+            "value": 400,
+            "unit": "µg"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Tablette"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "resourceType": "Medication",
+    "id": "effentora-600ug",
+    "substanceId": "fentanyl",
+    "productFamily": "Effentora",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "N02AB03"
+        }
+      ],
+      "text": "Effentora 600 µg Buccaltablette"
+    },
+    "form": {
+      "text": "Buccaltablette"
+    },
+    "btmStatus": "btm",
+    "btmCategory": "BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Fentanyl"
+        },
+        "strength": {
+          "numerator": {
+            "value": 600,
+            "unit": "µg"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Tablette"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "resourceType": "Medication",
+    "id": "effentora-800ug",
+    "substanceId": "fentanyl",
+    "productFamily": "Effentora",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "N02AB03"
+        }
+      ],
+      "text": "Effentora 800 µg Buccaltablette"
+    },
+    "form": {
+      "text": "Buccaltablette"
+    },
+    "btmStatus": "btm",
+    "btmCategory": "BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Fentanyl"
+        },
+        "strength": {
+          "numerator": {
+            "value": 800,
+            "unit": "µg"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Tablette"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "resourceType": "Medication",
+    "id": "palexia-retard-25mg",
+    "substanceId": "tapentadol",
+    "productFamily": "Palexia retard",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "N02AX06"
+        }
+      ],
+      "text": "Palexia retard 25 mg Retardtablette"
+    },
+    "form": {
+      "text": "Retardtablette"
+    },
+    "btmStatus": "btm",
+    "btmCategory": "BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Tapentadol"
+        },
+        "strength": {
+          "numerator": {
+            "value": 25,
+            "unit": "mg"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Tablette"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "resourceType": "Medication",
+    "id": "palexia-retard-50mg",
+    "substanceId": "tapentadol",
+    "productFamily": "Palexia retard",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "N02AX06"
+        }
+      ],
+      "text": "Palexia retard 50 mg Retardtablette"
+    },
+    "form": {
+      "text": "Retardtablette"
+    },
+    "btmStatus": "btm",
+    "btmCategory": "BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Tapentadol"
+        },
+        "strength": {
+          "numerator": {
+            "value": 50,
+            "unit": "mg"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Tablette"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "resourceType": "Medication",
+    "id": "palexia-retard-100mg",
+    "substanceId": "tapentadol",
+    "productFamily": "Palexia retard",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "N02AX06"
+        }
+      ],
+      "text": "Palexia retard 100 mg Retardtablette"
+    },
+    "form": {
+      "text": "Retardtablette"
+    },
+    "btmStatus": "btm",
+    "btmCategory": "BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Tapentadol"
+        },
+        "strength": {
+          "numerator": {
+            "value": 100,
+            "unit": "mg"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Tablette"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "resourceType": "Medication",
+    "id": "palexia-retard-150mg",
+    "substanceId": "tapentadol",
+    "productFamily": "Palexia retard",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "N02AX06"
+        }
+      ],
+      "text": "Palexia retard 150 mg Retardtablette"
+    },
+    "form": {
+      "text": "Retardtablette"
+    },
+    "btmStatus": "btm",
+    "btmCategory": "BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Tapentadol"
+        },
+        "strength": {
+          "numerator": {
+            "value": 150,
+            "unit": "mg"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Tablette"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "resourceType": "Medication",
+    "id": "palexia-retard-200mg",
+    "substanceId": "tapentadol",
+    "productFamily": "Palexia retard",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "N02AX06"
+        }
+      ],
+      "text": "Palexia retard 200 mg Retardtablette"
+    },
+    "form": {
+      "text": "Retardtablette"
+    },
+    "btmStatus": "btm",
+    "btmCategory": "BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Tapentadol"
+        },
+        "strength": {
+          "numerator": {
+            "value": 200,
+            "unit": "mg"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Tablette"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "resourceType": "Medication",
+    "id": "palexia-retard-250mg",
+    "substanceId": "tapentadol",
+    "productFamily": "Palexia retard",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "N02AX06"
+        }
+      ],
+      "text": "Palexia retard 250 mg Retardtablette"
+    },
+    "form": {
+      "text": "Retardtablette"
+    },
+    "btmStatus": "btm",
+    "btmCategory": "BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Tapentadol"
+        },
+        "strength": {
+          "numerator": {
+            "value": 250,
+            "unit": "mg"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Tablette"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "resourceType": "Medication",
+    "id": "valoron-n-retard-50mg",
+    "substanceId": "tilidin-naloxon",
+    "productFamily": "Valoron N retard",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "N02AX51"
+        }
+      ],
+      "text": "Valoron N retard 50 mg Retardtablette"
+    },
+    "form": {
+      "text": "Retardtablette"
+    },
+    "btmStatus": "ausgenommen",
+    "btmCategory": "Nicht-BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Tilidin + Naloxon"
+        },
+        "strength": {
+          "numerator": {
+            "value": 50,
+            "unit": "mg"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Tablette"
+          }
+        }
+      }
+    ],
+    "btmHinweis": "retardierte Form BtM-ausgenommen; nicht-retardierte Formen sind BtM-pflichtig"
+  },
+  {
+    "resourceType": "Medication",
+    "id": "valoron-n-retard-100mg",
+    "substanceId": "tilidin-naloxon",
+    "productFamily": "Valoron N retard",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "N02AX51"
+        }
+      ],
+      "text": "Valoron N retard 100 mg Retardtablette"
+    },
+    "form": {
+      "text": "Retardtablette"
+    },
+    "btmStatus": "ausgenommen",
+    "btmCategory": "Nicht-BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Tilidin + Naloxon"
+        },
+        "strength": {
+          "numerator": {
+            "value": 100,
+            "unit": "mg"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Tablette"
+          }
+        }
+      }
+    ],
+    "btmHinweis": "retardierte Form BtM-ausgenommen; nicht-retardierte Formen sind BtM-pflichtig"
+  },
+  {
+    "resourceType": "Medication",
+    "id": "valoron-n-retard-150mg",
+    "substanceId": "tilidin-naloxon",
+    "productFamily": "Valoron N retard",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "N02AX51"
+        }
+      ],
+      "text": "Valoron N retard 150 mg Retardtablette"
+    },
+    "form": {
+      "text": "Retardtablette"
+    },
+    "btmStatus": "ausgenommen",
+    "btmCategory": "Nicht-BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Tilidin + Naloxon"
+        },
+        "strength": {
+          "numerator": {
+            "value": 150,
+            "unit": "mg"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Tablette"
+          }
+        }
+      }
+    ],
+    "btmHinweis": "retardierte Form BtM-ausgenommen; nicht-retardierte Formen sind BtM-pflichtig"
+  },
+  {
+    "resourceType": "Medication",
+    "id": "valoron-n-retard-200mg",
+    "substanceId": "tilidin-naloxon",
+    "productFamily": "Valoron N retard",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "N02AX51"
+        }
+      ],
+      "text": "Valoron N retard 200 mg Retardtablette"
+    },
+    "form": {
+      "text": "Retardtablette"
+    },
+    "btmStatus": "ausgenommen",
+    "btmCategory": "Nicht-BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Tilidin + Naloxon"
+        },
+        "strength": {
+          "numerator": {
+            "value": 200,
+            "unit": "mg"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Tablette"
+          }
+        }
+      }
+    ],
+    "btmHinweis": "retardierte Form BtM-ausgenommen; nicht-retardierte Formen sind BtM-pflichtig"
+  },
+  {
+    "resourceType": "Medication",
+    "id": "norspan-5ugh",
+    "substanceId": "buprenorphin",
+    "productFamily": "Norspan",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "N02AE01"
+        }
+      ],
+      "text": "Norspan 5 µg/h transdermales Pflaster"
+    },
+    "form": {
+      "text": "transdermales Pflaster"
+    },
+    "btmStatus": "btm",
+    "btmCategory": "BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Buprenorphin"
+        },
+        "strength": {
+          "numerator": {
+            "value": 5,
+            "unit": "µg/h"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Pflaster"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "resourceType": "Medication",
+    "id": "norspan-10ugh",
+    "substanceId": "buprenorphin",
+    "productFamily": "Norspan",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "N02AE01"
+        }
+      ],
+      "text": "Norspan 10 µg/h transdermales Pflaster"
+    },
+    "form": {
+      "text": "transdermales Pflaster"
+    },
+    "btmStatus": "btm",
+    "btmCategory": "BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Buprenorphin"
+        },
+        "strength": {
+          "numerator": {
+            "value": 10,
+            "unit": "µg/h"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Pflaster"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "resourceType": "Medication",
+    "id": "norspan-15ugh",
+    "substanceId": "buprenorphin",
+    "productFamily": "Norspan",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "N02AE01"
+        }
+      ],
+      "text": "Norspan 15 µg/h transdermales Pflaster"
+    },
+    "form": {
+      "text": "transdermales Pflaster"
+    },
+    "btmStatus": "btm",
+    "btmCategory": "BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Buprenorphin"
+        },
+        "strength": {
+          "numerator": {
+            "value": 15,
+            "unit": "µg/h"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Pflaster"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "resourceType": "Medication",
+    "id": "norspan-20ugh",
+    "substanceId": "buprenorphin",
+    "productFamily": "Norspan",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "N02AE01"
+        }
+      ],
+      "text": "Norspan 20 µg/h transdermales Pflaster"
+    },
+    "form": {
+      "text": "transdermales Pflaster"
+    },
+    "btmStatus": "btm",
+    "btmCategory": "BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Buprenorphin"
+        },
+        "strength": {
+          "numerator": {
+            "value": 20,
+            "unit": "µg/h"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Pflaster"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "resourceType": "Medication",
+    "id": "norspan-30ugh",
+    "substanceId": "buprenorphin",
+    "productFamily": "Norspan",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "N02AE01"
+        }
+      ],
+      "text": "Norspan 30 µg/h transdermales Pflaster"
+    },
+    "form": {
+      "text": "transdermales Pflaster"
+    },
+    "btmStatus": "btm",
+    "btmCategory": "BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Buprenorphin"
+        },
+        "strength": {
+          "numerator": {
+            "value": 30,
+            "unit": "µg/h"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Pflaster"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "resourceType": "Medication",
+    "id": "norspan-40ugh",
+    "substanceId": "buprenorphin",
+    "productFamily": "Norspan",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "N02AE01"
+        }
+      ],
+      "text": "Norspan 40 µg/h transdermales Pflaster"
+    },
+    "form": {
+      "text": "transdermales Pflaster"
+    },
+    "btmStatus": "btm",
+    "btmCategory": "BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Buprenorphin"
+        },
+        "strength": {
+          "numerator": {
+            "value": 40,
+            "unit": "µg/h"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Pflaster"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "resourceType": "Medication",
+    "id": "temgesic-02mg",
+    "substanceId": "buprenorphin",
+    "productFamily": "Temgesic",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "N02AE01"
+        }
+      ],
+      "text": "Temgesic 0.2 mg Sublingualtablette"
+    },
+    "form": {
+      "text": "Sublingualtablette"
+    },
+    "btmStatus": "btm",
+    "btmCategory": "BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Buprenorphin"
+        },
+        "strength": {
+          "numerator": {
+            "value": 0.2,
+            "unit": "mg"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Tablette"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "resourceType": "Medication",
+    "id": "temgesic-04mg",
+    "substanceId": "buprenorphin",
+    "productFamily": "Temgesic",
+    "code": {
+      "coding": [
+        {
+          "system": "http://www.whocc.no/atc",
+          "code": "N02AE01"
+        }
+      ],
+      "text": "Temgesic 0.4 mg Sublingualtablette"
+    },
+    "form": {
+      "text": "Sublingualtablette"
+    },
+    "btmStatus": "btm",
+    "btmCategory": "BTM",
+    "ingredient": [
+      {
+        "itemCodeableConcept": {
+          "text": "Buprenorphin"
+        },
+        "strength": {
+          "numerator": {
+            "value": 0.4,
+            "unit": "mg"
+          },
+          "denominator": {
+            "value": 1,
+            "unit": "Tablette"
+          }
+        }
+      }
+    ]
   }
 ]
