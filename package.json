@@ -8,7 +8,9 @@
         "build": "webpack --mode production",
         "dev": "webpack-dev-server --mode development",
         "test": "vitest run",
-        "test:watch": "vitest"
+        "test:watch": "vitest",
+        "e2e": "playwright test",
+        "e2e:headed": "playwright test --headed"
     },
     "keywords": [
         "btm",
@@ -19,6 +21,7 @@
     "author": "Oliver-Marcus Eder",
     "license": "MIT",
     "devDependencies": {
+        "@playwright/test": "1.61.1",
         "@vitest/coverage-v8": "^2.1.9",
         "css-loader": "^6.8.1",
         "html-webpack-plugin": "^5.5.3",
