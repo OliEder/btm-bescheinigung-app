@@ -395,10 +395,10 @@ function notation(block) {
 - [ ] **Step 4: Test ausfuehren (soll bestehen)**
 
 Run: `npx vitest run js/services/DosageAggregator.test.js`
-Expected: PASS — neue + bestehende Tests. Falls ein bestehender reachDurationDays-Test die alte
-Kalenderspanne-Semantik erwartete (z.B. 15 fuer 3 lueckenlose Bloecke): bei lueckenlosen taeglichen
-Bloecken liefert intakeDaySet dieselbe Zahl (Gesamttage), pruefen und ggf. den erwarteten Wert
-auf die tatsaechlichen eindeutigen Einnahmetage aktualisieren.
+Expected: PASS — neue + bestehende Tests. Der bestehende Test `reachDurationDays(blocks) === 15`
+bleibt gruen: die drei Bloecke sind lueckenlos und taeglich (08-10..08-24 = 15 eindeutige
+Kalendertage), also liefert `intakeDaySet(...).size` weiterhin 15. Kein Bestandstest muss
+geaendert werden.
 
 - [ ] **Step 5: Volle Suite**
 
