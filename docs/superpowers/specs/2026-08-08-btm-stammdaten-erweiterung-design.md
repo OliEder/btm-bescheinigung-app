@@ -23,7 +23,8 @@ werden nur noch als Attribut geführt (als Liste, da mehrere möglich sind).
 ## Scope
 
 **In Scope:**
-- Neue zentrale Wirkstoff-Tabelle `data/substances.json` (Schlüssel `substanceId`), mit Indikationen/ICD.
+- Neue zentrale Wirkstoff-Tabelle `data/substances.json` (Schlüssel `substanceId`), mit
+  Indikationen; jede Indikation trägt `icd10` (ICD-10-GM) **und** `icd11` (WHO MMS).
 - 5 vorhandene ADHS-Wirkstoffe + 7 neue Opioid-Wirkstoffe in `substances.json`.
 - Neue Opioid-Präparate (Stärke-Resources) in `data/medications.json`.
 - Feld `substanceId` je Resource nachtragen (alle bestehenden + neuen Resources).
@@ -37,6 +38,8 @@ werden nur noch als Attribut geführt (als Liste, da mehrere möglich sind).
 
 **Out of Scope:**
 - Grund/ICD-**UI** (eigenes Folge-Teilprojekt; nutzt die hier erzeugten `reasonSuggestions`).
+  Vorgabe für dieses Folge-TP: Auf dem Medikationsplan wird in der „Grund"-Spalte **nur der
+  ICD-10-GM-Code** angezeigt (in DE verbindlich); `icd11` wird gespeichert, aber nicht gedruckt.
 - Cannabinoide (seit 01.04.2024 keine BtM mehr nach BtMG → MedCanG, kein Art.-75-Formular;
   bewusst zurückgestellt).
 - Substitutionspräparate (Methadon/Buprenorphin-Substitution), Benzodiazepine, weitere Gruppen.
@@ -55,13 +58,23 @@ UI-Gruppierung), Indikationen (2–4, laienverständliches Label + ICD-10-GM).
     "atc": ["N02AA01"],
     "atcGroup": "N02AA Natürliche Opium-Alkaloide",
     "indications": [
-      { "label": "Starke chronische Schmerzen", "icd10": "R52.2" },
-      { "label": "Tumor-/Palliativschmerz", "icd10": "C80.9" },
-      { "label": "Akute starke Schmerzen", "icd10": "R52.0" }
+      { "label": "Starke chronische Schmerzen", "icd10": "R52.2", "icd11": "MG30.0" },
+      { "label": "Tumor-/Palliativschmerz", "icd10": "C80.9", "icd11": "MG30.10" },
+      { "label": "Akute starke Schmerzen", "icd10": "R52.0", "icd11": "MG31.Z" }
     ]
   }
 }
 ```
+
+**ICD-Versionen:** Jede Indikation trägt `icd10` (ICD-10-GM, in DE verbindlich) und
+`icd11` (WHO MMS). ICD-11 ist strukturell nicht 1:1 zu ICD-10; wo kein eindeutiges
+Pendant existiert, steht in `icd11` ein Best-Match, ggf. mehrere Codes kommasepariert
+(z.B. `"6A05.2 + 6C90"` für „ADHS mit Störung des Sozialverhaltens"). `icd11` ist ein
+freier String, nicht maschinell einzeln validiert.
+
+**ICD-11-Quelle:** WHO ICD-11 MMS Browser (https://icd.who.int/browse/2025-01/mms/en)
+und Reference Guide (https://icdcdn.who.int/icd11referenceguide/en/html/index.html).
+Die deutsche ICD-11-Übersetzung (BfArM) ist noch Entwurf; verbindlich ist die englische WHO-MMS.
 
 **substanceId-Format:** kebab-case des Wirkstoffnamens, Umlaute aufgelöst, Kombinationen
 mit Bindestrich (`morphin`, `oxycodon`, `oxycodon-naloxon`, `tilidin-naloxon`, `fentanyl`,
@@ -73,11 +86,11 @@ https://www.wido.de/publikationen-produkte/analytik/arzneimittel-klassifikation/
 
 ### A1. ADHS-Wirkstoffe
 
-Indikationen einheitlich (alle ADHS-Präparate):
-- ADHS (mit Hyperaktivität) — F90.0
-- ADHS mit Störung des Sozialverhaltens — F90.1
-- ADS (Aufmerksamkeitsstörung ohne Hyperaktivität) — F98.8
-- ADHS, nicht näher bezeichnet — F90.9
+Indikationen einheitlich (alle ADHS-Präparate) — Label · ICD-10-GM · ICD-11:
+- ADHS (mit Hyperaktivität) · F90.0 · 6A05.1
+- ADHS mit Störung des Sozialverhaltens · F90.1 · 6A05.2 + 6C90
+- ADS (Aufmerksamkeitsstörung ohne Hyperaktivität) · F98.8 · 6A05.0
+- ADHS, nicht näher bezeichnet · F90.9 · 6A05.Z
 
 Einträge (substanceId → atc, atcGroup „N06BA Zentral wirkende Sympathomimetika"):
 `methylphenidat` → N06BA04 · `lisdexamfetamin` → N06BA12 · `dexamfetamin` → N06BA02 ·
@@ -90,20 +103,25 @@ ohnehin nur noch Attribut.
 
 ### A2. Opioid-Wirkstoffe (neu)
 
-| substanceId | ATC | Wirkstoff | atcGroup | Indikationen (Label — ICD-10-GM) |
-|---|---|---|---|---|
-| morphin | N02AA01 | Morphin | N02AA Natürliche Opium-Alkaloide | Starke chronische Schmerzen — R52.2 · Tumor-/Palliativschmerz — C80.9 · Akute starke Schmerzen — R52.0 |
-| hydromorphon | N02AA03 | Hydromorphon | N02AA Natürliche Opium-Alkaloide | Starke chronische Schmerzen — R52.2 · Tumor-/Palliativschmerz — C80.9 |
-| oxycodon | N02AA05 | Oxycodon | N02AA Natürliche Opium-Alkaloide | Starke chronische Schmerzen — R52.2 · Tumor-/Palliativschmerz — C80.9 |
-| oxycodon-naloxon | N02AA55 | Oxycodon + Naloxon | N02AA Natürliche Opium-Alkaloide | Starke chronische Schmerzen — R52.2 · Tumor-/Palliativschmerz — C80.9 |
-| fentanyl | N02AB03 | Fentanyl | N02AB Phenylpiperidin-Derivate | Chronische starke Schmerzen — R52.2 · Tumorschmerz — C80.9 · Durchbruchschmerz bei Tumor — R52.1 |
-| tapentadol | N02AX06 | Tapentadol | N02AX Andere Opioide | Starke chronische Schmerzen — R52.2 · Starke akute Schmerzen — R52.0 |
-| tilidin-naloxon | N02AX51 | Tilidin + Naloxon | N02AX Andere Opioide | Starke chronische Schmerzen — R52.2 · Starke akute Schmerzen — R52.0 |
-| buprenorphin | N02AE01 | Buprenorphin | N02AE Oripavin-Derivate | Mäßig starke bis starke chronische Schmerzen — R52.2 · Tumorschmerz — C80.9 |
+Indikationen je Wirkstoff (Label · ICD-10-GM · ICD-11); die Standard-Schmerz-Indikationen
+sind: „Starke chronische Schmerzen" (R52.2 · MG30.0), „Tumor-/Palliativschmerz"
+(C80.9 · MG30.10), „Akute starke Schmerzen" (R52.0 · MG31.Z), „Durchbruchschmerz bei Tumor"
+(R52.1 · MG30.10).
 
-Hinweis zu ICD: Tumorschmerz erfordert klinisch Grundleiden (C00–C97) plus Schmerzcode;
-für die Auswahlliste wird das laienverständliche Label mit einem repräsentativen Code
-(C80.9 „Bösartige Neubildung, nicht näher bezeichnet") geführt. Freitext bleibt möglich.
+| substanceId | ATC | Wirkstoff | atcGroup | Indikationen |
+|---|---|---|---|---|
+| morphin | N02AA01 | Morphin | N02AA Natürliche Opium-Alkaloide | Starke chronische Schmerzen · Tumor-/Palliativschmerz · Akute starke Schmerzen |
+| hydromorphon | N02AA03 | Hydromorphon | N02AA Natürliche Opium-Alkaloide | Starke chronische Schmerzen · Tumor-/Palliativschmerz |
+| oxycodon | N02AA05 | Oxycodon | N02AA Natürliche Opium-Alkaloide | Starke chronische Schmerzen · Tumor-/Palliativschmerz |
+| oxycodon-naloxon | N02AA55 | Oxycodon + Naloxon | N02AA Natürliche Opium-Alkaloide | Starke chronische Schmerzen · Tumor-/Palliativschmerz |
+| fentanyl | N02AB03 | Fentanyl | N02AB Phenylpiperidin-Derivate | Starke chronische Schmerzen · Tumor-/Palliativschmerz · Durchbruchschmerz bei Tumor |
+| tapentadol | N02AX06 | Tapentadol | N02AX Andere Opioide | Starke chronische Schmerzen · Akute starke Schmerzen |
+| tilidin-naloxon | N02AX51 | Tilidin + Naloxon | N02AX Andere Opioide | Starke chronische Schmerzen · Akute starke Schmerzen |
+| buprenorphin | N02AE01 | Buprenorphin | N02AE Oripavin-Derivate | Starke chronische Schmerzen · Tumor-/Palliativschmerz |
+
+Hinweis zu ICD: Tumorschmerz erfordert klinisch das Grundleiden (C00–C97) plus Schmerzcode;
+für die Auswahlliste wird das laienverständliche Label mit einem repräsentativen Code geführt
+(ICD-10-GM C80.9 bzw. ICD-11 MG30.10 „Chronic cancer pain"). Freitext bleibt möglich.
 
 ## B. Präparate in `data/medications.json` (neu)
 
@@ -192,7 +210,8 @@ getestet (Vorher/Nachher-Integritätsprüfung).
 ## Testfälle
 
 - **SubstanceRepository:** `findById('morphin').name === 'Morphin'`; `findById('morphin').atc`
-  enthält `'N02AA01'`; `indicationsFor('unbekannt') === []`; Indikationen enthalten `{label, icd10}`.
+  enthält `'N02AA01'`; `indicationsFor('unbekannt') === []`; Indikationen enthalten
+  `{label, icd10, icd11}` (jede Indikation hat beide Code-Felder).
 - **MedicationRepository-Join:** eine Morphin-Resource (substanceId `morphin`) bekommt
   `reasonSuggestions` mit „Starke chronische Schmerzen"/R52.2; eine ADHS-Resource
   (substanceId `methylphenidat`) bekommt die F90-Liste; Resource ohne `substanceId` bzw. ohne
