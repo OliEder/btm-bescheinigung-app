@@ -1,0 +1,310 @@
+{
+  "methylphenidat": {
+    "name": "Methylphenidat",
+    "atc": [
+      "N06BA04"
+    ],
+    "atcGroup": "N06BA Zentral wirkende Sympathomimetika",
+    "indications": [
+      {
+        "label": "ADHS (mit Hyperaktivität)",
+        "icd10": "F90.0",
+        "icd11": "6A05.1"
+      },
+      {
+        "label": "ADHS mit Störung des Sozialverhaltens",
+        "icd10": "F90.1",
+        "icd11": "6A05.2 + 6C90"
+      },
+      {
+        "label": "ADS (Aufmerksamkeitsstörung ohne Hyperaktivität)",
+        "icd10": "F98.8",
+        "icd11": "6A05.0"
+      },
+      {
+        "label": "ADHS, nicht näher bezeichnet",
+        "icd10": "F90.9",
+        "icd11": "6A05.Z"
+      }
+    ]
+  },
+  "lisdexamfetamin": {
+    "name": "Lisdexamfetamin",
+    "atc": [
+      "N06BA12"
+    ],
+    "atcGroup": "N06BA Zentral wirkende Sympathomimetika",
+    "indications": [
+      {
+        "label": "ADHS (mit Hyperaktivität)",
+        "icd10": "F90.0",
+        "icd11": "6A05.1"
+      },
+      {
+        "label": "ADHS mit Störung des Sozialverhaltens",
+        "icd10": "F90.1",
+        "icd11": "6A05.2 + 6C90"
+      },
+      {
+        "label": "ADS (Aufmerksamkeitsstörung ohne Hyperaktivität)",
+        "icd10": "F98.8",
+        "icd11": "6A05.0"
+      },
+      {
+        "label": "ADHS, nicht näher bezeichnet",
+        "icd10": "F90.9",
+        "icd11": "6A05.Z"
+      }
+    ]
+  },
+  "dexamfetamin": {
+    "name": "Dexamfetamin",
+    "atc": [
+      "N06BA02"
+    ],
+    "atcGroup": "N06BA Zentral wirkende Sympathomimetika",
+    "indications": [
+      {
+        "label": "ADHS (mit Hyperaktivität)",
+        "icd10": "F90.0",
+        "icd11": "6A05.1"
+      },
+      {
+        "label": "ADHS mit Störung des Sozialverhaltens",
+        "icd10": "F90.1",
+        "icd11": "6A05.2 + 6C90"
+      },
+      {
+        "label": "ADS (Aufmerksamkeitsstörung ohne Hyperaktivität)",
+        "icd10": "F98.8",
+        "icd11": "6A05.0"
+      },
+      {
+        "label": "ADHS, nicht näher bezeichnet",
+        "icd10": "F90.9",
+        "icd11": "6A05.Z"
+      }
+    ]
+  },
+  "atomoxetin": {
+    "name": "Atomoxetin",
+    "atc": [
+      "N06BA09"
+    ],
+    "atcGroup": "N06BA Zentral wirkende Sympathomimetika",
+    "indications": [
+      {
+        "label": "ADHS (mit Hyperaktivität)",
+        "icd10": "F90.0",
+        "icd11": "6A05.1"
+      },
+      {
+        "label": "ADHS mit Störung des Sozialverhaltens",
+        "icd10": "F90.1",
+        "icd11": "6A05.2 + 6C90"
+      },
+      {
+        "label": "ADS (Aufmerksamkeitsstörung ohne Hyperaktivität)",
+        "icd10": "F98.8",
+        "icd11": "6A05.0"
+      },
+      {
+        "label": "ADHS, nicht näher bezeichnet",
+        "icd10": "F90.9",
+        "icd11": "6A05.Z"
+      }
+    ]
+  },
+  "guanfacin": {
+    "name": "Guanfacin",
+    "atc": [
+      "N06BA21",
+      "C02AC02"
+    ],
+    "atcGroup": "N06BA Zentral wirkende Sympathomimetika",
+    "indications": [
+      {
+        "label": "ADHS (mit Hyperaktivität)",
+        "icd10": "F90.0",
+        "icd11": "6A05.1"
+      },
+      {
+        "label": "ADHS mit Störung des Sozialverhaltens",
+        "icd10": "F90.1",
+        "icd11": "6A05.2 + 6C90"
+      },
+      {
+        "label": "ADS (Aufmerksamkeitsstörung ohne Hyperaktivität)",
+        "icd10": "F98.8",
+        "icd11": "6A05.0"
+      },
+      {
+        "label": "ADHS, nicht näher bezeichnet",
+        "icd10": "F90.9",
+        "icd11": "6A05.Z"
+      }
+    ]
+  },
+  "morphin": {
+    "name": "Morphin",
+    "atc": [
+      "N02AA01"
+    ],
+    "atcGroup": "N02AA Natürliche Opium-Alkaloide",
+    "indications": [
+      {
+        "label": "Starke chronische Schmerzen",
+        "icd10": "R52.2",
+        "icd11": "MG30.0"
+      },
+      {
+        "label": "Tumor-/Palliativschmerz",
+        "icd10": "C80.9",
+        "icd11": "MG30.10"
+      },
+      {
+        "label": "Akute starke Schmerzen",
+        "icd10": "R52.0",
+        "icd11": "MG31.Z"
+      }
+    ]
+  },
+  "hydromorphon": {
+    "name": "Hydromorphon",
+    "atc": [
+      "N02AA03"
+    ],
+    "atcGroup": "N02AA Natürliche Opium-Alkaloide",
+    "indications": [
+      {
+        "label": "Starke chronische Schmerzen",
+        "icd10": "R52.2",
+        "icd11": "MG30.0"
+      },
+      {
+        "label": "Tumor-/Palliativschmerz",
+        "icd10": "C80.9",
+        "icd11": "MG30.10"
+      }
+    ]
+  },
+  "oxycodon": {
+    "name": "Oxycodon",
+    "atc": [
+      "N02AA05"
+    ],
+    "atcGroup": "N02AA Natürliche Opium-Alkaloide",
+    "indications": [
+      {
+        "label": "Starke chronische Schmerzen",
+        "icd10": "R52.2",
+        "icd11": "MG30.0"
+      },
+      {
+        "label": "Tumor-/Palliativschmerz",
+        "icd10": "C80.9",
+        "icd11": "MG30.10"
+      }
+    ]
+  },
+  "oxycodon-naloxon": {
+    "name": "Oxycodon + Naloxon",
+    "atc": [
+      "N02AA55"
+    ],
+    "atcGroup": "N02AA Natürliche Opium-Alkaloide",
+    "indications": [
+      {
+        "label": "Starke chronische Schmerzen",
+        "icd10": "R52.2",
+        "icd11": "MG30.0"
+      },
+      {
+        "label": "Tumor-/Palliativschmerz",
+        "icd10": "C80.9",
+        "icd11": "MG30.10"
+      }
+    ]
+  },
+  "fentanyl": {
+    "name": "Fentanyl",
+    "atc": [
+      "N02AB03"
+    ],
+    "atcGroup": "N02AB Phenylpiperidin-Derivate",
+    "indications": [
+      {
+        "label": "Starke chronische Schmerzen",
+        "icd10": "R52.2",
+        "icd11": "MG30.0"
+      },
+      {
+        "label": "Tumor-/Palliativschmerz",
+        "icd10": "C80.9",
+        "icd11": "MG30.10"
+      },
+      {
+        "label": "Durchbruchschmerz bei Tumor",
+        "icd10": "R52.1",
+        "icd11": "MG30.10"
+      }
+    ]
+  },
+  "tapentadol": {
+    "name": "Tapentadol",
+    "atc": [
+      "N02AX06"
+    ],
+    "atcGroup": "N02AX Andere Opioide",
+    "indications": [
+      {
+        "label": "Starke chronische Schmerzen",
+        "icd10": "R52.2",
+        "icd11": "MG30.0"
+      },
+      {
+        "label": "Akute starke Schmerzen",
+        "icd10": "R52.0",
+        "icd11": "MG31.Z"
+      }
+    ]
+  },
+  "tilidin-naloxon": {
+    "name": "Tilidin + Naloxon",
+    "atc": [
+      "N02AX51"
+    ],
+    "atcGroup": "N02AX Andere Opioide",
+    "indications": [
+      {
+        "label": "Starke chronische Schmerzen",
+        "icd10": "R52.2",
+        "icd11": "MG30.0"
+      },
+      {
+        "label": "Akute starke Schmerzen",
+        "icd10": "R52.0",
+        "icd11": "MG31.Z"
+      }
+    ]
+  },
+  "buprenorphin": {
+    "name": "Buprenorphin",
+    "atc": [
+      "N02AE01"
+    ],
+    "atcGroup": "N02AE Oripavin-Derivate",
+    "indications": [
+      {
+        "label": "Starke chronische Schmerzen",
+        "icd10": "R52.2",
+        "icd11": "MG30.0"
+      },
+      {
+        "label": "Tumor-/Palliativschmerz",
+        "icd10": "C80.9",
+        "icd11": "MG30.10"
+      }
+    ]
+  }
+}
