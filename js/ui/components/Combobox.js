@@ -17,7 +17,7 @@ export function combobox({ options = [], value, onChange, placeholder } = {}) {
 
   function filtered() {
     const q = query.trim().toLowerCase();
-    const src = q ? options.filter((o) => o.label.toLowerCase().includes(q)) : options;
+    const src = q ? options.filter((o) => String(o.label ?? '').toLowerCase().includes(q)) : options;
     return src.slice(0, 8);
   }
   function render() {
