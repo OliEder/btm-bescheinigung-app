@@ -64,7 +64,9 @@ Auslieferbar über beliebigen Static-Host / lokal.
   geladen über js/app.js vor dem (noch aktiven) styles.css. Bausteine für die kommenden
   Teilprojekte: js/ui/Icon.js (icon() baut inline-SVG per DOMParser, kein innerHTML) und
   js/ui/dom.js (el/on/clear/text, DOM statt Template-Strings → Escaping by construction).
-  Übergangszustand: neue Tokens neben altem Look; Optik kippt ab TP-C, styles.css entfällt in TP-F.
+  Übergangszustand: index.css lädt in TP-A nur die Variablen-Token-Dateien (optisch inert);
+  base.css (Element-Restyling: h1-h4 auf Libre Caslon, :focus-visible) wird erst in TP-C
+  importiert, damit die App in TP-A unverändert aussieht. styles.css entfällt in TP-F.
 
 ## 9. Architekturentscheidungen
 - ADR-001: pdf-lib befüllt das amtliche BfArM-017-Formular (AcroForm) und flattet es.

@@ -31,10 +31,16 @@ describe('Design-Tokens', () => {
   it('base.css setzt einen 3px Focus-Ring', () => {
     expect(read('css/tokens/base.css')).toContain('outline:3px solid var(--color-focus-ring)');
   });
-  it('index.css importiert alle Token-Dateien', () => {
+  it('index.css importiert die Variablen-Token-Dateien', () => {
     const i = read('css/tokens/index.css');
-    for (const f of ['fonts', 'colors', 'spacing', 'typography', 'elevation', 'motion', 'base']) {
+    for (const f of ['fonts', 'colors', 'spacing', 'typography', 'elevation', 'motion']) {
       expect(i).toContain(`${f}.css`);
     }
+  });
+  it('index.css lädt base.css (Element-Restyling) in TP-A NICHT — kein sichtbarer Umbruch', () => {
+    // base.css setzt echte Element-Regeln (h1-h4 auf Libre Caslon, :focus-visible).
+    // Die App hat klassenlose <h2>/<h3>/<h4>, die styles.css nicht überschreibt —
+    // ein Import würde die Optik schon jetzt ändern. base.css wird in TP-C aktiviert.
+    expect(read('css/tokens/index.css')).not.toMatch(/@import[^;]*base\.css/);
   });
 });
