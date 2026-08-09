@@ -67,6 +67,13 @@ Auslieferbar über beliebigen Static-Host / lokal.
   Übergangszustand: index.css lädt in TP-A nur die Variablen-Token-Dateien (optisch inert);
   base.css (Element-Restyling: h1-h4 auf Libre Caslon, :focus-visible) wird erst in TP-C
   importiert, damit die App in TP-A unverändert aussieht. styles.css entfällt in TP-F.
+- UI-Komponenten (TP-B): 10 präsentative/Formular-Komponenten als Vanilla-Factories
+  (js/ui/components/*, name(props)->HTMLElement via dom.js, kein innerHTML), gestylt über
+  rb-*-Klassen in css/components.css (auf TP-A-Tokens). Modal ist eine intentionale Ergänzung
+  (openModal/confirmModal/chooseModal) für den Ersatz von confirm()/prompt(). Combobox filtert
+  per Substring (includes) mit tastaturnavigierbarer Listbox; interaktive Komponenten melden
+  ihre document-Listener beim Zerstören/Schließen wieder ab. Wie die Tokens wird
+  css/components.css bewusst noch nicht global geladen (App optisch unverändert bis TP-C).
 
 ## 9. Architekturentscheidungen
 - ADR-001: pdf-lib befüllt das amtliche BfArM-017-Formular (AcroForm) und flattet es.
