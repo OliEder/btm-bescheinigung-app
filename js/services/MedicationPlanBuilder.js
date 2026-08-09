@@ -8,8 +8,9 @@ import { formatNumber } from '../utils/NumberFormat.js';
 
 function ddmm(dateStr) {
     if (!dateStr) return '';
+    // UTC-Accessoren fuer zeitzonenstabile Datumsanzeige (s. DosageAggregator.ddmm).
     const d = new Date(dateStr);
-    return `${String(d.getDate()).padStart(2, '0')}.${String(d.getMonth() + 1).padStart(2, '0')}.`;
+    return `${String(d.getUTCDate()).padStart(2, '0')}.${String(d.getUTCMonth() + 1).padStart(2, '0')}.`;
 }
 
 function grundText(b) {
