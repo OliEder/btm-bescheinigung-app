@@ -1,4 +1,8 @@
 // Main Application Class (ES-Module-Entry)
+// Design-Tokens zuerst (definieren nur Custom-Properties), dann der bestehende
+// Look. Übergangszustand von TP-A: styles.css bleibt aktiv, die Optik kippt erst
+// ab TP-C. styles.css wird in TP-F entfernt.
+import '../css/tokens/index.css';
 import '../css/styles.css';
 import medicationsData from '../data/medications.json';
 import substancesData from '../data/substances.json';
