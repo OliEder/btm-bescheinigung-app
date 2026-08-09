@@ -4,3 +4,9 @@ test-results/
 playwright-report/
 blob-report/
 .playwright/
+
+# Claude Design handoff bundle — lokale Referenz, gehört nicht in die App
+reisebescheinigung-design-system/
+Reisebescheinigung Design System-handoff.zip
+.DS_Store
+assets/schengen-bescheinigung.svg

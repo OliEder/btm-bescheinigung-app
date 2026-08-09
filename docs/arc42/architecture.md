@@ -59,6 +59,14 @@ Auslieferbar über beliebigen Static-Host / lokal.
   (Weekdays.intakeDaySet); Gesamtmenge = Σ(Einnahmetage × Dosis) × Wirkstoff. Abweichungs-Hinweise
   (DosageDeviation) in App + BtM-Anmerkungen.
 - Test: Vitest + jsdom.
+- UI-Schicht / Design-System-Fundament (TP-A): Design-Tokens als CSS-Custom-Properties
+  (css/tokens/*.css, Werte 1:1 aus dem Claude-Design-Handoff „Reisebescheinigung Design System"),
+  geladen über js/app.js vor dem (noch aktiven) styles.css. Bausteine für die kommenden
+  Teilprojekte: js/ui/Icon.js (icon() baut inline-SVG per DOMParser, kein innerHTML) und
+  js/ui/dom.js (el/on/clear/text, DOM statt Template-Strings → Escaping by construction).
+  Übergangszustand: index.css lädt in TP-A nur die Variablen-Token-Dateien (optisch inert);
+  base.css (Element-Restyling: h1-h4 auf Libre Caslon, :focus-visible) wird erst in TP-C
+  importiert, damit die App in TP-A unverändert aussieht. styles.css entfällt in TP-F.
 
 ## 9. Architekturentscheidungen
 - ADR-001: pdf-lib befüllt das amtliche BfArM-017-Formular (AcroForm) und flattet es.
@@ -71,6 +79,12 @@ Auslieferbar über beliebigen Static-Host / lokal.
   MedicationRepository (findAll/findById/search). productFamily = UI-Gruppierung
   (nicht-FHIR). MedicationInstance = Snapshot bei Erfassung. Spätere PZN-API austauschbar.
 - ADR-004: Indikationen (ICD-10-GM + ICD-11) zentral in substances.json; Join Resource->Wirkstoff über stabile substanceId (nicht ATC, da ein Wirkstoff mehrere ATC-Codes haben kann, z.B. Guanfacin N06BA21/C02AC02). MedicationRepository reichert Resources um reasonSuggestions an.
+- ADR-005: Redesign auf das „Reisebescheinigung Design System" bleibt Vanilla-JS (die JSX-Prototypen
+  sind Referenz für das visuelle Ergebnis, nicht zum Portieren); Umsetzung in Teilprojekten (TP-A…F),
+  App durchgehend lauffähig. Assets lokal statt CDN: Lucide-Icons (ISC) werden zur Build-Zeit aus
+  lucide-static@0.462.0 nach js/ui/icon-data.js generiert (scripts/generate-icons.mjs, npm run
+  generate:icons), Fonts (Work Sans, Libre Caslon Text) als woff2 selbst gehostet — Begründung:
+  Gesundheits-/BtM-PWA, keine Laufzeit-Requests an Fremd-CDNs (Datenschutz, Offline-Fähigkeit).
 
 ## 10. Qualitätsanforderungen
 Datensparsamkeit, XSS-Freiheit, korrekte Wirkstoffmengen-Aggregation, amtstreue PDF-Ausgabe.
