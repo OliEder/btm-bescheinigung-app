@@ -31,10 +31,22 @@ describe('combobox()', () => {
     document.body.appendChild(c);
     const inp = c.querySelector('input');
     inp.dispatchEvent(new Event('focus'));
-    type(inp, 'sch');
+    // 'schweiz' matcht eindeutig nur Schweizerisch (Substring-Filter, includes)
+    type(inp, 'schweiz');
     inp.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown' }));
     inp.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter' }));
     expect(fn).toHaveBeenCalledWith('Schweizerisch');
+    c.destroy(); c.remove();
+  });
+  it('filtert per Substring, nicht nur per Präfix (Design-Treue: includes)', () => {
+    const c = combobox({ options: OPTS });
+    document.body.appendChild(c);
+    const inp = c.querySelector('input');
+    inp.dispatchEvent(new Event('focus'));
+    // 'reich' kommt NICHT am Wortanfang vor -> mit startsWith wäre die Liste leer.
+    type(inp, 'reich');
+    const labels = [...c.querySelectorAll('.rb-combobox__option')].map((li) => li.textContent);
+    expect(labels).toEqual(['Österreichisch']);
     c.destroy(); c.remove();
   });
   it('Escape schließt die Liste', () => {
