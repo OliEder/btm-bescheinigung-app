@@ -1,5 +1,5 @@
-import { DateHelper } from '../utils/DateHelper.js';
 import { formatNumber } from '../utils/NumberFormat.js';
+import { countIntakeDays, intakeDaySet } from '../utils/Weekdays.js';
 
 // Aggregiert mehrere Dosierbloecke (Titrations-/Eindosierungsschema) fuer die
 // einzeiligen Felder des amtlichen Formulars.
@@ -9,20 +9,26 @@ function dailyDose(block) {
 }
 
 function blockDays(block) {
-    return DateHelper.getDaysBetween(block.startDate, block.endDate);
+    return countIntakeDays(block.startDate, block.endDate, block.weekdays);
 }
 
 function notation(block) {
     // Immer 4 Slots (morgens-mittags-abends-nachts), dezimal mit Komma.
-    return [block.morning, block.noon, block.evening, block.night]
+    const doses = [block.morning, block.noon, block.evening, block.night]
         .map((v) => formatNumber(v || 0))
         .join('-');
+    const wd = block.weekdays;
+    // Praefix nur bei echter Teilmenge (leer/0 = taeglich, 7 = alle Tage)
+    if (wd && wd.length > 0 && wd.length < 7) return `${wd.join(',')}: ${doses}`;
+    return doses;
 }
 
 function ddmm(dateStr) {
+    // UTC-Accessoren: ISO-Datumsstrings werden als UTC-Mitternacht geparst; lokale
+    // getDate()/getMonth() wuerden in negativen Zeitzonen um einen Tag verschieben.
     const d = new Date(dateStr);
-    const dd = String(d.getDate()).padStart(2, '0');
-    const mm = String(d.getMonth() + 1).padStart(2, '0');
+    const dd = String(d.getUTCDate()).padStart(2, '0');
+    const mm = String(d.getUTCMonth() + 1).padStart(2, '0');
     return `${dd}.${mm}.`;
 }
 
@@ -38,10 +44,9 @@ export const DosageAggregator = {
         return Math.round((raw + Number.EPSILON) * 100) / 100;
     },
 
-    /** Tage vom Start des ersten bis Ende des letzten Blocks (inkl.). */
+    /** Reichdauer = Anzahl eindeutiger Kalendertage mit mindestens einer Einnahme. */
     reachDurationDays(blocks) {
-        if (blocks.length === 0) return 0;
-        return DateHelper.getDaysBetween(blocks[0].startDate, blocks[blocks.length - 1].endDate);
+        return intakeDaySet(blocks).size;
     },
 
     /** Kompakte Kette der Notationen, z.B. "1-0-0 -> 1-0-1 -> 2-0-1". */

@@ -54,6 +54,10 @@ Auslieferbar über beliebigen Static-Host / lokal.
   je Dosierblock -> reasonLabel/reasonIcd10/reasonNote im DosageScheme. Anzeige: Medikationsplan
   Grund-Spalte „Label (ICD-10-GM)", reasonNote in Hinweise. BtM-Formular: nur reasonNote in
   Anmerkungen (nie ICD/Diagnose).
+- Dosierung: Bruchteile (DosageRound, 0,25-Schritte), nicht-tägliche Einnahme (weekdays je Block,
+  nur bei Abweichung gespeichert). Reisedauer = Tage im Ausland; Reichdauer = eindeutige Einnahmetage
+  (Weekdays.intakeDaySet); Gesamtmenge = Σ(Einnahmetage × Dosis) × Wirkstoff. Abweichungs-Hinweise
+  (DosageDeviation) in App + BtM-Anmerkungen.
 - Test: Vitest + jsdom.
 
 ## 9. Architekturentscheidungen

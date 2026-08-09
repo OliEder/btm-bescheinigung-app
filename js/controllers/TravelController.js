@@ -1,4 +1,6 @@
 import { AppConfig } from '../config.js';
+import { roundToQuarter } from '../utils/DosageRound.js';
+import { WEEKDAYS } from '../utils/Weekdays.js';
 
 class TravelController {
     constructor(model, view) {
@@ -143,17 +145,28 @@ class TravelController {
             if (s) { reasonLabel = s.label; reasonIcd10 = s.icd10; }
         }
 
+        const toggle = document.getElementById(`weekday-toggle-${schemeId}`);
+        let weekdays = [];
+        if (toggle && toggle.checked) {
+            const checked = [...document.querySelectorAll(`.weekday-cb-${schemeId}`)]
+                .filter((cb) => cb.checked).map((cb) => cb.value);
+            const ordered = WEEKDAYS.filter((w) => checked.includes(w));
+            if (ordered.length > 0 && ordered.length < 7) weekdays = ordered;
+        }
+
         const scheme = {
             startDate: val(`scheme-start-${schemeId}`),
             endDate: val(`scheme-end-${schemeId}`),
-            morning: parseInt(val(`dose-morning-${schemeId}`)) || 0,
-            noon: parseInt(val(`dose-noon-${schemeId}`)) || 0,
-            evening: parseInt(val(`dose-evening-${schemeId}`)) || 0,
-            night: parseInt(val(`dose-night-${schemeId}`)) || 0,
+            morning: roundToQuarter(val(`dose-morning-${schemeId}`)),
+            noon: roundToQuarter(val(`dose-noon-${schemeId}`)),
+            evening: roundToQuarter(val(`dose-evening-${schemeId}`)),
+            night: roundToQuarter(val(`dose-night-${schemeId}`)),
             reasonLabel,
             reasonIcd10,
             reasonNote: val(`reason-note-${schemeId}`),
         };
+
+        if (weekdays.length > 0) scheme.weekdays = weekdays;
 
         this.model.updateDosageScheme(medicationId, schemeIndex, scheme);
     }

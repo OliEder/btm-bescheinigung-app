@@ -13,7 +13,7 @@ describe('DosageAggregator', () => {
         // Einheiten gesamt = 39, * 36mg = 1404 mg
         expect(DosageAggregator.totalSubstance(blocks, 36)).toBe(1404);
     });
-    it('berechnet Reichdauer = erster Start bis letztes Ende (inkl.)', () => {
+    it('berechnet Reichdauer = eindeutige Einnahmetage (hier lueckenlos taeglich = 15)', () => {
         expect(DosageAggregator.reachDurationDays(blocks)).toBe(15);
     });
     it('baut kompakte Gebrauchsanweisungs-Kette bei mehreren Bloecken (4-Slot)', () => {
@@ -48,5 +48,36 @@ describe('DosageAggregator Notation (dezimal, 4-Slot)', () => {
         const b = [{ startDate: '2026-08-10', endDate: '2026-08-11',
             morning: 0.5, noon: 0, evening: 0.5, night: 0 }];
         expect(DosageAggregator.instructionChain(b)).toBe('0,5-0-0,5-0');
+    });
+});
+
+describe('DosageAggregator — nicht-taegliche Einnahme', () => {
+    const block = { startDate: '2026-08-10', endDate: '2026-08-23',
+        morning: 1, noon: 0, evening: 0, night: 0, weekdays: ['Mo', 'Di', 'So'] };
+    it('totalUnits zaehlt nur Einnahmetage (6)', () => {
+        expect(DosageAggregator.totalUnits([block])).toBe(6);
+    });
+    it('totalSubstance = Einnahmetage * Dosis * Konzentration', () => {
+        expect(DosageAggregator.totalSubstance([block], 36)).toBe(216);
+    });
+    it('reachDurationDays = eindeutige Einnahmetage (6), nicht Kalenderspanne', () => {
+        expect(DosageAggregator.reachDurationDays([block])).toBe(6);
+    });
+    it('reachDurationDays taeglich lueckenlos = Kalendertage', () => {
+        const daily = [{ startDate: '2026-08-10', endDate: '2026-08-19',
+            morning: 1, noon: 0, evening: 0, night: 0 }];
+        expect(DosageAggregator.reachDurationDays(daily)).toBe(10);
+    });
+    it('notation mit Wochentags-Praefix bei Teilmenge; ohne bei taeglich', () => {
+        expect(DosageAggregator.instructionChain([block])).toBe('Mo,Di,So: 1-0-0-0');
+        const daily = [{ startDate: '2026-08-10', endDate: '2026-08-19',
+            morning: 1, noon: 0, evening: 1, night: 0 }];
+        expect(DosageAggregator.instructionChain(daily)).toBe('1-0-1-0');
+    });
+    it('alle 7 Wochentage -> kein Praefix (wie taeglich)', () => {
+        const b = [{ startDate: '2026-08-10', endDate: '2026-08-16',
+            morning: 1, noon: 0, evening: 0, night: 0,
+            weekdays: ['Mo','Di','Mi','Do','Fr','Sa','So'] }];
+        expect(DosageAggregator.instructionChain(b)).toBe('1-0-0-0');
     });
 });
