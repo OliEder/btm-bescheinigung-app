@@ -23,4 +23,12 @@ describe('components.css', () => {
       expect(c).toContain(sel);
     }
   });
+  it('enthält Mobil-Block (@media ≤640px) mit Badges-only + 16px-Rändern', () => {
+    const c = css();
+    const idx = c.indexOf('@media (max-width: 640px)');
+    expect(idx).toBeGreaterThan(-1);
+    const mobile = c.slice(idx);
+    expect(mobile).toMatch(/\.shell-tab__label\s*\{[^}]*display:\s*none/);
+    expect(mobile).toMatch(/\.shell-header\s*\{[^}]*16px/);
+  });
 });
