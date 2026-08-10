@@ -4,19 +4,29 @@ import { DosageAggregator } from './DosageAggregator.js';
 import { formatNumber } from '../utils/NumberFormat.js';
 import { formUnit } from '../utils/DosageForm.js';
 import { detectDeviations } from './DosageDeviation.js';
+import fontkit from '@pdf-lib/fontkit';
+import { fitFontSize } from './PdfFieldFont.js';
 
 // Befuellt das amtliche BfArM-017-Formular (AcroForm) und flattet es.
 // Signatur-/Behoerdenfelder bleiben bewusst leer (per Hand/vor Ort).
 // Feldnamen entsprechen der bereinigten 32-Felder-Version (s. scripts/preprocess-form.mjs).
 
-function setField(form, name, value) {
+function setField(form, name, value, font) {
     try {
         const field = form.getTextField(name);
-        field.setText(String(value ?? ''));
-        // Auto-Groesse: lange Werte (z.B. Titel + langer Nachname, Wohnanschrift)
-        // schrumpfen, um ins Feld zu passen, statt beim Flatten abgeschnitten zu
-        // werden. setFontSize(0) = pdf-lib-Auto-Sizing.
-        field.setFontSize(0);
+        const text = String(value ?? '');
+        field.setText(text);
+        if (font) {
+            // Kontrolliertes Sizing: Standard 11pt, sonst bis 7pt, sonst Auto (0).
+            let width = 0;
+            try { width = field.acroField.getWidgets()[0].getRectangle().width; } catch { width = 0; }
+            const size = width > 0 ? fitFontSize(font, text, width) : 0;
+            field.setFontSize(size);
+            field.updateAppearances(font);
+        } else {
+            // Abwaertskompatibel: bisheriges reines Auto-Sizing (Standardschrift).
+            field.setFontSize(0);
+        }
     } catch {
         // Feld existiert nicht in dieser Formularvariante — ueberspringen.
     }
@@ -41,50 +51,58 @@ function buildInstruction(blocks, travelData) {
     return { gebrauchsanweisung, anmerkungen: append(detailed) };
 }
 
-export async function fillCertificate(templateBytes, data) {
+export async function fillCertificate(templateBytes, data, fontBytes) {
     const { patient, doctor, travel, medication, blocks = [], flatten = true } = data;
     const doc = await PDFDocument.load(templateBytes);
     const form = doc.getForm();
 
+    // Optionale Condensed-Schrift: einbetten und an setField weiterreichen.
+    let font = null;
+    if (fontBytes) {
+        doc.registerFontkit(fontkit);
+        font = await doc.embedFont(fontBytes, { subset: true });
+    }
+
     // A – Arzt: Titel + Nachname im Name-Feld (Titel ist Teil der Berufsangabe).
-    setField(form, 'Name', [doctor.title, doctor.lastname].filter(Boolean).join(' ').trim());
-    setField(form, 'Vorname', doctor.firstname);
-    setField(form, 'Telefon', doctor.phone);
-    setField(form, 'Anschrift', doctor.address);
+    setField(form, 'Name', [doctor.title, doctor.lastname].filter(Boolean).join(' ').trim(), font);
+    setField(form, 'Vorname', doctor.firstname, font);
+    setField(form, 'Telefon', doctor.phone, font);
+    setField(form, 'Anschrift', doctor.address, font);
     // Stempel des Arztes / Datum / Unterschrift des Arztes bewusst leer.
 
     // B – Patient
-    setField(form, 'Name_2', patient.lastname);
-    setField(form, 'Vorname_2', patient.firstname);
-    setField(form, 'Nr des Passes oder eines', patient.passport);
-    setField(form, 'Geburtsort', patient.birthplace);
-    setField(form, 'Geburtsdatum', DateHelper.formatDate(patient.birthdate));
-    setField(form, 'Staatsangehoerigkeit', patient.nationality);
-    setField(form, 'Geschlecht', patient.gender);
-    setField(form, 'Wohnanschrift', `${patient.street}, ${patient.zip} ${patient.city}`);
-    setField(form, 'Dauer der Reise in Tagen', travel.duration);
+    setField(form, 'Name_2', patient.lastname, font);
+    setField(form, 'Vorname_2', patient.firstname, font);
+    setField(form, 'Nr des Passes oder eines', patient.passport, font);
+    setField(form, 'Geburtsort', patient.birthplace, font);
+    setField(form, 'Geburtsdatum', DateHelper.formatDate(patient.birthdate), font);
+    setField(form, 'Staatsangehoerigkeit', patient.nationality, font);
+    setField(form, 'Geschlecht', patient.gender, font);
+    setField(form, 'Wohnanschrift', `${patient.street}, ${patient.zip} ${patient.city}`, font);
+    setField(form, 'Dauer der Reise in Tagen', travel.duration, font);
     setField(form, 'Gültigkeitsdauer der Erlaubnis vonbis max 30 Tage',
-        `${DateHelper.formatDate(travel.start)} - ${DateHelper.formatDate(travel.end)}`);
+        `${DateHelper.formatDate(travel.start)} - ${DateHelper.formatDate(travel.end)}`, font);
 
     // C – Arzneimittel
-    setField(form, 'Handelsbezeichnung oder Sonderzubereitung', medication.handelsname);
-    setField(form, 'Darreichungsform', medication.darreichungsform);
-    setField(form, 'Internationale Bezeichnung des Wirkstoffs', medication.wirkstoff);
+    setField(form, 'Handelsbezeichnung oder Sonderzubereitung', medication.handelsname, font);
+    setField(form, 'Darreichungsform', medication.darreichungsform, font);
+    setField(form, 'Internationale Bezeichnung des Wirkstoffs', medication.wirkstoff, font);
     const unit = formUnit(medication.darreichungsform);
     setField(form, 'WirkstoffKonzentration',
-        `${formatNumber(medication.concentrationValue)} ${medication.concentrationUnit}/${unit.singular}`);
+        `${formatNumber(medication.concentrationValue)} ${medication.concentrationUnit}/${unit.singular}`, font);
     const { gebrauchsanweisung, anmerkungen } = buildInstruction(blocks, travel);
-    setField(form, 'Gebrauchsanweisung', gebrauchsanweisung);
-    setField(form, 'Anmerkungen', anmerkungen);
+    setField(form, 'Gebrauchsanweisung', gebrauchsanweisung, font);
+    setField(form, 'Anmerkungen', anmerkungen, font);
     const stueck = DosageAggregator.totalUnits(blocks);
     const stueckEinheit = stueck === 1 ? unit.singular : unit.plural;
     setField(form, 'Gesamtwirkstoffmenge',
-        `${formatNumber(DosageAggregator.totalSubstance(blocks, medication.concentrationValue))} ${medication.concentrationUnit}, entspricht ${formatNumber(stueck)} ${stueckEinheit}`);
+        `${formatNumber(DosageAggregator.totalSubstance(blocks, medication.concentrationValue))} ${medication.concentrationUnit}, entspricht ${formatNumber(stueck)} ${stueckEinheit}`, font);
     setField(form, 'Reichdauer der Verschreibung in Tagen max 30 Tage',
-        `${DosageAggregator.reachDurationDays(blocks)} Tage`);
+        `${DosageAggregator.reachDurationDays(blocks)} Tage`, font);
 
     // D – Behörde (Bezeichnung/Anschrift_2/Telefon_2/Stempel/Datum_2/Unterschrift) bewusst leer.
 
+    if (font) form.updateFieldAppearances(font);
     if (flatten) form.flatten();
     return doc.save();
 }

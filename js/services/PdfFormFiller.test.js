@@ -178,3 +178,39 @@ describe('fillCertificate — Hotfix: Arzt-Titel + lange Namen', () => {
         expect(size).toBeLessThan(12);
     });
 });
+
+describe('fillCertificate — Fira Condensed + Sizing', () => {
+    const tpl = () => new Uint8Array(readFileSync('assets/reise-scheng-formular.pdf'));
+    const firaBytes = new Uint8Array(readFileSync('assets/fonts/FiraSansCondensed-Regular.ttf'));
+    const base = { patient, doctor, travel, medication, blocks, flatten: false };
+
+    const readField = async (data, fieldName) => {
+        const bytes = await fillCertificate(tpl(), data, firaBytes);
+        const form = (await (await import('pdf-lib')).PDFDocument.load(bytes)).getForm();
+        const field = form.getTextField(fieldName);
+        return { text: field.getText() || '', da: field.acroField.getDefaultAppearance() };
+    };
+
+    it('bettet Fira Condensed ein (Default Appearance referenziert die Schrift)', async () => {
+        const { da } = await readField(base, 'Name');
+        expect(da).toMatch(/FiraSansCondensed/);
+    });
+    it('kurzer Wert → Standardgröße 11pt', async () => {
+        const shortDoc = { ...doctor, title: '', lastname: 'Meier' };
+        const { text, da } = await readField({ ...base, doctor: shortDoc }, 'Name');
+        expect(text).toBe('Meier');
+        expect(da).toMatch(/\b11 Tf\b/);
+    });
+    it('sehr langer Wert → schrumpft (< 11) oder Auto (0), Wert bleibt vollständig gesetzt', async () => {
+        const longDoc = { ...doctor, title: 'Prof. Dr. med.', lastname: 'Von-Hohenzollern-Sigmaringen-Habsburg-Lothringen' };
+        const { text, da } = await readField({ ...base, doctor: longDoc }, 'Name');
+        expect(text).toBe('Prof. Dr. med. Von-Hohenzollern-Sigmaringen-Habsburg-Lothringen');
+        const size = Number((da.match(/\/\S+\s+([\d.]+)\s+Tf/) || [])[1]);
+        expect(size).toBeLessThan(11);
+    });
+    it('ohne fontBytes: bisheriges Verhalten (kein Wurf, Feld gesetzt)', async () => {
+        const bytes = await fillCertificate(tpl(), base);
+        const form = (await (await import('pdf-lib')).PDFDocument.load(bytes)).getForm();
+        expect(form.getTextField('Name').getText()).toBe('Dr. med. Aerztin');
+    });
+});
