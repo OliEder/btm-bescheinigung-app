@@ -74,6 +74,15 @@ Auslieferbar über beliebigen Static-Host / lokal.
   per Substring (includes) mit tastaturnavigierbarer Listbox; interaktive Komponenten melden
   ihre document-Listener beim Zerstören/Schließen wieder ab. Wie die Tokens wird
   css/components.css bewusst noch nicht global geladen (App optisch unverändert bis TP-C).
+- App-Shell (TP-C): js/ui/AppShell.js kapselt Header, Schritt-Tabs (Badges/Aufmerksamkeits-
+  Punkte, WAI-ARIA-Tastatur mit roving-Fokus), <main> und Footer sowie den Start-Screen;
+  js/app.js ist schlanker Orchestrator (Model/Views/Controller/Persistenz) und delegiert die
+  Navigations-UI ans Shell. js/ui/StepStatus.js leitet done/attention/todo je Schritt aus dem
+  Model ab (Header-Zähler, Tab-Badges). Ab TP-C sind css/components.css + css/tokens/base.css
+  global aktiv — die Optik ist umgestellt; styles.css bleibt bis TP-F. Footer navigiert nur;
+  „Speichern beim Weiter" folgt in TP-D/E. Übergangs-Kompromiss: AppShell.setContent nimmt
+  weiterhin den View-render()-String entgegen (einzige HTML-Injektionsstelle, isoliert über
+  <template>; Umstellung auf Nodes in TP-D/E).
 
 ## 9. Architekturentscheidungen
 - ADR-001: pdf-lib befüllt das amtliche BfArM-017-Formular (AcroForm) und flattet es.

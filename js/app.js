@@ -3,11 +3,11 @@
 // Look. Übergangszustand von TP-A: styles.css bleibt aktiv, die Optik kippt erst
 // ab TP-C. styles.css wird in TP-F entfernt.
 import '../css/tokens/index.css';
+import '../css/components.css';
 import '../css/styles.css';
 import medicationsData from '../data/medications.json';
 import substancesData from '../data/substances.json';
 
-import { AppConfig } from './config.js';
 import { DataStore } from './models/DataStore.js';
 import { MedicationRepository } from './repositories/MedicationRepository.js';
 import { SubstanceRepository } from './repositories/SubstanceRepository.js';
@@ -27,6 +27,18 @@ import { MedicationController } from './controllers/MedicationController.js';
 import { TravelController } from './controllers/TravelController.js';
 import { PDFController } from './controllers/PDFController.js';
 import { DataController } from './controllers/DataController.js';
+
+import { AppShell } from './ui/AppShell.js';
+import { stepStatus } from './ui/StepStatus.js';
+
+const SHELL_STEPS = [
+    { id: 'patient', label: 'Patient', icon: 'user' },
+    { id: 'doctor', label: 'Arzt', icon: 'stethoscope' },
+    { id: 'medication', label: 'Medikamente', icon: 'pill' },
+    { id: 'travel', label: 'Reisedaten', icon: 'plane' },
+    { id: 'certificates', label: 'Formulare', icon: 'file-text' },
+    { id: 'data', label: 'Gespeicherte Daten', icon: 'database', utility: true },
+];
 
 class BTMApp {
     constructor() {
@@ -60,22 +72,22 @@ class BTMApp {
         }
 
         // Warnung bei ungesicherten Änderungen (sessionStorage wird beim Schließen geleert).
-        this.model.subscribe(() => { this.hasUnsavedChanges = true; });
+        this.model.subscribe(() => {
+            this.hasUnsavedChanges = true;
+            if (this.shell) this.shell.setStatus(stepStatus(this.model.data));
+        });
         window.addEventListener('beforeunload', (e) => {
             if (this.hasUnsavedChanges) { e.preventDefault(); e.returnValue = ''; }
         });
     }
 
     setupNavigation() {
-        const nav = document.getElementById('navigation');
-        AppConfig.tabs.forEach(tab => {
-            const button = document.createElement('button');
-            button.className = 'nav-tab';
-            button.dataset.tab = tab.id;
-            button.textContent = tab.label;
-            button.addEventListener('click', () => this.showTab(tab.id));
-            nav.appendChild(button);
+        this.shell = new AppShell({
+            steps: SHELL_STEPS,
+            onNavigate: (id) => this.showTab(id),
+            onGenerate: () => {},
         });
+        this.shell.mount(document.getElementById('app'));
     }
 
     initializeViews() {
@@ -97,42 +109,28 @@ class BTMApp {
     }
 
     showTab(tabId) {
-        document.querySelectorAll('.nav-tab').forEach(tab => {
-            tab.classList.toggle('active', tab.dataset.tab === tabId);
-        });
-
-        const mainContent = document.getElementById('main-content');
-        mainContent.innerHTML = '';
-
+        this.shell.hideStart();
+        let html = '';
         switch (tabId) {
-            case 'patient':
-                mainContent.innerHTML = this.views.patient.render();
-                this.controllers.patient.init();
-                break;
-            case 'doctor':
-                mainContent.innerHTML = this.views.doctor.render();
-                this.controllers.doctor.init();
-                break;
-            case 'medication':
-                mainContent.innerHTML = this.views.medication.render();
-                this.controllers.medication.init();
-                break;
-            case 'travel':
-                mainContent.innerHTML = this.views.travel.render();
-                this.controllers.travel.init();
-                break;
-            case 'certificates':
-                mainContent.innerHTML = this.views.certificates.render();
-                this.controllers.pdf.init();
-                break;
-            case 'data':
-                mainContent.innerHTML = this.views.data.render();
-                this.controllers.data.init();
-                break;
-            default:
-                mainContent.innerHTML = '<div class="tab-content active"><h2>Coming Soon</h2></div>';
+            case 'patient': html = this.views.patient.render(); break;
+            case 'doctor': html = this.views.doctor.render(); break;
+            case 'medication': html = this.views.medication.render(); break;
+            case 'travel': html = this.views.travel.render(); break;
+            case 'certificates': html = this.views.certificates.render(); break;
+            case 'data': html = this.views.data.render(); break;
+            default: tabId = 'patient'; html = this.views.patient.render();
         }
-
+        this.shell.setContent(html);
+        this.shell.setActive(tabId);
+        this.shell.setStatus(stepStatus(this.model.data));
+        switch (tabId) {
+            case 'patient': this.controllers.patient.init(); break;
+            case 'doctor': this.controllers.doctor.init(); break;
+            case 'medication': this.controllers.medication.init(); break;
+            case 'travel': this.controllers.travel.init(); break;
+            case 'certificates': this.controllers.pdf.init(); break;
+            case 'data': this.controllers.data.init(); break;
+        }
         this.currentTab = tabId;
     }
 
@@ -152,42 +150,11 @@ class BTMApp {
 
     // Start-Screen: laufende Sitzung fortsetzen / neu anfangen / Datei laden.
     showStartScreen() {
-        const hasSession = this.model.hasSession();
-        const mainContent = document.getElementById('main-content');
-        document.querySelectorAll('.nav-tab').forEach((t) => t.classList.remove('active'));
-
-        mainContent.innerHTML = `
-            <div class="tab-content active start-screen">
-                <h2>Willkommen</h2>
-                <div class="alert alert-info">
-                    ℹ️ Möchten Sie eine gespeicherte Datei laden oder neu beginnen?
-                </div>
-                <div class="button-group">
-                    ${hasSession ? '<button class="btn btn-primary" id="start-continue">▶️ Laufende Sitzung fortsetzen</button>' : ''}
-                    <button class="btn btn-secondary" id="start-import">📥 Gespeicherte Datei laden</button>
-                    <button class="btn btn-secondary" id="start-new">🆕 Neu anfangen</button>
-                </div>
-            </div>
-        `;
-
-        const cont = document.getElementById('start-continue');
-        if (cont) {
-            cont.addEventListener('click', () => {
-                this.model.load();
-                this.showTab('patient');
-            });
-        }
-
-        document.getElementById('start-new').addEventListener('click', () => {
-            this.model.clearAll();
-            this.hasUnsavedChanges = false;
-            this.showTab('patient');
-        });
-
-        document.getElementById('start-import').addEventListener('click', () => {
-            // Nach erfolgreichem Import in die App wechseln.
-            this._pendingImportRedirect = true;
-            this.controllers.data.importData();
+        this.shell.showStart({
+            hasSession: this.model.hasSession(),
+            onContinue: () => { this.model.load(); this.showTab('patient'); },
+            onImport: () => { this._pendingImportRedirect = true; this.controllers.data.importData(); },
+            onNew: () => { this.model.clearAll(); this.hasUnsavedChanges = false; this.showTab('patient'); },
         });
     }
 
