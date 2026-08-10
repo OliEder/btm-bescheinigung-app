@@ -128,3 +128,28 @@ describe('AppShell.showStart', () => {
     expect(onContinue).toHaveBeenCalledTimes(1);
   });
 });
+
+describe('AppShell — Fokus & letzter Schritt (Review-Fixes)', () => {
+  it('ArrowRight verschiebt den DOM-Fokus auf den nächsten Tab (roving)', () => {
+    const root = document.createElement('div'); document.body.appendChild(root);
+    const shell = new AppShell({ steps: STEPS, onNavigate: vi.fn(), onGenerate: vi.fn() });
+    shell.mount(root);
+    shell.setActive('patient');
+    const patientTab = root.querySelector('[role=tab][data-step=patient]');
+    patientTab.focus();
+    patientTab.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true }));
+    expect(document.activeElement).toBe(root.querySelector('[role=tab][data-step=doctor]'));
+  });
+  it('auf certificates ist der Weiter-Button deaktiviert (kein wirkungsloser Klick)', () => {
+    const root = document.createElement('div'); document.body.appendChild(root);
+    const onNavigate = vi.fn();
+    const shell = new AppShell({ steps: STEPS, onNavigate, onGenerate: vi.fn() });
+    shell.mount(root);
+    shell.setActive('certificates');
+    const next = root.querySelector('[data-role=next]');
+    expect(next.disabled).toBe(true);
+    onNavigate.mockClear();
+    next.click();
+    expect(onNavigate).not.toHaveBeenCalled();
+  });
+});

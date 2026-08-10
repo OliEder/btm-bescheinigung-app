@@ -73,7 +73,13 @@ export class AppShell {
     else if (e.key === 'ArrowLeft') next = order[(idx - 1 + order.length) % order.length];
     else if (e.key === 'Home') next = order[0];
     else if (e.key === 'End') next = order[order.length - 1];
-    if (next) { e.preventDefault(); this.onNavigate(next); }
+    if (next) {
+      e.preventDefault();
+      // WAI-ARIA roving tabindex: Fokus dem neuen Tab folgen lassen.
+      const target = this.tabButtons.get(next);
+      if (target && target.btn) target.btn.focus();
+      this.onNavigate(next);
+    }
   }
 
   _buildFooter() {
@@ -134,6 +140,11 @@ export class AppShell {
     const idx = this.inputSteps.findIndex((s) => s.id === this.active);
     this.backBtn.disabled = idx <= 0;
     const isLast = this.active === 'travel';
+    // Auf dem letzten Eingabeschritt (certificates) gibt es kein "Weiter" mehr
+    // -> deaktivieren statt eines wirkungslosen Buttons.
+    const isFinal = idx === this.inputSteps.length - 1;
+    this.nextBtn.disabled = isFinal;
+    this.nextBtn.style.visibility = isFinal ? 'hidden' : '';
     this._nextLabel.textContent = isLast ? 'Bescheinigungen generieren' : 'Weiter';
     clear(this._nextIcon);
     this._nextIcon.appendChild(icon(isLast ? 'file-cog' : 'arrow-right', { size: 16 }));
