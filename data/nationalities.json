@@ -1,0 +1,1064 @@
+{
+  "_meta": {
+    "version": "2026-08-05",
+    "source": "DESTATIS/Statistisches Bundesamt (xrepository)",
+    "count": 211
+  },
+  "list": [
+    {
+      "code": "423",
+      "name": "Afghanistan",
+      "adjective": "afghanisch"
+    },
+    {
+      "code": "287",
+      "name": "Ägypten",
+      "adjective": "ägyptisch"
+    },
+    {
+      "code": "121",
+      "name": "Albanien",
+      "adjective": "albanisch"
+    },
+    {
+      "code": "221",
+      "name": "Algerien",
+      "adjective": "algerisch"
+    },
+    {
+      "code": "123",
+      "name": "Andorra",
+      "adjective": "andorranisch"
+    },
+    {
+      "code": "223",
+      "name": "Angola",
+      "adjective": "angolanisch"
+    },
+    {
+      "code": "320",
+      "name": "Antigua und Barbuda",
+      "adjective": "antiguanisch"
+    },
+    {
+      "code": "274",
+      "name": "Äquatorialguinea",
+      "adjective": "äquatorialguineisch"
+    },
+    {
+      "code": "323",
+      "name": "Argentinien",
+      "adjective": "argentinisch"
+    },
+    {
+      "code": "422",
+      "name": "Armenien",
+      "adjective": "armenisch"
+    },
+    {
+      "code": "425",
+      "name": "Aserbaidschan",
+      "adjective": "aserbaidschanisch"
+    },
+    {
+      "code": "225",
+      "name": "Äthiopien",
+      "adjective": "äthiopisch"
+    },
+    {
+      "code": "523",
+      "name": "Australien",
+      "adjective": "australisch"
+    },
+    {
+      "code": "324",
+      "name": "Bahamas",
+      "adjective": "bahamaisch"
+    },
+    {
+      "code": "424",
+      "name": "Bahrain",
+      "adjective": "bahrainisch"
+    },
+    {
+      "code": "460",
+      "name": "Bangladesch",
+      "adjective": "bangladeschisch"
+    },
+    {
+      "code": "322",
+      "name": "Barbados",
+      "adjective": "barbadisch"
+    },
+    {
+      "code": "169",
+      "name": "Belarus",
+      "adjective": "belarussisch"
+    },
+    {
+      "code": "124",
+      "name": "Belgien",
+      "adjective": "belgisch"
+    },
+    {
+      "code": "330",
+      "name": "Belize",
+      "adjective": "belizisch"
+    },
+    {
+      "code": "229",
+      "name": "Benin",
+      "adjective": "beninisch"
+    },
+    {
+      "code": "426",
+      "name": "Bhutan",
+      "adjective": "bhutanisch"
+    },
+    {
+      "code": "326",
+      "name": "Bolivien",
+      "adjective": "bolivianisch"
+    },
+    {
+      "code": "122",
+      "name": "Bosnien und Herzegowina",
+      "adjective": "bosnisch-herzegowinisch"
+    },
+    {
+      "code": "227",
+      "name": "Botsuana",
+      "adjective": "botsuanisch"
+    },
+    {
+      "code": "327",
+      "name": "Brasilien",
+      "adjective": "brasilianisch"
+    },
+    {
+      "code": "185",
+      "name": "Britische Überseegebiete",
+      "adjective": "britisch (BOTC)"
+    },
+    {
+      "code": "429",
+      "name": "Brunei Darussalam",
+      "adjective": "bruneiisch"
+    },
+    {
+      "code": "125",
+      "name": "Bulgarien",
+      "adjective": "bulgarisch"
+    },
+    {
+      "code": "258",
+      "name": "Burkina Faso",
+      "adjective": "burkinisch"
+    },
+    {
+      "code": "291",
+      "name": "Burundi",
+      "adjective": "burundisch"
+    },
+    {
+      "code": "242",
+      "name": "Cabo Verde",
+      "adjective": "cabo-verdisch"
+    },
+    {
+      "code": "332",
+      "name": "Chile",
+      "adjective": "chilenisch"
+    },
+    {
+      "code": "479",
+      "name": "China",
+      "adjective": "chinesisch"
+    },
+    {
+      "code": "334",
+      "name": "Costa Rica",
+      "adjective": "costa-ricanisch"
+    },
+    {
+      "code": "231",
+      "name": "Côte d’Ivoire",
+      "adjective": "ivorisch"
+    },
+    {
+      "code": "126",
+      "name": "Dänemark",
+      "adjective": "dänisch"
+    },
+    {
+      "code": "000",
+      "name": "Deutschland",
+      "adjective": "deutsch"
+    },
+    {
+      "code": "333",
+      "name": "Dominica",
+      "adjective": "dominicanisch"
+    },
+    {
+      "code": "335",
+      "name": "Dominikanische Republik",
+      "adjective": "dominikanisch"
+    },
+    {
+      "code": "230",
+      "name": "Dschibuti",
+      "adjective": "dschibutisch"
+    },
+    {
+      "code": "336",
+      "name": "Ecuador",
+      "adjective": "ecuadorianisch"
+    },
+    {
+      "code": "337",
+      "name": "El Salvador",
+      "adjective": "salvadorianisch"
+    },
+    {
+      "code": "224",
+      "name": "Eritrea",
+      "adjective": "eritreisch"
+    },
+    {
+      "code": "127",
+      "name": "Estland",
+      "adjective": "estnisch"
+    },
+    {
+      "code": "281",
+      "name": "Eswatini",
+      "adjective": "eswatinisch"
+    },
+    {
+      "code": "526",
+      "name": "Fidschi",
+      "adjective": "fidschianisch"
+    },
+    {
+      "code": "128",
+      "name": "Finnland",
+      "adjective": "finnisch"
+    },
+    {
+      "code": "129",
+      "name": "Frankreich",
+      "adjective": "französisch"
+    },
+    {
+      "code": "910",
+      "name": "für interne Zwecke verwendet",
+      "adjective": "–"
+    },
+    {
+      "code": "236",
+      "name": "Gabun",
+      "adjective": "gabunisch"
+    },
+    {
+      "code": "237",
+      "name": "Gambia",
+      "adjective": "gambisch"
+    },
+    {
+      "code": "430",
+      "name": "Georgien",
+      "adjective": "georgisch"
+    },
+    {
+      "code": "238",
+      "name": "Ghana",
+      "adjective": "ghanaisch"
+    },
+    {
+      "code": "340",
+      "name": "Grenada",
+      "adjective": "grenadisch"
+    },
+    {
+      "code": "134",
+      "name": "Griechenland",
+      "adjective": "griechisch"
+    },
+    {
+      "code": "345",
+      "name": "Guatemala",
+      "adjective": "guatemaltekisch"
+    },
+    {
+      "code": "261",
+      "name": "Guinea",
+      "adjective": "guineisch"
+    },
+    {
+      "code": "259",
+      "name": "Guinea-Bissau",
+      "adjective": "guinea-bissauisch"
+    },
+    {
+      "code": "328",
+      "name": "Guyana",
+      "adjective": "guyanisch"
+    },
+    {
+      "code": "346",
+      "name": "Haiti",
+      "adjective": "haitianisch"
+    },
+    {
+      "code": "347",
+      "name": "Honduras",
+      "adjective": "honduranisch"
+    },
+    {
+      "code": "411",
+      "name": "Hongkong",
+      "adjective": "chinesisch (Hongkong)"
+    },
+    {
+      "code": "436",
+      "name": "Indien",
+      "adjective": "indisch"
+    },
+    {
+      "code": "437",
+      "name": "Indonesien",
+      "adjective": "indonesisch"
+    },
+    {
+      "code": "438",
+      "name": "Irak",
+      "adjective": "irakisch"
+    },
+    {
+      "code": "439",
+      "name": "Iran",
+      "adjective": "iranisch"
+    },
+    {
+      "code": "135",
+      "name": "Irland",
+      "adjective": "irisch"
+    },
+    {
+      "code": "136",
+      "name": "Island",
+      "adjective": "isländisch"
+    },
+    {
+      "code": "441",
+      "name": "Israel",
+      "adjective": "israelisch"
+    },
+    {
+      "code": "137",
+      "name": "Italien",
+      "adjective": "italienisch"
+    },
+    {
+      "code": "355",
+      "name": "Jamaika",
+      "adjective": "jamaikanisch"
+    },
+    {
+      "code": "442",
+      "name": "Japan",
+      "adjective": "japanisch"
+    },
+    {
+      "code": "421",
+      "name": "Jemen",
+      "adjective": "jemenitisch"
+    },
+    {
+      "code": "445",
+      "name": "Jordanien",
+      "adjective": "jordanisch"
+    },
+    {
+      "code": "120",
+      "name": "Jugoslawien",
+      "adjective": "jugoslawisch"
+    },
+    {
+      "code": "138",
+      "name": "Jugoslawien, Bundesrepublik",
+      "adjective": "jugoslawisch"
+    },
+    {
+      "code": "446",
+      "name": "Kambodscha",
+      "adjective": "kambodschanisch"
+    },
+    {
+      "code": "262",
+      "name": "Kamerun",
+      "adjective": "kamerunisch"
+    },
+    {
+      "code": "348",
+      "name": "Kanada",
+      "adjective": "kanadisch"
+    },
+    {
+      "code": "444",
+      "name": "Kasachstan",
+      "adjective": "kasachisch"
+    },
+    {
+      "code": "447",
+      "name": "Katar",
+      "adjective": "katarisch"
+    },
+    {
+      "code": "243",
+      "name": "Kenia",
+      "adjective": "kenianisch"
+    },
+    {
+      "code": "450",
+      "name": "Kirgisistan",
+      "adjective": "kirgisisch"
+    },
+    {
+      "code": "530",
+      "name": "Kiribati",
+      "adjective": "kiribatisch"
+    },
+    {
+      "code": "349",
+      "name": "Kolumbien",
+      "adjective": "kolumbianisch"
+    },
+    {
+      "code": "244",
+      "name": "Komoren",
+      "adjective": "komorisch"
+    },
+    {
+      "code": "245",
+      "name": "Kongo",
+      "adjective": "kongolesisch"
+    },
+    {
+      "code": "246",
+      "name": "Kongo, Demokratische Republik",
+      "adjective": "der Demokratischen Republik Kongo"
+    },
+    {
+      "code": "434",
+      "name": "Korea, Demokratische Volksrepublik",
+      "adjective": "der Demokratischen Volksrepublik Korea"
+    },
+    {
+      "code": "467",
+      "name": "Korea, Republik",
+      "adjective": "der Republik Korea"
+    },
+    {
+      "code": "150",
+      "name": "Kosovo",
+      "adjective": "kosovarisch"
+    },
+    {
+      "code": "130",
+      "name": "Kroatien",
+      "adjective": "kroatisch"
+    },
+    {
+      "code": "351",
+      "name": "Kuba",
+      "adjective": "kubanisch"
+    },
+    {
+      "code": "448",
+      "name": "Kuwait",
+      "adjective": "kuwaitisch"
+    },
+    {
+      "code": "449",
+      "name": "Laos",
+      "adjective": "laotisch"
+    },
+    {
+      "code": "226",
+      "name": "Lesotho",
+      "adjective": "lesothisch"
+    },
+    {
+      "code": "139",
+      "name": "Lettland",
+      "adjective": "lettisch"
+    },
+    {
+      "code": "451",
+      "name": "Libanon",
+      "adjective": "libanesisch"
+    },
+    {
+      "code": "247",
+      "name": "Liberia",
+      "adjective": "liberianisch"
+    },
+    {
+      "code": "248",
+      "name": "Libyen",
+      "adjective": "libysch"
+    },
+    {
+      "code": "141",
+      "name": "Liechtenstein",
+      "adjective": "liechtensteinisch"
+    },
+    {
+      "code": "142",
+      "name": "Litauen",
+      "adjective": "litauisch"
+    },
+    {
+      "code": "143",
+      "name": "Luxemburg",
+      "adjective": "luxemburgisch"
+    },
+    {
+      "code": "412",
+      "name": "Macau",
+      "adjective": "chinesisch (Macau)"
+    },
+    {
+      "code": "249",
+      "name": "Madagaskar",
+      "adjective": "madagassisch"
+    },
+    {
+      "code": "256",
+      "name": "Malawi",
+      "adjective": "malawisch"
+    },
+    {
+      "code": "482",
+      "name": "Malaysia",
+      "adjective": "malaysisch"
+    },
+    {
+      "code": "454",
+      "name": "Malediven",
+      "adjective": "maledivisch"
+    },
+    {
+      "code": "251",
+      "name": "Mali",
+      "adjective": "malisch"
+    },
+    {
+      "code": "145",
+      "name": "Malta",
+      "adjective": "maltesisch"
+    },
+    {
+      "code": "252",
+      "name": "Marokko",
+      "adjective": "marokkanisch"
+    },
+    {
+      "code": "544",
+      "name": "Marshallinseln",
+      "adjective": "marshallisch"
+    },
+    {
+      "code": "239",
+      "name": "Mauretanien",
+      "adjective": "mauretanisch"
+    },
+    {
+      "code": "253",
+      "name": "Mauritius",
+      "adjective": "mauritisch"
+    },
+    {
+      "code": "353",
+      "name": "Mexiko",
+      "adjective": "mexikanisch"
+    },
+    {
+      "code": "545",
+      "name": "Mikronesien",
+      "adjective": "mikronesisch"
+    },
+    {
+      "code": "146",
+      "name": "Moldau",
+      "adjective": "moldauisch"
+    },
+    {
+      "code": "147",
+      "name": "Monaco",
+      "adjective": "monegassisch"
+    },
+    {
+      "code": "457",
+      "name": "Mongolei",
+      "adjective": "mongolisch"
+    },
+    {
+      "code": "140",
+      "name": "Montenegro",
+      "adjective": "montenegrinisch"
+    },
+    {
+      "code": "254",
+      "name": "Mosambik",
+      "adjective": "mosambikanisch"
+    },
+    {
+      "code": "427",
+      "name": "Myanmar",
+      "adjective": "myanmarisch"
+    },
+    {
+      "code": "267",
+      "name": "Namibia",
+      "adjective": "namibisch"
+    },
+    {
+      "code": "531",
+      "name": "Naoero",
+      "adjective": "von Naoero"
+    },
+    {
+      "code": "458",
+      "name": "Nepal",
+      "adjective": "nepalesisch"
+    },
+    {
+      "code": "536",
+      "name": "Neuseeland",
+      "adjective": "neuseeländisch"
+    },
+    {
+      "code": "354",
+      "name": "Nicaragua",
+      "adjective": "nicaraguanisch"
+    },
+    {
+      "code": "148",
+      "name": "Niederlande",
+      "adjective": "niederländisch"
+    },
+    {
+      "code": "255",
+      "name": "Niger",
+      "adjective": "nigrisch"
+    },
+    {
+      "code": "232",
+      "name": "Nigeria",
+      "adjective": "nigerianisch"
+    },
+    {
+      "code": "144",
+      "name": "Nordmazedonien",
+      "adjective": "mazedonisch/Bürger der Republik Nordmazedonien"
+    },
+    {
+      "code": "149",
+      "name": "Norwegen",
+      "adjective": "norwegisch"
+    },
+    {
+      "code": "999",
+      "name": "ohne Angabe (Staatsangehörigkeit)",
+      "adjective": "ohne Angabe"
+    },
+    {
+      "code": "456",
+      "name": "Oman",
+      "adjective": "omanisch"
+    },
+    {
+      "code": "151",
+      "name": "Österreich",
+      "adjective": "österreichisch"
+    },
+    {
+      "code": "461",
+      "name": "Pakistan",
+      "adjective": "pakistanisch"
+    },
+    {
+      "code": "459",
+      "name": "Palästinensische Gebiete",
+      "adjective": "ohne Bezeichnung"
+    },
+    {
+      "code": "537",
+      "name": "Palau",
+      "adjective": "palauisch"
+    },
+    {
+      "code": "357",
+      "name": "Panama",
+      "adjective": "panamaisch"
+    },
+    {
+      "code": "538",
+      "name": "Papua-Neuguinea",
+      "adjective": "papua-neuguineisch"
+    },
+    {
+      "code": "359",
+      "name": "Paraguay",
+      "adjective": "paraguayisch"
+    },
+    {
+      "code": "361",
+      "name": "Peru",
+      "adjective": "peruanisch"
+    },
+    {
+      "code": "462",
+      "name": "Philippinen",
+      "adjective": "philippinisch"
+    },
+    {
+      "code": "152",
+      "name": "Polen",
+      "adjective": "polnisch"
+    },
+    {
+      "code": "153",
+      "name": "Portugal",
+      "adjective": "portugiesisch"
+    },
+    {
+      "code": "265",
+      "name": "Ruanda",
+      "adjective": "ruandisch"
+    },
+    {
+      "code": "154",
+      "name": "Rumänien",
+      "adjective": "rumänisch"
+    },
+    {
+      "code": "160",
+      "name": "Russische Föderation",
+      "adjective": "russisch"
+    },
+    {
+      "code": "524",
+      "name": "Salomonen",
+      "adjective": "salomonisch"
+    },
+    {
+      "code": "257",
+      "name": "Sambia",
+      "adjective": "sambisch"
+    },
+    {
+      "code": "543",
+      "name": "Samoa",
+      "adjective": "samoanisch"
+    },
+    {
+      "code": "156",
+      "name": "San Marino",
+      "adjective": "san-marinesisch"
+    },
+    {
+      "code": "268",
+      "name": "São Tomé und Príncipe",
+      "adjective": "são-toméisch"
+    },
+    {
+      "code": "472",
+      "name": "Saudi-Arabien",
+      "adjective": "saudi-arabisch"
+    },
+    {
+      "code": "157",
+      "name": "Schweden",
+      "adjective": "schwedisch"
+    },
+    {
+      "code": "158",
+      "name": "Schweiz",
+      "adjective": "schweizerisch"
+    },
+    {
+      "code": "269",
+      "name": "Senegal",
+      "adjective": "senegalesisch"
+    },
+    {
+      "code": "170",
+      "name": "Serbien",
+      "adjective": "serbisch"
+    },
+    {
+      "code": "133",
+      "name": "Serbien (einschließlich Kosovo)",
+      "adjective": "serbisch"
+    },
+    {
+      "code": "132",
+      "name": "Serbien und Montenegro",
+      "adjective": "von Serbien und Montenegro"
+    },
+    {
+      "code": "271",
+      "name": "Seychellen",
+      "adjective": "seychellisch"
+    },
+    {
+      "code": "272",
+      "name": "Sierra Leone",
+      "adjective": "sierra-leonisch"
+    },
+    {
+      "code": "233",
+      "name": "Simbabwe",
+      "adjective": "simbabwisch"
+    },
+    {
+      "code": "474",
+      "name": "Singapur",
+      "adjective": "singapurisch"
+    },
+    {
+      "code": "155",
+      "name": "Slowakei",
+      "adjective": "slowakisch"
+    },
+    {
+      "code": "131",
+      "name": "Slowenien",
+      "adjective": "slowenisch"
+    },
+    {
+      "code": "273",
+      "name": "Somalia",
+      "adjective": "somalisch"
+    },
+    {
+      "code": "159",
+      "name": "Sowjetunion",
+      "adjective": "sowjetisch"
+    },
+    {
+      "code": "161",
+      "name": "Spanien",
+      "adjective": "spanisch"
+    },
+    {
+      "code": "431",
+      "name": "Sri Lanka",
+      "adjective": "sri-lankisch"
+    },
+    {
+      "code": "370",
+      "name": "St. Kitts und Nevis",
+      "adjective": "von St. Kitts und Nevis"
+    },
+    {
+      "code": "366",
+      "name": "St. Lucia",
+      "adjective": "lucianisch"
+    },
+    {
+      "code": "369",
+      "name": "St. Vincent und die Grenadinen",
+      "adjective": "vincentisch"
+    },
+    {
+      "code": "997",
+      "name": "staatenlos",
+      "adjective": "staatenlos"
+    },
+    {
+      "code": "263",
+      "name": "Südafrika",
+      "adjective": "südafrikanisch"
+    },
+    {
+      "code": "277",
+      "name": "Sudan",
+      "adjective": "sudanesisch"
+    },
+    {
+      "code": "276",
+      "name": "Sudan (einschließlich Südsudan)",
+      "adjective": "sudanesisch"
+    },
+    {
+      "code": "278",
+      "name": "Südsudan",
+      "adjective": "südsudanesisch"
+    },
+    {
+      "code": "364",
+      "name": "Suriname",
+      "adjective": "surinamisch"
+    },
+    {
+      "code": "475",
+      "name": "Syrien",
+      "adjective": "syrisch"
+    },
+    {
+      "code": "470",
+      "name": "Tadschikistan",
+      "adjective": "tadschikisch"
+    },
+    {
+      "code": "465",
+      "name": "Taiwan",
+      "adjective": "taiwanisch"
+    },
+    {
+      "code": "282",
+      "name": "Tansania",
+      "adjective": "tansanisch"
+    },
+    {
+      "code": "476",
+      "name": "Thailand",
+      "adjective": "thailändisch"
+    },
+    {
+      "code": "483",
+      "name": "Timor-Leste",
+      "adjective": "von Timor-Leste"
+    },
+    {
+      "code": "283",
+      "name": "Togo",
+      "adjective": "togoisch"
+    },
+    {
+      "code": "541",
+      "name": "Tonga",
+      "adjective": "tongaisch"
+    },
+    {
+      "code": "371",
+      "name": "Trinidad und Tobago",
+      "adjective": "von Trinidad und Tobago"
+    },
+    {
+      "code": "284",
+      "name": "Tschad",
+      "adjective": "tschadisch"
+    },
+    {
+      "code": "164",
+      "name": "Tschechien",
+      "adjective": "tschechisch"
+    },
+    {
+      "code": "162",
+      "name": "Tschechoslowakei",
+      "adjective": "tschechoslowakisch"
+    },
+    {
+      "code": "285",
+      "name": "Tunesien",
+      "adjective": "tunesisch"
+    },
+    {
+      "code": "163",
+      "name": "Türkei",
+      "adjective": "türkisch"
+    },
+    {
+      "code": "471",
+      "name": "Turkmenistan",
+      "adjective": "turkmenisch"
+    },
+    {
+      "code": "540",
+      "name": "Tuvalu",
+      "adjective": "tuvaluisch"
+    },
+    {
+      "code": "286",
+      "name": "Uganda",
+      "adjective": "ugandisch"
+    },
+    {
+      "code": "166",
+      "name": "Ukraine",
+      "adjective": "ukrainisch"
+    },
+    {
+      "code": "165",
+      "name": "Ungarn",
+      "adjective": "ungarisch"
+    },
+    {
+      "code": "998",
+      "name": "ungeklärt",
+      "adjective": "ungeklärt"
+    },
+    {
+      "code": "365",
+      "name": "Uruguay",
+      "adjective": "uruguayisch"
+    },
+    {
+      "code": "477",
+      "name": "Usbekistan",
+      "adjective": "usbekisch"
+    },
+    {
+      "code": "532",
+      "name": "Vanuatu",
+      "adjective": "vanuatuisch"
+    },
+    {
+      "code": "167",
+      "name": "Vatikanstadt",
+      "adjective": "vatikanisch"
+    },
+    {
+      "code": "367",
+      "name": "Venezuela",
+      "adjective": "venezolanisch"
+    },
+    {
+      "code": "469",
+      "name": "Vereinigte Arabische Emirate",
+      "adjective": "der Vereinigten Arabischen Emirate"
+    },
+    {
+      "code": "368",
+      "name": "Vereinigte Staaten",
+      "adjective": "amerikanisch"
+    },
+    {
+      "code": "168",
+      "name": "Vereinigtes Königreich",
+      "adjective": "britisch"
+    },
+    {
+      "code": "432",
+      "name": "Vietnam",
+      "adjective": "vietnamesisch"
+    },
+    {
+      "code": "289",
+      "name": "Zentralafrikanische Republik",
+      "adjective": "zentralafrikanisch"
+    },
+    {
+      "code": "181",
+      "name": "Zypern",
+      "adjective": "zyprisch"
+    }
+  ]
+}
