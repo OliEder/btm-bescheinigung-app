@@ -16,6 +16,7 @@ module.exports = {
         rules: [
             { test: /\.css$/i, use: ['style-loader', 'css-loader'] },
             { test: /\.pdf$/i, type: 'asset/resource' },
+            { test: /\.ttf$/i, type: 'asset/resource' },
         ],
     },
     plugins: [
