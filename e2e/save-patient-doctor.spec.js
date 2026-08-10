@@ -42,7 +42,7 @@ test('Patient + Arzt: voller Flow inkl. Tab-Wechsel + Anzeige', async ({ page })
     await page.waitForTimeout(200);
 
     // Tab -> Arzt
-    await page.getByRole('button', { name: /Arzt/i }).click();
+    await page.getByRole('tab', { name: /Arzt/i }).click();
     await expect(page.locator('#doctor-form')).toBeVisible();
     await fillDoctor(page);
     await page.waitForTimeout(200);
@@ -58,7 +58,7 @@ test('Patient + Arzt: voller Flow inkl. Tab-Wechsel + Anzeige', async ({ page })
     console.log('--- MODEL STATE ---', JSON.stringify(state, null, 2));
 
     // Tab -> Gespeicherte Daten, pruefen ob beide angezeigt werden
-    await page.getByRole('button', { name: /Gespeicherte Daten/i }).click();
+    await page.getByRole('tab', { name: /Gespeicherte Daten/i }).click();
     await page.waitForTimeout(200);
     const savedText = await page.locator('#data-tab, #saved-patients, #saved-doctors').allInnerTexts().catch(() => []);
     const bodyText = await page.locator('body').innerText();

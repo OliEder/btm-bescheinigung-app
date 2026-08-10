@@ -35,7 +35,7 @@ async function fillAndSavePatient(page) {
 }
 
 async function fillAndSaveDoctor(page) {
-    await page.getByRole('button', { name: /Arzt/i }).click();
+    await page.getByRole('tab', { name: /Arzt/i }).click();
     await expect(page.locator('#doctor-form')).toBeVisible();
     await page.fill('#doctor-lastname', 'Schmidt');
     await page.fill('#doctor-firstname', 'Thomas');
@@ -48,7 +48,7 @@ async function fillAndSaveDoctor(page) {
 }
 
 async function addManualMedication(page, { name, form, substance, concentration }) {
-    await page.getByRole('button', { name: /Medikamente/i }).click();
+    await page.getByRole('tab', { name: /Medikamente/i }).click();
     await expect(page.locator('#manual-medication-form')).toBeVisible();
     await page.fill('#manual-med-name', name);
     await page.selectOption('#manual-med-form', form);
@@ -80,7 +80,7 @@ test.describe('Full-Flow BtM-Reisebescheinigung', () => {
         });
 
         // Reisedaten
-        await page.getByRole('button', { name: /Reisedaten/i }).click();
+        await page.getByRole('tab', { name: /Reisedaten/i }).click();
         await expect(page.locator('#travel-form')).toBeVisible();
         await page.fill('#travel-start', '2026-08-10');
         await page.fill('#travel-end', '2026-08-24');
@@ -103,7 +103,7 @@ test.describe('Full-Flow BtM-Reisebescheinigung', () => {
         }
 
         // Formulare: PDFs generieren
-        await page.getByRole('button', { name: /Formulare/i }).click();
+        await page.getByRole('tab', { name: /Formulare/i }).click();
         await expect(page.locator('#generate-pdfs-btn')).toBeVisible();
         await page.click('#generate-pdfs-btn');
 
@@ -140,7 +140,7 @@ test.describe('Full-Flow BtM-Reisebescheinigung', () => {
         });
 
         // Export ueber "Gespeicherte Daten"-Tab
-        await page.getByRole('button', { name: /Gespeicherte Daten/i }).click();
+        await page.getByRole('tab', { name: /Gespeicherte Daten/i }).click();
         await expect(page.locator('#export-all-data-btn')).toBeVisible();
         const [download] = await Promise.all([
             page.waitForEvent('download'),
@@ -162,7 +162,7 @@ test.describe('Full-Flow BtM-Reisebescheinigung', () => {
             .toBe(0);
 
         // Import der zuvor exportierten Datei
-        await page.getByRole('button', { name: /Gespeicherte Daten/i }).click();
+        await page.getByRole('tab', { name: /Gespeicherte Daten/i }).click();
         await expect(page.locator('#export-all-data-btn')).toBeVisible();
         await page.setInputFiles('#import-file', filePath);
 
