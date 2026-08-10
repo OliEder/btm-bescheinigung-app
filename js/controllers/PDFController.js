@@ -1,9 +1,10 @@
 import { fillCertificate } from '../services/PdfFormFiller.js';
 import { buildMedicationPlan } from '../services/MedicationPlanBuilder.js';
 import templateUrl from '../../assets/reise-scheng-formular.pdf';
+import fontUrl from '../../assets/fonts/FiraSansCondensed-Regular.ttf';
 
 // Testbare Kernfunktion: baut die PDF-Bytes aus Session + gewaehlter Medikamenten-ID.
-export async function buildCertificateBytes(templateBytes, session, medicationId) {
+export async function buildCertificateBytes(templateBytes, session, medicationId, fontBytes) {
     const medication = session.selectedMedications.find((m) => m.id === medicationId);
     const blocks = session.dosageSchemes[medicationId] || [];
     return fillCertificate(templateBytes, {
@@ -12,7 +13,7 @@ export async function buildCertificateBytes(templateBytes, session, medicationId
         travel: session.travelData,
         medication,
         blocks,
-    });
+    }, fontBytes);
 }
 
 class PDFController {
@@ -21,6 +22,7 @@ class PDFController {
         this.view = view;
         this.generatedPDFs = [];
         this._templateBytes = null;
+        this._fontBytes = null;
     }
     
     init() {
@@ -33,6 +35,13 @@ class PDFController {
         this._templateBytes = new Uint8Array(await res.arrayBuffer());
         return this._templateBytes;
     }
+
+    async _loadFont() {
+        if (this._fontBytes) return this._fontBytes;
+        const res = await fetch(fontUrl);
+        this._fontBytes = new Uint8Array(await res.arrayBuffer());
+        return this._fontBytes;
+    }
     
     async generatePDFs() {
         if (!this.validateData()) {
@@ -41,6 +50,7 @@ class PDFController {
         }
         
         const templateBytes = await this._loadTemplate();
+        const fontBytes = await this._loadFont();
         this.generatedPDFs = [];
         
         for (const med of this.model.data.selectedMedications) {
@@ -49,7 +59,7 @@ class PDFController {
                 || `${med.concentrationValue || ''}${med.concentrationUnit || ''}`;
             const fileName = `BTM-Bescheinigung_${name}_${conc}.pdf`.replace(/\s+/g, '_');
             // Template pro Medikament frisch laden (fillCertificate flattet und veraendert das Dokument).
-            const bytes = await buildCertificateBytes(templateBytes, this.model.data, med.id);
+            const bytes = await buildCertificateBytes(templateBytes, this.model.data, med.id, fontBytes);
             this.generatedPDFs.push({ name: fileName, bytes, medication: med });
         }
 
