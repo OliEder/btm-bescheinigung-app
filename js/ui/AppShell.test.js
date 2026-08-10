@@ -98,3 +98,33 @@ describe('AppShell.setContent', () => {
     expect(root.querySelector('#patient-form')).not.toBeNull();
   });
 });
+
+describe('AppShell.showStart', () => {
+  it('zeigt Willkommen + Neu anfangen; onNew/onImport feuern; kein Fortsetzen ohne Session', () => {
+    const root = document.createElement('div'); document.body.appendChild(root);
+    const shell = new AppShell({ steps: STEPS, onNavigate: vi.fn(), onGenerate: vi.fn() });
+    shell.mount(root);
+    const onNew = vi.fn(); const onImport = vi.fn(); const onContinue = vi.fn();
+    shell.showStart({ hasSession: false, onNew, onImport, onContinue });
+    expect(root.textContent).toContain('Willkommen');
+    const newBtn = [...root.querySelectorAll('button')].find((b) => /Neu anfangen/.test(b.textContent));
+    expect(newBtn).toBeTruthy();
+    newBtn.click();
+    expect(onNew).toHaveBeenCalledTimes(1);
+    const importBtn = [...root.querySelectorAll('button')].find((b) => /laden/i.test(b.textContent));
+    importBtn.click();
+    expect(onImport).toHaveBeenCalledTimes(1);
+    expect([...root.querySelectorAll('button')].some((b) => /fortsetzen/i.test(b.textContent))).toBe(false);
+  });
+  it('mit Session: Fortsetzen-Button vorhanden und ruft onContinue', () => {
+    const root = document.createElement('div'); document.body.appendChild(root);
+    const shell = new AppShell({ steps: STEPS, onNavigate: vi.fn(), onGenerate: vi.fn() });
+    shell.mount(root);
+    const onContinue = vi.fn();
+    shell.showStart({ hasSession: true, onNew: vi.fn(), onImport: vi.fn(), onContinue });
+    const cont = [...root.querySelectorAll('button')].find((b) => /fortsetzen/i.test(b.textContent));
+    expect(cont).toBeTruthy();
+    cont.click();
+    expect(onContinue).toHaveBeenCalledTimes(1);
+  });
+});

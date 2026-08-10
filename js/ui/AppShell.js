@@ -1,5 +1,8 @@
 import { el, clear } from './dom.js';
 import { icon } from './Icon.js';
+import { button } from './components/Button.js';
+import { card } from './components/Card.js';
+import { alert } from './components/Alert.js';
 
 // App-Shell: Header + Schritt-Tabs + <main> + Footer. DOM via dom.js.
 // setContent akzeptiert einen Node (bevorzugt) ODER einen HTML-String
@@ -157,6 +160,30 @@ export class AppShell {
       }
     }
     this._updateHeader();
+  }
+
+  showStart({ hasSession = false, onContinue, onImport, onNew } = {}) {
+    this.tablist.style.display = 'none';
+    this.footer.style.display = 'none';
+    const actions = [];
+    if (hasSession) actions.push(button({ label: 'Laufende Sitzung fortsetzen', variant: 'primary', onClick: () => onContinue && onContinue() }));
+    actions.push(button({ label: 'Gespeicherte Datei laden', variant: 'secondary', icon: 'folder-open', onClick: () => onImport && onImport() }));
+    actions.push(button({ label: 'Neu anfangen', variant: 'secondary', onClick: () => onNew && onNew() }));
+    const body = el('div', { class: 'shell-start' }, [
+      alert({ tone: 'info', children: 'Möchten Sie eine gespeicherte Datei laden oder neu beginnen?' }),
+      el('div', { class: 'shell-start__actions' }, actions),
+    ]);
+    const startCard = card({ title: 'Willkommen', children: body });
+    clear(this.main);
+    this.main.appendChild(startCard);
+    clear(this.headerIcon);
+    this.headerTitle.textContent = 'Willkommen';
+    this.headerMeta.textContent = '';
+  }
+
+  hideStart() {
+    this.tablist.style.display = '';
+    this.footer.style.display = '';
   }
 
   setContent(htmlOrNode) {
