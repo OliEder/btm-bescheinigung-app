@@ -11,7 +11,12 @@ import { detectDeviations } from './DosageDeviation.js';
 
 function setField(form, name, value) {
     try {
-        form.getTextField(name).setText(String(value ?? ''));
+        const field = form.getTextField(name);
+        field.setText(String(value ?? ''));
+        // Auto-Groesse: lange Werte (z.B. Titel + langer Nachname, Wohnanschrift)
+        // schrumpfen, um ins Feld zu passen, statt beim Flatten abgeschnitten zu
+        // werden. setFontSize(0) = pdf-lib-Auto-Sizing.
+        field.setFontSize(0);
     } catch {
         // Feld existiert nicht in dieser Formularvariante — ueberspringen.
     }
@@ -41,8 +46,8 @@ export async function fillCertificate(templateBytes, data) {
     const doc = await PDFDocument.load(templateBytes);
     const form = doc.getForm();
 
-    // A – Arzt
-    setField(form, 'Name', doctor.lastname);
+    // A – Arzt: Titel + Nachname im Name-Feld (Titel ist Teil der Berufsangabe).
+    setField(form, 'Name', [doctor.title, doctor.lastname].filter(Boolean).join(' ').trim());
     setField(form, 'Vorname', doctor.firstname);
     setField(form, 'Telefon', doctor.phone);
     setField(form, 'Anschrift', doctor.address);
