@@ -153,3 +153,29 @@ describe('AppShell — Fokus & letzter Schritt (Review-Fixes)', () => {
     expect(onNavigate).not.toHaveBeenCalled();
   });
 });
+
+describe('AppShell — Tab aria-label (Mobile/A11y)', () => {
+  it('Eingabeschritt: aria-label enthält Namen + "Schritt n von N"', () => {
+    const root = document.createElement('div'); document.body.appendChild(root);
+    const shell = new AppShell({ steps: STEPS, onNavigate: vi.fn(), onGenerate: vi.fn() });
+    shell.mount(root);
+    const doctorTab = root.querySelector('[role=tab][data-step=doctor]');
+    const label = doctorTab.getAttribute('aria-label');
+    expect(label).toContain('Arzt');
+    expect(label).toContain('2 von 5');
+  });
+  it('Utility-Tab: aria-label ist der Klartext-Name', () => {
+    const root = document.createElement('div'); document.body.appendChild(root);
+    const shell = new AppShell({ steps: STEPS, onNavigate: vi.fn(), onGenerate: vi.fn() });
+    shell.mount(root);
+    const dataTab = root.querySelector('[role=tab][data-step=data]');
+    expect(dataTab.getAttribute('aria-label')).toBe('Gespeicherte Daten');
+  });
+  it('sichtbares Label bleibt erhalten (Desktop unverändert)', () => {
+    const root = document.createElement('div'); document.body.appendChild(root);
+    const shell = new AppShell({ steps: STEPS, onNavigate: vi.fn(), onGenerate: vi.fn() });
+    shell.mount(root);
+    const patientTab = root.querySelector('[role=tab][data-step=patient]');
+    expect(patientTab.querySelector('.shell-tab__label').textContent).toBe('Patient');
+  });
+});
