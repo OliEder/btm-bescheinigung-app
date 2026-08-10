@@ -17,4 +17,10 @@ describe('components.css', () => {
     expect(c).toContain('var(--radius-md)');
     expect(c).toContain('var(--space-');
   });
+  it('enthält Shell-Klassen', () => {
+    const c = css();
+    for (const sel of ['.shell-header', '.shell-tabs', '.shell-tab', '.shell-main', '.shell-footer']) {
+      expect(c).toContain(sel);
+    }
+  });
 });
