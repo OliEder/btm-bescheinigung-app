@@ -1,9 +1,16 @@
 class Medication {
     constructor(data = {}) {
         this.id = data.id || null;
-        this.name = data.name || '';
-        this.form = data.form || '';
-        this.substance = data.substance || '';
+        // Zwei Vokabulare koexistieren: das Modell nutzt historisch name/form/substance,
+        // Session/PDF-Filler erwarten handelsname/darreichungsform/wirkstoff. Beide werden
+        // aus dem jeweils vorhandenen Feld abgeleitet, damit geladene Alt-Daten UND neu
+        // erfasste Medikamente vollstaendig sind (Wurzel-Fix; hydrate/fromJSON laufen hier durch).
+        this.name = data.name || data.handelsname || '';
+        this.form = data.form || data.darreichungsform || '';
+        this.substance = data.substance || data.wirkstoff || '';
+        this.handelsname = data.handelsname || this.name;
+        this.darreichungsform = data.darreichungsform || this.form;
+        this.wirkstoff = data.wirkstoff || this.substance;
         // Getrennte Felder; falls nur alter concentration-String kommt, ableiten.
         if (data.concentrationValue !== undefined || data.concentrationUnit !== undefined) {
             this.concentrationValue = Number(data.concentrationValue) || 0;
@@ -100,6 +107,11 @@ class Medication {
             name: this.name,
             form: this.form,
             substance: this.substance,
+            // Bescheinigungs-Vokabular mitschreiben, damit geladene Daten die vom
+            // PDF-Filler erwarteten Felder tragen (Round-Trip bleibt vollstaendig).
+            handelsname: this.handelsname,
+            darreichungsform: this.darreichungsform,
+            wirkstoff: this.wirkstoff,
             concentrationValue: this.concentrationValue,
             concentrationUnit: this.concentrationUnit,
             manufacturer: this.manufacturer,
