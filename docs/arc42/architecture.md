@@ -20,8 +20,8 @@ FHIR-angelehnte Flatfile-Medikamenten-DB hinter einem Repository-Interface.
 
 ## 5. Bausteinsicht
 - Models: Patient, Doctor, Medication, MedicationInstance, DosageScheme, DataStore
-- Repositories: MedicationRepository, SubstanceRepository
-- Daten: medications.json, substances.json
+- Repositories: MedicationRepository, SubstanceRepository, NationalityRepository
+- Daten: medications.json, substances.json, nationalities.json (amtliche DESTATIS-Liste)
 - Services: PdfFormFiller, DosageAggregator, Migration, MedicationPlanBuilder (BMP nach § 31a Abs. 4 SGB V)
 - Utils: Sanitize, Obfuscate, Validator, DateHelper, NumberFormat (deutsche
   Zahlenformatierung), DosageForm (Bezugseinheit aus Darreichungsform)
@@ -114,6 +114,13 @@ Auslieferbar über beliebigen Static-Host / lokal.
   lucide-static@0.462.0 nach js/ui/icon-data.js generiert (scripts/generate-icons.mjs, npm run
   generate:icons), Fonts (Work Sans, Libre Caslon Text) als woff2 selbst gehostet — Begründung:
   Gesundheits-/BtM-PWA, keine Laufzeit-Requests an Fremd-CDNs (Datenschutz, Offline-Fähigkeit).
+- ADR-006: Staatsangehörigkeiten aus der amtlichen DESTATIS-Tabelle (Statistisches Bundesamt,
+  xrepository) als gebündelte data/nationalities.json. Build-Transform
+  (scripts/fetch-nationalities.mjs) ermittelt die gültige Version automatisch über den
+  gueltigeVersion-Endpoint (kein fest verdrahtetes Datum) und extrahiert {code, name, adjective};
+  im Formularfeld „Staatsangehörigkeit" wird das Adjektiv gespeichert (z.B. „deutsch").
+  Kein Laufzeit-Fetch (Offline/Datensparsamkeit). NationalityRepository (findAll/search) speist
+  die Combobox (Verdrahtung in TP-D). Neue Versionen erkennbar über _meta.version vs. gueltigeVersion.
 
 ## 10. Qualitätsanforderungen
 Datensparsamkeit, XSS-Freiheit, korrekte Wirkstoffmengen-Aggregation, amtstreue PDF-Ausgabe.
