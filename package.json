@@ -11,7 +11,8 @@
         "test:watch": "vitest",
         "e2e": "playwright test",
         "e2e:headed": "playwright test --headed",
-        "generate:icons": "node scripts/generate-icons.mjs"
+        "generate:icons": "node scripts/generate-icons.mjs",
+        "fetch:nationalities": "node scripts/fetch-nationalities.mjs"
     },
     "keywords": [
         "btm",
