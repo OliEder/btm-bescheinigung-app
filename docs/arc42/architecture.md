@@ -89,6 +89,13 @@ Auslieferbar über beliebigen Static-Host / lokal.
   „Speichern beim Weiter" folgt in TP-D/E. Übergangs-Kompromiss: AppShell.setContent nimmt
   weiterhin den View-render()-String entgegen (einzige HTML-Injektionsstelle, isoliert über
   <template>; Umstellung auf Nodes in TP-D/E).
+- Shell responsiv / WCAG 2.2 AA (TP-Mobile): Schritt-Tabs werden ≤640px als Badges-only
+  dargestellt (inaktive Labels ausgeblendet, aktiver Tab mit Label) — alle 6 Schritte bleiben
+  gleichzeitig sichtbar (kein horizontales Scrollen, WCAG 1.4.10 Reflow; WCAG-3-Draft
+  "all steps listed"). Jeder Tab trägt ein aria-label mit vollem Schrittnamen (+ Position),
+  sodass das Label bei mobiler Ausblendung für Screenreader erhalten bleibt. Ränder mobil 16px.
+  Target Size (2.5.8) und Focus-Sichtbarkeit (2.4.11, roving-Fokus aus TP-C) bleiben gewahrt.
+  Volle App-weite A11y-Durchsicht der Screens bleibt TP4.
 
 ## 9. Architekturentscheidungen
 - ADR-001: pdf-lib befüllt das amtliche BfArM-017-Formular (AcroForm) und flattet es.
