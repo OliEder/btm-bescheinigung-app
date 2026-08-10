@@ -13,7 +13,8 @@ export class NationalityRepository {
     const q = String(term || '').trim().toLowerCase();
     if (!q) return this.list.slice(0, limit);
     return this.list
-      .filter((n) => n.name.toLowerCase().includes(q) || n.adjective.toLowerCase().includes(q))
+      .filter((n) => String(n.name || '').toLowerCase().includes(q)
+        || String(n.adjective || '').toLowerCase().includes(q))
       .slice(0, limit);
   }
 }

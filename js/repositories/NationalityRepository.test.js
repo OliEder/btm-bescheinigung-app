@@ -25,6 +25,11 @@ describe('NationalityRepository', () => {
   it('search("") liefert bis zu limit Einträge', () => {
     expect(new NationalityRepository(data).search('', 2).length).toBe(2);
   });
+  it('search wirft nicht bei unvollständigen Einträgen', () => {
+    const r = new NationalityRepository({ list: [{ code: '999' }, { code: '000', name: 'Deutschland', adjective: 'deutsch' }] });
+    expect(() => r.search('deutsch')).not.toThrow();
+    expect(r.search('deutsch').some((n) => n.code === '000')).toBe(true);
+  });
   it('leeres Repository → [] ohne Wurf', () => {
     const r = new NationalityRepository();
     expect(r.findAll()).toEqual([]);

@@ -16,7 +16,7 @@ const url = `https://www.xrepository.de/api/xrepository/urn:de:bund:destatis:bev
 const doc = await (await fetch(url)).json();
 
 const list = doc.daten
-  .filter((r) => r[2])
+  .filter((r) => r[0] && r[1] && r[2]) // nur vollständige Zeilen (Code, Name, Adjektiv)
   .map((r) => ({ code: r[0], name: r[1], adjective: r[2] }))
   .sort((a, b) => a.name.localeCompare(b.name, 'de'));
 
