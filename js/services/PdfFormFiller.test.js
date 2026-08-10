@@ -143,3 +143,38 @@ describe('fillCertificate — Reisedauer-Abweichung in Anmerkungen (TP2)', () =>
         expect(g('Anmerkungen')).toBe('keine');
     });
 });
+
+describe('fillCertificate — Hotfix: Arzt-Titel + lange Namen', () => {
+    const templateBytes2 = new Uint8Array(readFileSync('assets/reise-scheng-formular.pdf'));
+    const read = async (data) => {
+        const bytes = await fillCertificate(templateBytes2, { ...data, flatten: false });
+        const form = (await PDFDocument.load(bytes)).getForm();
+        return {
+            get: (n) => { try { return form.getTextField(n).getText() || ''; } catch { return ''; } },
+            field: (n) => { try { return form.getTextField(n); } catch { return null; } },
+        };
+    };
+
+    it('übernimmt den Arzt-Titel in das Name-Feld', async () => {
+        const { get } = await read({ patient, doctor, travel, medication, blocks });
+        expect(get('Name')).toBe('Dr. med. Aerztin');
+    });
+
+    it('ohne Titel: nur der Nachname (kein führendes Leerzeichen)', async () => {
+        const { get } = await read({ patient, doctor: { ...doctor, title: '' }, travel, medication, blocks });
+        expect(get('Name')).toBe('Aerztin');
+    });
+
+    it('lange Textwerte: Feld auf Auto-Größe, damit Text schrumpft statt abzuschneiden', async () => {
+        const longDoctor = { ...doctor, lastname: 'Von-Hohenzollern-Sigmaringen-Habsburg-Lothringen' };
+        const { field } = await read({ patient, doctor: longDoctor, travel, medication, blocks });
+        const nameField = field('Name');
+        expect(nameField).not.toBeNull();
+        // Auto-Größe: pdf-lib berechnet die Schrift beim Rendern kleiner, damit
+        // der lange Name passt — die Default Appearance zeigt eine geschrumpfte
+        // Tf-Größe deutlich unter der Default-Größe 12 (statt Text abzuschneiden).
+        const size = Number((nameField.acroField.getDefaultAppearance().match(/\/\S+\s+([\d.]+)\s+Tf/) || [])[1]);
+        expect(size).toBeGreaterThan(0);
+        expect(size).toBeLessThan(12);
+    });
+});
