@@ -50,6 +50,12 @@ Auslieferbar über beliebigen Static-Host / lokal.
   Formular-Konzentration als „Wert Einheit/Bezugsmenge" (z.B. 36 mg/Tablette),
   Gesamtmenge als „X mg, entspricht Y <Form>" (Zähl-Einheit aus DosageForm.formUnit),
   leere Anmerkungen als „keine". Dosier-Notation dezimal 4-Slot (0,5-0-0,5-0).
+- PDF-Schrift: Formularfelder nutzen Fira Sans Condensed (SIL OFL, self-hosted unter
+  assets/fonts/, via @pdf-lib/fontkit eingebettet). Kontrolliertes Sizing (PdfFieldFont.fitFontSize):
+  Standard 11 pt je Feld; passt der Wert nicht, wird das Feld bis 7 pt reduziert, sonst pdf-lib-
+  Auto-Sizing (0). Condensed + Auto-Sizing verhindern abgeschnittene lange Werte. fillCertificate
+  nimmt die Font-Bytes als optionalen Parameter (ohne → Standardschrift/Auto, abwärtskompatibel).
+  Offen (Nice-to-have): global koordiniertes Sizing (eine gemeinsame Größe für alle Felder).
 - Grund/ICD: reasonSuggestions (Stammdaten) -> Snapshot in MedicationInstance -> Grund-Dropdown
   je Dosierblock -> reasonLabel/reasonIcd10/reasonNote im DosageScheme. Anzeige: Medikationsplan
   Grund-Spalte „Label (ICD-10-GM)", reasonNote in Hinweise. BtM-Formular: nur reasonNote in
