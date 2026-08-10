@@ -79,3 +79,40 @@ describe('DosageScheme weekdays (nicht-taeglich)', () => {
         expect(new DosageScheme({ weekdays: ['Mo','Di','So'] }).toJSON().weekdays).toEqual(['Mo','Di','So']);
     });
 });
+
+describe('Medication — Alt-/Neu-Vokabular (handelsname/wirkstoff/darreichungsform)', () => {
+    it('geladenes Alt-Medikament (name/form/substance/concentration) liefert Bescheinigungs-Felder', () => {
+        // Exakte Form wie in gespeicherten selectedMedications (pre-Vokabular-Umstellung)
+        const med = Medication.fromJSON({
+            id: 1755696350085.935, name: 'Ritalin Adult', form: 'Kapsel',
+            substance: 'Methylphenidat', concentration: '27mg', btmCategory: 'BTM',
+        });
+        expect(med.handelsname).toBe('Ritalin Adult');
+        expect(med.darreichungsform).toBe('Kapsel');
+        expect(med.wirkstoff).toBe('Methylphenidat');
+        expect(med.concentrationValue).toBe(27);
+        expect(med.concentrationUnit).toBe('mg');
+    });
+    it('Neu-Vokabular (handelsname/wirkstoff/darreichungsform) wird übernommen', () => {
+        const med = Medication.fromJSON({
+            handelsname: 'Concerta', wirkstoff: 'Methylphenidat',
+            darreichungsform: 'Retardtablette', concentrationValue: 36, concentrationUnit: 'mg',
+        });
+        expect(med.handelsname).toBe('Concerta');
+        expect(med.wirkstoff).toBe('Methylphenidat');
+        expect(med.darreichungsform).toBe('Retardtablette');
+    });
+    it('toJSON serialisiert die Bescheinigungs-Felder (Round-Trip bleibt vollständig)', () => {
+        const med = Medication.fromJSON({ name: 'Ritalin Adult', form: 'Kapsel', substance: 'Methylphenidat', concentration: '10mg' });
+        const round = Medication.fromJSON(med.toJSON());
+        expect(round.handelsname).toBe('Ritalin Adult');
+        expect(round.wirkstoff).toBe('Methylphenidat');
+        expect(round.darreichungsform).toBe('Kapsel');
+    });
+    it('name/form/substance bleiben für bestehende Nutzung erhalten (keine Regression)', () => {
+        const med = Medication.fromJSON({ name: 'Ritalin', form: 'Tablette', substance: 'Methylphenidat', concentration: '10mg' });
+        expect(med.name).toBe('Ritalin');
+        expect(med.form).toBe('Tablette');
+        expect(med.substance).toBe('Methylphenidat');
+    });
+});
