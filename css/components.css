@@ -107,3 +107,20 @@
 .shell-footer__btn--back:disabled{opacity:.5;cursor:default;color:var(--color-ink-300)}
 .shell-footer__btn--next{background:var(--color-primary-700);border:none;color:#fff;font-weight:var(--weight-semibold)}
 .shell-start__actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:var(--space-5)}
+
+/* App-Shell mobil (≤640px): Badges-only-Tabs + schmalere Ränder.
+   Alle 6 Schritte bleiben gleichzeitig sichtbar (kein Overflow) -> WCAG 1.4.10
+   Reflow + WCAG-3-Draft "all steps listed". Voller Schrittname bleibt via
+   aria-label am Tab (s. AppShell). */
+@media (max-width: 640px) {
+  .shell-header { padding: 20px 16px 16px; }
+  .shell-tabs { padding: 0 8px; gap: 2px; justify-content: space-between; }
+  .shell-main { padding: 24px 16px 28px; }
+  .shell-footer { padding: 16px 16px 24px; }
+  .shell-header__row { flex-direction: column; align-items: flex-start; gap: 4px; }
+  .shell-header__title { font-size: var(--text-xl); }
+  .shell-tab__label { display: none; }
+  .shell-tab--active .shell-tab__label { display: inline; }
+  .shell-tab { padding: 12px 6px; gap: 6px; }
+  .shell-tabs__spacer { display: none; }
+}

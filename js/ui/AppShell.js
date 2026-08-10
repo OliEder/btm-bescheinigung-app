@@ -48,9 +48,15 @@ export class AppShell {
     this.tabButtons.clear();
     this.steps.forEach((step) => {
       const stepIndex = step.utility ? null : this.inputSteps.findIndex((s) => s.id === step.id);
+      // aria-label traegt den vollen Schrittnamen (+ Position), damit das Label
+      // fuer Screenreader erhalten bleibt, wenn es mobil visuell ausgeblendet ist.
+      const ariaLabel = step.utility
+        ? String(step.label)
+        : `${step.label}, Schritt ${stepIndex + 1} von ${this.inputSteps.length}`;
       const btn = el('button', {
         class: 'shell-tab' + (step.utility ? ' shell-tab--utility' : ''),
         role: 'tab', 'data-step': step.id, tabindex: '-1', 'aria-selected': 'false',
+        'aria-label': ariaLabel,
       });
       const badge = el('span', { class: 'shell-tab__badge', 'aria-hidden': 'true' });
       if (step.utility) badge.appendChild(icon(step.icon, { size: 14 }));
