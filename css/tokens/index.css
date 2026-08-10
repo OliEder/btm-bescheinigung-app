@@ -1,10 +1,11 @@
-/* Nur die Variablen-Token-Dateien (reine Custom-Properties, optisch inert).
+/* Variablen-Token-Dateien (reine Custom-Properties) plus base.css.
    base.css setzt echte Element-Regeln (h1-h4 auf Libre Caslon, :focus-visible) und
-   wird deshalb erst in TP-C importiert, wenn die Optik komplett umgestellt wird —
-   im Übergangszustand von TP-A soll die App unverändert aussehen. */
+   wird ab TP-C importiert, da die Optik hier vollständig auf das Design System
+   umgestellt wird. */
 @import './fonts.css';
 @import './colors.css';
 @import './spacing.css';
 @import './typography.css';
 @import './elevation.css';
 @import './motion.css';
+@import './base.css';

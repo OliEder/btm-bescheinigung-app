@@ -37,10 +37,7 @@ describe('Design-Tokens', () => {
       expect(i).toContain(`${f}.css`);
     }
   });
-  it('index.css lädt base.css (Element-Restyling) in TP-A NICHT — kein sichtbarer Umbruch', () => {
-    // base.css setzt echte Element-Regeln (h1-h4 auf Libre Caslon, :focus-visible).
-    // Die App hat klassenlose <h2>/<h3>/<h4>, die styles.css nicht überschreibt —
-    // ein Import würde die Optik schon jetzt ändern. base.css wird in TP-C aktiviert.
-    expect(read('css/tokens/index.css')).not.toMatch(/@import[^;]*base\.css/);
+  it('index.css lädt base.css ab TP-C (Element-Restyling aktiv)', () => {
+    expect(read('css/tokens/index.css')).toMatch(/@import[^;]*base\.css/);
   });
 });

@@ -3,6 +3,7 @@
 // Look. Übergangszustand von TP-A: styles.css bleibt aktiv, die Optik kippt erst
 // ab TP-C. styles.css wird in TP-F entfernt.
 import '../css/tokens/index.css';
+import '../css/components.css';
 import '../css/styles.css';
 import medicationsData from '../data/medications.json';
 import substancesData from '../data/substances.json';
