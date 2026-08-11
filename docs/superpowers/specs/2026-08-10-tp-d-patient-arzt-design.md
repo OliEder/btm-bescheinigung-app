@@ -41,7 +41,7 @@ js/utils/DocNumber.js         NEU — checkGermanDocNumber(value) -> { valid, hi
 js/utils/DocNumber.test.js
 js/validation/RequiredFields.js  NEU — validatePatientFields(data)/validateDoctorFields(data) -> string[] (fehlende Keys)
 js/validation/RequiredFields.test.js
-js/views/PatientView.js       Node-Factory (dom.js + formField/input/select); Inline-Validierung + DocNumber-Warnung
+js/views/PatientView.js       Node-Factory (dom.js + formField/input/select/combobox); Inline-Validierung + DocNumber-Warnung; NationalityRepository für die Combobox
 js/views/DoctorView.js        dito
 js/controllers/PatientController.js  savePatient()->{ok,missing}; loadPatient() via chooseModal; confirmModal; Inline-alert
 js/controllers/DoctorController.js   saveDoctor()->{ok,missing}; loadDoctor(); searchDoctor/linkPatientDoctor Inline-alert
@@ -95,10 +95,14 @@ validateDoctorFields(data) -> string[]
   `optional:true` NUR bei nationality (Patient) bzw. title (Doctor).
 - Geschlecht: `select` mit id `patient-gender` und den bestehenden Option-Werten
   (männlich/weiblich/divers) — bleibt select, um Controller-Vertrag/E2E exakt zu halten.
-- Staatsangehörigkeit: bleibt in TP-D ein **`input`** (id `patient-nationality`, Default
-  „Deutsch"). Die Combobox mit voller Länderliste ist NICHT Teil von TP-D — die
-  Nationalitäten-Datenquelle existiert im App-Code noch nicht (nur im Design-Bundle) und wäre
-  eine eigene Daten-Aufgabe. Als optionales Feld markiert („(optional)").
+- Staatsangehörigkeit: **`combobox`** (aus TP-B), gespeist von `NationalityRepository.search()`
+  (amtliche DESTATIS-Daten aus TP-Nationalities). Angezeigt „Land (Adjektiv)", **gespeichert das
+  Adjektiv** (z.B. „deutsch"); Default „deutsch". Die Combobox schreibt ihren Wert in ein
+  verstecktes/gebundenes Feld mit id **`patient-nationality`** (Controller-/E2E-Vertrag bleibt:
+  `getFormData().nationality` = das Adjektiv). Als optionales Feld markiert („(optional)").
+  Fallback: ist das Repository leer, erlaubt die Combobox weiterhin Freitext.
+  `app.js` erzeugt das `NationalityRepository` (Import `data/nationalities.json`) und übergibt es
+  der PatientView (z.B. via Konstruktor/Setter), damit die View DOM-frei testbar bleibt.
 - **Kein** Speichern-Button (Speichern per Footer). „Laden"-Button bleibt (öffnet chooseModal).
   Doctor behält „Suchen" und „Verknüpfen".
 - Inline-Validierung: `blur` auf einem leeren Pflichtfeld → `input({error:'Pflichtfeld'})`;
@@ -147,7 +151,7 @@ validateDoctorFields(data) -> string[]
   keine Navigation.
 - Dokumentennummer-Warnung blockiert **nie** (nur Hinweis); nur bei `nationality === 'Deutsch'`.
 - „Laden" ohne Einträge → Inline-Alert.
-- Combobox-Fallback, falls `window.STAATSANGEHOERIGKEIT` fehlt → einfaches `input`.
+- Nationalitäts-Combobox mit leerem/fehlendem Repository → erlaubt Freitext (kein Wurf), Default „deutsch".
 - Async-Controller: Doppelklick auf „Weiter" während eines offenen Modals → Save-Hook ist
   idempotent (zweiter Aufruf wartet/ignoriert), damit keine Doppel-Navigation entsteht.
 
