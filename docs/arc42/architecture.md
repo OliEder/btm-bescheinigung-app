@@ -96,6 +96,14 @@ Auslieferbar über beliebigen Static-Host / lokal.
   sodass das Label bei mobiler Ausblendung für Screenreader erhalten bleibt. Ränder mobil 16px.
   Target Size (2.5.8) und Focus-Sichtbarkeit (2.4.11, roving-Fokus aus TP-C) bleiben gewahrt.
   Volle App-weite A11y-Durchsicht der Screens bleibt TP4.
+- Screen-Migration (TP-D): PatientView/DoctorView als Node-Factories (dom.js + TP-B-Komponenten,
+  kein innerHTML); Feld-IDs unverändert (Controller-/E2E-Vertrag). Inline-Validierung: nur optionale
+  Felder markiert („(optional)"), Pflichtfehler bei Blur/Weiter. Speichern-per-Weiter über den
+  Shell-Footer (onNext-Save-Hook je Schritt, Ergebnis {ok,missing}; nur bei ok navigieren).
+  Dialoge → Alert (inline)/confirmModal/chooseModal (Controller async). Dokumentennummer-Prüfung
+  (DocNumber) nur bei dt. Staatsangehörigkeit, tolerant + Warnung (blockiert nicht).
+  Staatsangehörigkeit als Combobox (NationalityRepository/DESTATIS); gespeichert wird das Adjektiv.
+  PDF-Trigger am letzten Schritt (travel) folgt in TP-E über denselben Save-Hook.
 
 ## 9. Architekturentscheidungen
 - ADR-001: pdf-lib befüllt das amtliche BfArM-017-Formular (AcroForm) und flattet es.
