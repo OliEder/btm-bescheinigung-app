@@ -10,11 +10,13 @@ import { alert } from './components/Alert.js';
 // Nodes in TP-D/E). Der String-Pfad ist die EINZIGE Stelle mit HTML-Injektion.
 
 export class AppShell {
-  constructor({ steps, onNavigate, onGenerate } = {}) {
+  constructor({ steps, onNavigate, onGenerate, onNext } = {}) {
     this.steps = steps || [];
     this.inputSteps = this.steps.filter((s) => !s.utility);
     this.onNavigate = onNavigate || (() => {});
     this.onGenerate = onGenerate || (() => {});
+    this.onNext = onNext || null;
+    this._navigating = false;
     this.active = this.inputSteps[0] ? this.inputSteps[0].id : null;
     this.status = {};
     this.tabButtons = new Map();
@@ -105,11 +107,23 @@ export class AppShell {
   _go(delta) {
     const idx = this.inputSteps.findIndex((s) => s.id === this.active);
     if (idx === -1) return;
-    const isLast = this.active === 'travel';
-    if (delta > 0 && isLast) { this.onGenerate(); this.onNavigate('certificates'); return; }
-    const nextIdx = idx + delta;
-    if (nextIdx < 0 || nextIdx >= this.inputSteps.length) return;
-    this.onNavigate(this.inputSteps[nextIdx].id);
+    if (delta < 0) {
+      const prev = idx - 1;
+      if (prev >= 0) this.onNavigate(this.inputSteps[prev].id);
+      return;
+    }
+    const proceed = () => {
+      const isLast = this.active === 'travel';
+      if (isLast) { this.onGenerate(); this.onNavigate('certificates'); return; }
+      const nextIdx = idx + 1;
+      if (nextIdx < this.inputSteps.length) this.onNavigate(this.inputSteps[nextIdx].id);
+    };
+    if (!this.onNext) { proceed(); return; }
+    if (this._navigating) return;
+    this._navigating = true;
+    Promise.resolve(this.onNext(this.active))
+      .then((res) => { if (res && res.ok) proceed(); })
+      .finally(() => { this._navigating = false; });
   }
 
   setActive(stepId) {
