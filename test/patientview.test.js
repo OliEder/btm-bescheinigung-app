@@ -37,4 +37,16 @@ describe('PatientView (Node-Factory)', () => {
     view.showMissing(['firstname']);
     expect(document.body.textContent).toContain('Pflichtfeld');
   });
+
+  it('Nationalitäts-Combobox schreibt das ADJEKTIV (nicht das Label) ins hidden field', () => {
+    const repo = { findAll: () => [{ code: '000', name: 'Deutschland', adjective: 'deutsch' }, { code: '423', name: 'Afghanistan', adjective: 'afghanisch' }],
+      search: (t) => [{ code: '423', name: 'Afghanistan', adjective: 'afghanisch' }].filter((n) => !t || n.name.toLowerCase().includes(t.toLowerCase())) };
+    const view = new PatientView(repo);
+    document.body.replaceChildren(view.render());
+    // simuliere Auswahl über das von der Combobox gemeldete Label
+    view.nationalityInput.value = view._toAdjective('Afghanistan (afghanisch)');
+    expect(document.getElementById('patient-nationality').value).toBe('afghanisch');
+    // Freitext bleibt erhalten
+    expect(view._toAdjective('irgendwas')).toBe('irgendwas');
+  });
 });

@@ -61,8 +61,11 @@ export class PatientView {
     const cb = combobox({
       placeholder: 'z.B. deutsch', value: 'deutsch',
       options: this._nationalityOptions(''),
-      onChange: (val) => { this.nationalityInput.value = val; },
+      // Die TP-B-Combobox meldet das ANGEZEIGTE Label ("Land (Adjektiv)") bzw. den
+      // freien Text. Gespeichert werden soll aber das Adjektiv -> hier auflösen.
+      onChange: (val) => { this.nationalityInput.value = this._toAdjective(val); },
     });
+    this.nationalityCombobox = cb.querySelector('input');
     const wrapper = formField({ label: 'Staatsangehörigkeit', htmlFor: 'patient-nationality', optional: true, control: cb });
     wrapper.appendChild(this.nationalityInput);
     this.fieldEls['patient-nationality'] = { field: { id: 'patient-nationality', name: 'nationality', required: false }, wrapper };
@@ -72,6 +75,21 @@ export class PatientView {
   _nationalityOptions(term) {
     if (!this.nationalityRepo) return [];
     return this.nationalityRepo.search(term, 8).map((n) => ({ value: n.adjective, label: `${n.name} (${n.adjective})` }));
+  }
+
+  // Löst den von der Combobox gemeldeten Wert (Label "Land (Adjektiv)" ODER Freitext)
+  // auf das Adjektiv auf. Reihenfolge: exakte Option per Repo -> Klammer-Adjektiv aus
+  // dem Label -> Freitext unverändert.
+  _toAdjective(val) {
+    const raw = String(val ?? '').trim();
+    if (!raw) return '';
+    if (this.nationalityRepo) {
+      const hit = this.nationalityRepo.findAll().find((n) => `${n.name} (${n.adjective})` === raw || n.adjective === raw || n.name === raw);
+      if (hit) return hit.adjective;
+    }
+    const paren = raw.match(/\(([^)]+)\)\s*$/);
+    if (paren) return paren[1].trim();
+    return raw;
   }
 
   _validateField(f, inputEl) {
@@ -134,6 +152,7 @@ export class PatientView {
     set('patient-lastname', patient.lastname); set('patient-firstname', patient.firstname);
     set('patient-passport', patient.passport); set('patient-birthplace', patient.birthplace);
     set('patient-birthdate', patient.birthdate); set('patient-nationality', patient.nationality || 'deutsch');
+    if (this.nationalityCombobox) this.nationalityCombobox.value = patient.nationality || 'deutsch';
     set('patient-gender', patient.gender); set('patient-street', patient.street);
     set('patient-zip', patient.zip); set('patient-city', patient.city);
   }
