@@ -11,6 +11,8 @@ import substancesData from '../data/substances.json';
 import { DataStore } from './models/DataStore.js';
 import { MedicationRepository } from './repositories/MedicationRepository.js';
 import { SubstanceRepository } from './repositories/SubstanceRepository.js';
+import nationalitiesData from '../data/nationalities.json';
+import { NationalityRepository } from './repositories/NationalityRepository.js';
 import { obfuscate } from './utils/Obfuscate.js';
 import { hasLegacyData, migrateLegacyData } from './services/Migration.js';
 
@@ -45,6 +47,7 @@ class BTMApp {
         this.model = new DataStore();
         this.substanceRepository = new SubstanceRepository(substancesData);
         this.medicationRepository = new MedicationRepository(medicationsData, this.substanceRepository);
+        this.nationalityRepository = new NationalityRepository(nationalitiesData);
         this.controllers = {};
         this.views = {};
         this.currentTab = 'patient';
@@ -86,12 +89,21 @@ class BTMApp {
             steps: SHELL_STEPS,
             onNavigate: (id) => this.showTab(id),
             onGenerate: () => {},
+            onNext: (stepId) => this._saveStep(stepId),
         });
         this.shell.mount(document.getElementById('app'));
     }
 
+    // Speichern-per-Weiter: der Footer ruft dies je Schritt; nur bei {ok:true} navigiert das Shell.
+    async _saveStep(stepId) {
+        if (stepId === 'patient') return this.controllers.patient.savePatient();
+        if (stepId === 'doctor') return this.controllers.doctor.saveDoctor();
+        // medication/travel speichern (noch) selbst; PDF-Trigger für travel folgt in TP-E.
+        return { ok: true, missing: [] };
+    }
+
     initializeViews() {
-        this.views.patient = new PatientView();
+        this.views.patient = new PatientView(this.nationalityRepository);
         this.views.doctor = new DoctorView();
         this.views.medication = new MedicationView();
         this.views.travel = new TravelView();

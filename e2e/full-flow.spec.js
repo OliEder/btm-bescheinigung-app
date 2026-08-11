@@ -23,25 +23,26 @@ async function fillAndSavePatient(page) {
     await page.fill('#patient-passport', 'C01X00T47');
     await page.fill('#patient-birthplace', 'Berlin');
     await page.fill('#patient-birthdate', '1990-05-01');
-    await page.fill('#patient-nationality', 'Deutsch');
+    // Staatsangehörigkeit: Default „deutsch" (Combobox).
     await page.selectOption('#patient-gender', 'männlich');
     await page.fill('#patient-street', 'Hauptstr. 1');
     await page.fill('#patient-zip', '10115');
     await page.fill('#patient-city', 'Berlin');
-    await page.click('#patient-form button[type="submit"]');
+    // TP-D: Speichern per Footer-„Weiter" (navigiert zu Arzt).
+    await page.locator('[data-role=next]').click();
     await expect
         .poll(() => page.evaluate(() => window.app.model.data.patients.length))
         .toBe(1);
 }
 
 async function fillAndSaveDoctor(page) {
-    await page.getByRole('tab', { name: /Arzt/i }).click();
     await expect(page.locator('#doctor-form')).toBeVisible();
     await page.fill('#doctor-lastname', 'Schmidt');
     await page.fill('#doctor-firstname', 'Thomas');
     await page.fill('#doctor-phone', '0911/123456');
     await page.fill('#doctor-address', 'Bahnhofstr. 15, 90518 Altdorf');
-    await page.click('#doctor-form button[type="submit"]');
+    // TP-D: Speichern per Footer-„Weiter".
+    await page.locator('[data-role=next]').click();
     await expect
         .poll(() => page.evaluate(() => window.app.model.data.doctors.length))
         .toBe(1);

@@ -179,3 +179,36 @@ describe('AppShell — Tab aria-label (Mobile/A11y)', () => {
     expect(patientTab.querySelector('.shell-tab__label').textContent).toBe('Patient');
   });
 });
+
+describe('AppShell — Save-Hook beim Weiter (TP-D)', () => {
+  it('Weiter ruft onNext; bei ok:true wird navigiert', async () => {
+    const root = document.createElement('div'); document.body.appendChild(root);
+    const onNavigate = vi.fn();
+    const onNext = vi.fn().mockResolvedValue({ ok: true, missing: [] });
+    const shell = new AppShell({ steps: STEPS, onNavigate, onGenerate: vi.fn(), onNext });
+    shell.mount(root); shell.setActive('patient');
+    root.querySelector('[data-role=next]').click();
+    await Promise.resolve(); await Promise.resolve();
+    expect(onNext).toHaveBeenCalledWith('patient');
+    expect(onNavigate).toHaveBeenCalledWith('doctor');
+  });
+  it('bei ok:false wird NICHT navigiert', async () => {
+    const root = document.createElement('div'); document.body.appendChild(root);
+    const onNavigate = vi.fn();
+    const onNext = vi.fn().mockResolvedValue({ ok: false, missing: ['city'] });
+    const shell = new AppShell({ steps: STEPS, onNavigate, onGenerate: vi.fn(), onNext });
+    shell.mount(root); shell.setActive('patient');
+    root.querySelector('[data-role=next]').click();
+    await Promise.resolve(); await Promise.resolve();
+    expect(onNext).toHaveBeenCalledWith('patient');
+    expect(onNavigate).not.toHaveBeenCalled();
+  });
+  it('ohne onNext: Weiter navigiert wie bisher', () => {
+    const root = document.createElement('div'); document.body.appendChild(root);
+    const onNavigate = vi.fn();
+    const shell = new AppShell({ steps: STEPS, onNavigate, onGenerate: vi.fn() });
+    shell.mount(root); shell.setActive('patient');
+    root.querySelector('[data-role=next]').click();
+    expect(onNavigate).toHaveBeenCalledWith('doctor');
+  });
+});
