@@ -1,13 +1,11 @@
 // Reproduktion: werden Patienten- UND Arztdaten beim frischen Durchlauf gespeichert und angezeigt?
+// TP-D: Speichern per Footer-„Weiter" (kein Speichern-Button, keine Browser-Dialoge mehr).
 import { test, expect } from '@playwright/test';
-
-test.beforeEach(async ({ page }) => {
-    page.on('dialog', (d) => d.accept());
-});
 
 async function startFresh(page) {
     await page.goto('/');
     await page.getByRole('button', { name: /Neu anfangen/i }).click();
+    await page.waitForSelector('#patient-form', { timeout: 8000 });
 }
 
 async function fillPatient(page) {
@@ -16,12 +14,14 @@ async function fillPatient(page) {
     await page.fill('#patient-passport', 'C01X00T47');
     await page.fill('#patient-birthplace', 'Berlin');
     await page.fill('#patient-birthdate', '1990-05-01');
-    await page.fill('#patient-nationality', 'Deutsch');
+    // Staatsangehörigkeit: Default „deutsch" (Combobox); nicht nötig zu setzen.
     await page.selectOption('#patient-gender', 'männlich');
     await page.fill('#patient-street', 'Hauptstr. 1');
     await page.fill('#patient-zip', '10115');
     await page.fill('#patient-city', 'Berlin');
-    await page.click('#patient-form button[type="submit"]');
+    // Speichern-per-Weiter: Footer speichert + navigiert zum nächsten Schritt (Arzt).
+    await page.locator('[data-role=next]').click();
+    await page.waitForSelector('#doctor-form', { timeout: 8000 });
 }
 
 async function fillDoctor(page) {
@@ -29,7 +29,9 @@ async function fillDoctor(page) {
     await page.fill('#doctor-firstname', 'Thomas');
     await page.fill('#doctor-phone', '0911/123456');
     await page.fill('#doctor-address', 'Bahnhofstr. 15, 90518 Altdorf');
-    await page.click('#doctor-form button[type="submit"]');
+    // Weiter speichert Arzt + navigiert weiter (Medikamente).
+    await page.locator('[data-role=next]').click();
+    await page.waitForTimeout(200);
 }
 
 test('Patient + Arzt: voller Flow inkl. Tab-Wechsel + Anzeige', async ({ page }) => {
@@ -39,13 +41,8 @@ test('Patient + Arzt: voller Flow inkl. Tab-Wechsel + Anzeige', async ({ page })
 
     await startFresh(page);
     await fillPatient(page);
-    await page.waitForTimeout(200);
-
-    // Tab -> Arzt
-    await page.getByRole('tab', { name: /Arzt/i }).click();
     await expect(page.locator('#doctor-form')).toBeVisible();
     await fillDoctor(page);
-    await page.waitForTimeout(200);
 
     // Model-Zustand
     const state = await page.evaluate(() => ({
@@ -57,10 +54,9 @@ test('Patient + Arzt: voller Flow inkl. Tab-Wechsel + Anzeige', async ({ page })
     }));
     console.log('--- MODEL STATE ---', JSON.stringify(state, null, 2));
 
-    // Tab -> Gespeicherte Daten, pruefen ob beide angezeigt werden
+    // Tab -> Gespeicherte Daten, prüfen ob beide angezeigt werden
     await page.getByRole('tab', { name: /Gespeicherte Daten/i }).click();
     await page.waitForTimeout(200);
-    const savedText = await page.locator('#data-tab, #saved-patients, #saved-doctors').allInnerTexts().catch(() => []);
     const bodyText = await page.locator('body').innerText();
     console.log('--- zeigt "Mustermann"? ---', bodyText.includes('Mustermann'));
     console.log('--- zeigt "Schmidt"? ---', bodyText.includes('Schmidt'));
